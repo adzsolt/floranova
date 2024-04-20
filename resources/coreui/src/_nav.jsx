@@ -562,7 +562,7 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Hozzáadás1',
+        name: 'Hozzáadás12345',
         to: '/layouts/add',
       },
 
