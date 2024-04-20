@@ -73,7 +73,7 @@ Route::post("/update-layout", [LayoutController::class, 'update',]);
 
 
 
-//HEAT UNIT
+//HEAT UNIT_
 
 Route::get("/get-heat-units", [HeatUnitController::class, 'getHeatUnits',]);
 Route::post("/get-heat-unit", [HeatUnitController::class, 'getHeatUnit',]);
