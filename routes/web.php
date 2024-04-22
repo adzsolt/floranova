@@ -10,6 +10,7 @@ use App\Http\Controllers\PeatController;
 use App\Http\Controllers\PotController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\HeatUnitController;
+use App\Http\Controllers\ProductionUnitController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,50 +37,59 @@ Route::get('/', function () {
 Auth::routes();
 //PEAT
 
-Route::get("/get-peats", [PeatController::class, 'getPeats',]);
-Route::post("/get-peat", [PeatController::class, 'getPeat',]);
-Route::post("/create-peat", [PeatController::class, 'store',]);
-Route::post("/delete-peat", [PeatController::class, 'delete',]);
-Route::post("/update-peat", [PeatController::class, 'update',]);
+Route::get("/get-peats", [PeatController::class, 'getPeats']);
+Route::post("/get-peat", [PeatController::class, 'getPeat']);
+Route::post("/create-peat", [PeatController::class, 'store']);
+Route::post("/delete-peat", [PeatController::class, 'delete']);
+Route::post("/update-peat", [PeatController::class, 'update']);
 
 
 //POT
 
-Route::get("/get-pots", [PotController::class, 'getPots',]);
-Route::post("/get-pot", [PotController::class, 'getPot',]);
-Route::post("/create-pot", [PotController::class, 'store',]);
-Route::post("/delete-pot", [PotController::class, 'delete',]);
-Route::post("/update-pot", [PotController::class, 'update',]);
+Route::get("/get-pots", [PotController::class, 'getPots']);
+Route::post("/get-pot", [PotController::class, 'getPot']);
+Route::post("/create-pot", [PotController::class, 'store']);
+Route::post("/delete-pot", [PotController::class, 'delete']);
+Route::post("/update-pot", [PotController::class, 'update']);
 
 
 
 
 //SEASONS
-Route::get("/get-seasons", [SeasoneController::class, 'getSeasons',]);
-Route::post("/get-season", [SeasoneController::class, 'getSeason',]);
-Route::post("/create-season", [SeasoneController::class, 'store',]);
-Route::post("/delete-season", [SeasoneController::class, 'delete',]);
-Route::post("/update-season", [SeasoneController::class, 'update',]);
+Route::get("/get-seasons", [SeasoneController::class, 'getSeasons']);
+Route::post("/get-season", [SeasoneController::class, 'getSeason']);
+Route::post("/create-season", [SeasoneController::class, 'store']);
+Route::post("/delete-season", [SeasoneController::class, 'delete']);
+Route::post("/update-season", [SeasoneController::class, 'update']);
 
 
 
 //LAYOUTS
 
-Route::get("/get-layouts", [LayoutController::class, 'getLayouts',]);
-Route::post("/get-layout", [LayoutController::class, 'getLayout',]);
-Route::post("/create-layout", [LayoutController::class, 'store',]);
-Route::post("/delete-layout", [LayoutController::class, 'delete',]);
-Route::post("/update-layout", [LayoutController::class, 'update',]);
+Route::get("/get-layouts", [LayoutController::class, 'getLayouts']);
+Route::post("/get-layout", [LayoutController::class, 'getLayout']);
+Route::post("/create-layout", [LayoutController::class, 'store']);
+Route::post("/delete-layout", [LayoutController::class, 'delete']);
+Route::post("/update-layout", [LayoutController::class, 'update']);
 
 
 
-//HEAT UNIT_
+//HEAT UNIT
 
-Route::get("/get-heat-units", [HeatUnitController::class, 'getHeatUnits',]);
-Route::post("/get-heat-unit", [HeatUnitController::class, 'getHeatUnit',]);
-Route::post("/create-heat-unit", [HeatUnitController::class, 'store',]);
-Route::post("/delete-heat-unit", [HeatUnitController::class, 'delete',]);
-Route::post("/update-heat-unit", [HeatUnitController::class, 'update',]);
+Route::get("/get-heat-units", [HeatUnitController::class, 'getHeatUnits']);
+Route::post("/get-heat-unit", [HeatUnitController::class, 'getHeatUnit']);
+Route::post("/create-heat-unit", [HeatUnitController::class, 'store']);
+Route::post("/delete-heat-unit", [HeatUnitController::class, 'delete']);
+Route::post("/update-heat-unit", [HeatUnitController::class, 'update']);
+
+
+//PRODUCTION UNIT
+
+Route::get("/get-production-units", [ProductionUnitController::class, 'getProductionUnits']);
+Route::post("/get-production-unit", [ProductionUnitController::class, 'getProductionUnit']);
+Route::post("/create-production-unit", [ProductionUnitController::class, 'store']);
+Route::post("/delete-production-unit", [ProductionUnitController::class, 'delete']);
+Route::post("/update-production-unit", [ProductionUnitController::class, 'update']);
 
 
 

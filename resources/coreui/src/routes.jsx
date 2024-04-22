@@ -97,6 +97,12 @@ const AddHeatUnit = React.lazy(() => import('./views/heat-unit/AddHeatUnit'))
 const EditHeatUnit = React.lazy(() => import('./views/heat-unit/EditHeatUnit'))
 
 
+//ProductionUnit
+const ProductionUnit = React.lazy(() => import('./views/production-unit/ProductionUnit'))
+const AddProductionUnit = React.lazy(() => import('./views/production-unit/AddProductionUnit'))
+const EditProductionUnit = React.lazy(() => import('./views/production-unit/EditProductionUnit'))
+
+
 //Users
 const Users = React.lazy(() => import('./views/users/Users'))
 const AddUser = React.lazy(() => import('./views/users/AddUser'))
@@ -194,10 +200,16 @@ const routes = [
   { path: '/layouts/edit/:id', name: 'Edit layout', element: EditPotLayout },
 
 
-  //Layouts
+  //Heat units
   { path: '/heat-units', name: 'Heat Units', element: HeatUnit },
   { path: '/heat-units/add', name: 'Add Heat Unit', element: AddHeatUnit },
   { path: '/heat-units/edit/:id', name: 'Edit Heat Unit', element: EditHeatUnit },
+
+
+  //Production units
+  { path: '/production-units', name: 'Production Units', element: ProductionUnit },
+  { path: '/production-units/add', name: 'Add Production Unit', element: AddProductionUnit },
+  { path: '/production-units/edit/:id', name: 'Edit Production Unit', element: EditProductionUnit },
 
 
 

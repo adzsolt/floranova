@@ -32,7 +32,8 @@ import {
   cilTerrain,
   cilAperture,
   cibHockeyapp,
-  cilRectangle
+  cilRectangle,
+  cilPlant
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
 
@@ -509,6 +510,26 @@ const _nav = [
 
   {
     component: CNavGroup,
+    name: 'Növény',
+    to: '/base',
+    icon: <CIcon icon={cilPlant} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Lista',
+        to: '/pot',
+      },
+      {
+        component: CNavItem,
+        name: 'Hozzáadás',
+        to: '/pot/add',
+      },
+
+    ]
+  },
+
+  {
+    component: CNavGroup,
     name: 'Vegyszerek',
     to: '/base',
     icon: <CIcon icon={cilAperture} customClassName="nav-icon" />,
@@ -601,13 +622,13 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Lista',
-        to: '/base/breadcrumbs',
+        to: '/production-units',
       },
 
       {
         component: CNavItem,
         name: 'Hozzáadás',
-        to: '/base/accordion',
+        to: '/production-units/ad',
       },
 
       ]
