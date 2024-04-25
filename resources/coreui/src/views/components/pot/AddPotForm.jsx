@@ -76,12 +76,12 @@ const AddPotForm = () => {
         </CCol>
 
         <CCol md={6} className='mb-3'>
-          <CFormInput ref={sizeRef} type="number" name="size" id="size" placeholder="Méret" disabled={isLoading} feedbackInvalid='Adj meg egy méretet' required />
+          <CFormInput ref={sizeRef} type="number" name="size" id="size" placeholder="Méret" step='any' disabled={isLoading} feedbackInvalid='Adj meg egy méretet' required />
           <CFormLabel htmlFor="size">Méret</CFormLabel>
         </CCol>
 
         <CCol md={6} className='mb-3'>
-          <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Ár" disabled={isLoading} feedbackInvalid='Adj meg egy árat' required />
+          <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Ár"  step='any' disabled={isLoading} feedbackInvalid='Adj meg egy árat' required />
           <CFormLabel htmlFor="price">Ár</CFormLabel>
         </CCol>
 

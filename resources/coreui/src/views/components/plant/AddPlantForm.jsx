@@ -18,19 +18,16 @@ import {useNavigate} from "react-router-dom";
 import {GlobalContext} from "../../context/GlobalContext";
 // import useMediaQuery from "../../hooks/useMediaQuery";
 
-const AddPeatForm = () => {
+const AddPlantForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState('');
-  const {roles} = useContext(GlobalContext);
-  const [roleId, setRoleId] = useState(1);
   const navigate = useNavigate();
 
-  const [start_date, setStartDate] = useState('');
-  const [end_date, setEndDate] = useState('');
 
   const formRef = useRef();
   const nameRef = useRef();
+  const colorRef = useRef();
   const priceRef = useRef();
 
 
@@ -39,13 +36,14 @@ const AddPeatForm = () => {
     if (form.checkValidity() !== false) {
       setIsLoading(true);
 
-      axios.post('/create-peat', {
+      axios.post('/create-plant', {
         name: nameRef.current.value,
+        color: colorRef.current.value,
         price: priceRef.current.value,
       })
         .then((response) => {
           // console.log('update role success ', response.data);
-          navigate('/peat');
+          navigate('/plant');
         })
         .catch(error => {
           console.log("ERROR:: ", error);
@@ -61,7 +59,7 @@ const AddPeatForm = () => {
   }
 
   const handleCancel = () => {
-    navigate('/peat');
+    navigate('/plant');
   }
 
 
@@ -72,15 +70,19 @@ const AddPeatForm = () => {
       <CRow>
         <CCol md={6} className='mb-3'>
 
-            <CFormInput ref={nameRef} type="text" name="name" id="name" placeholder="Name" disabled={isLoading}
-                        feedbackInvalid='Adj meg egy nevet' required/>
-            <CFormLabel htmlFor="name">Név</CFormLabel>
-
-
+          <CFormInput ref={nameRef} type="text" name="name" id="name" placeholder="Name" disabled={isLoading}
+                      feedbackInvalid='Adj meg egy nevet' required/>
+          <CFormLabel htmlFor="name">Név</CFormLabel>
         </CCol>
+
         <CCol md={6} className='mb-3'>
-            <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Ár" step='any' disabled={isLoading} feedbackInvalid='Adj meg egy árat' required />
-            <CFormLabel htmlFor="price">Ár</CFormLabel>
+          <CFormInput ref={colorRef} type="text" name="color" id="color" placeholder="Szín"  disabled={isLoading} feedbackInvalid='Adj meg egy színt' required />
+          <CFormLabel htmlFor="color">Szín</CFormLabel>
+        </CCol>
+
+        <CCol md={6} className='mb-3'>
+          <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Ár"  step='any' disabled={isLoading} feedbackInvalid='Adj meg egy árat' required />
+          <CFormLabel htmlFor="price">Ár</CFormLabel>
         </CCol>
 
         <CCol xs={12}>
@@ -90,7 +92,7 @@ const AddPeatForm = () => {
         </CCol>
         <CCol xs={12} className="text-right">
           <CLoadingButton type="button" color="primary" loading={isLoading} disabled={isLoading} onClick={handleSubmit}>
-            Tőzeg létrehozása
+           Növény létrehozása
           </CLoadingButton>
           <CButton color='light' disabled={isLoading} onClick={handleCancel} className='mr-1 ms-4'>Mégsem</CButton>
         </CCol>
@@ -99,4 +101,4 @@ const AddPeatForm = () => {
   )
 }
 
-export default AddPeatForm;
+export default AddPlantForm;

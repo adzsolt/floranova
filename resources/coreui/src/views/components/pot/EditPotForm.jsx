@@ -83,7 +83,7 @@ const EditPotForm = ({pot}) => {
 
         <CCol md={6} className='mb-3'>
           <CFormFloating>
-            <CFormInput ref={sizeRef} type="number" name="size" id="size" placeholder="Cserép neve" disabled={isLoading} defaultValue={pot.price} feedbackInvalid='A cserép mérete kötelező' required />
+            <CFormInput ref={sizeRef} type="number" name="size" id="size" placeholder="Cserép mérete" step='any' disabled={isLoading} defaultValue={pot.price} feedbackInvalid='A cserép mérete kötelező' required />
             <CFormLabel htmlFor="name">Cserép mérete</CFormLabel>
           </CFormFloating>
         </CCol>
@@ -91,7 +91,7 @@ const EditPotForm = ({pot}) => {
         <CCol md={6} className='mb-3'>
 
           <CFormFloating>
-            <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Cseráp ára" disabled={isLoading} defaultValue={pot.price} feedbackInvalid='A cserép ára kötelező' required />
+            <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Cseráp ára" step='any' disabled={isLoading} defaultValue={pot.price} feedbackInvalid='A cserép ára kötelező' required />
             <CFormLabel htmlFor="name">Cserép ára</CFormLabel>
           </CFormFloating>
         </CCol>

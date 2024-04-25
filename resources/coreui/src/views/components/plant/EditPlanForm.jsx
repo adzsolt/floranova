@@ -19,19 +19,17 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
 // import useMediaQuery from "../../hooks/useMediaQuery";
 
-const EditPeatForm = ({peat}) => {
+const EditPlantForm = ({plant}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState('');
-  /* const { roles } = useContext(GlobalContext);
-   const [roleId, setRoleId] = useState(user.role[0]?.id);*/
   const navigate = useNavigate();
 
-  /* const [start_date, setStartDate] = useState(season.start_date);
-   const [end_date, setEndDate] = useState(season.end_date);*/
+
 
   const formRef = useRef();
   const nameRef = useRef();
+  const colorRef = useRef();
   const priceRef = useRef();
 
 
@@ -45,9 +43,10 @@ const EditPeatForm = ({peat}) => {
     if (form.checkValidity() !== false)  {
       setIsLoading(true);
 
-      await axios.post('/update-peat', {
-        id: peat.id,
+      await axios.post('/update-plant', {
+        id: plant.id,
         name: nameRef.current.value,
+        color: colorRef.current.value,
         price: priceRef.current.value,
 
       })
@@ -61,14 +60,14 @@ const EditPeatForm = ({peat}) => {
         })
         .finally( ()=> {
           setIsLoading(false);
-          navigate('/peat');
+          navigate('/plant');
         });
     }
     setValidated(true);
   }
 
   const handleCancel = () => {
-    navigate('/peat');
+    navigate('/plant');
   }
 
 
@@ -77,15 +76,23 @@ const EditPeatForm = ({peat}) => {
       <CRow>
         <CCol md={6} className='mb-3'>
           <CFormFloating>
-            <CFormInput ref={nameRef} type="text" name="name" id="name" placeholder="Tőzeg neve" disabled={isLoading} defaultValue={peat.name} feedbackInvalid='A tüzeg neve kötelező' required />
-            <CFormLabel htmlFor="name">Tőzeg neve</CFormLabel>
+            <CFormInput ref={nameRef} type="text" name="name" id="name" placeholder="Cserép neve" disabled={isLoading} defaultValue={plant.name} feedbackInvalid='A Növény neve kötelező' required />
+            <CFormLabel htmlFor="name">Növény neve</CFormLabel>
           </CFormFloating>
         </CCol>
+
+        <CCol md={6} className='mb-3'>
+          <CFormFloating>
+            <CFormInput ref={colorRef} type="text" name="color" id="color" placeholder="Növény színe"  disabled={isLoading} defaultValue={plant.color} feedbackInvalid='A növény színe kötelező' required />
+            <CFormLabel htmlFor="color">Növény színe</CFormLabel>
+          </CFormFloating>
+        </CCol>
+
         <CCol md={6} className='mb-3'>
 
           <CFormFloating>
-            <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Tőzeg ára" step='any' disabled={isLoading} defaultValue={peat.price} feedbackInvalid='A Tőzeg ára kötelező' required />
-            <CFormLabel htmlFor="name">Tőzeg ára</CFormLabel>
+            <CFormInput ref={priceRef} type="number" name="price" id="price" placeholder="Növény ára" step='any' disabled={isLoading} defaultValue={plant.price} feedbackInvalid='A növény ára kötelező' required />
+            <CFormLabel htmlFor="name">Növény ára</CFormLabel>
           </CFormFloating>
         </CCol>
 
@@ -97,7 +104,7 @@ const EditPeatForm = ({peat}) => {
         <CCol xs={12} className="text-right">
 
           <CLoadingButton className= 'me-3' type="button" color="primary" loading={isLoading} disabled={isLoading} onClick={handleSubmit}>
-            Tőzeg frissítése
+           Növény frissítése
           </CLoadingButton>
           <CButton color='light' disabled={isLoading} onClick={handleCancel} className='mr-1'>Mégsem</CButton>
         </CCol>
@@ -106,4 +113,4 @@ const EditPeatForm = ({peat}) => {
   )
 }
 
-export default EditPeatForm;
+export default EditPlantForm;

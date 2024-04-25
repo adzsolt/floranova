@@ -109,14 +109,14 @@ const AddProductionUnitForm = () => {
         </CCol>
         <CCol md={6} className='mb-3'>
           <CFormFloating>
-            <CFormInput ref={lengthRef} type="text" name="length" id="length" placeholder="Hosszúság" disabled={isLoading} feedbackInvalid='Adj meg egy hosszúságot' required />
+            <CFormInput ref={lengthRef} type="text" name="length" id="length" placeholder="Hosszúság"  step='any' disabled={isLoading} feedbackInvalid='Adj meg egy hosszúságot' required />
             <CFormLabel htmlFor="length">Hosszúság</CFormLabel>
           </CFormFloating>
         </CCol>
 
         <CCol md={6} className='mb-3'>
           <CFormFloating>
-            <CFormInput ref={widthRef} type="text" name="width" id="width" placeholder="Szélesség" disabled={isLoading} feedbackInvalid='Adj meg egyá szélességet' required />
+            <CFormInput ref={widthRef} type="text" name="width" id="width" placeholder="Szélesség" step='any' disabled={isLoading} feedbackInvalid='Adj meg egyá szélességet' required />
             <CFormLabel htmlFor="width">Szélesség</CFormLabel>
           </CFormFloating>
         </CCol>

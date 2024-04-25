@@ -11,6 +11,7 @@ use App\Http\Controllers\PotController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\HeatUnitController;
 use App\Http\Controllers\ProductionUnitController;
+use App\Http\Controllers\PlantController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,7 +54,13 @@ Route::post("/delete-pot", [PotController::class, 'delete']);
 Route::post("/update-pot", [PotController::class, 'update']);
 
 
+//PLANT
 
+Route::get("/get-plants", [PlantController::class, 'getPlants']);
+Route::post("/get-plant", [PlantController::class, 'getPlant']);
+Route::post("/create-plant", [PlantController::class, 'store']);
+Route::post("/delete-plant", [PlantController::class, 'delete']);
+Route::post("/update-plant", [PlantController::class, 'update']);
 
 //SEASONS
 Route::get("/get-seasons", [SeasoneController::class, 'getSeasons']);

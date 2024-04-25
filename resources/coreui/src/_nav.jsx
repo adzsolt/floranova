@@ -517,12 +517,12 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Lista',
-        to: '/pot',
+        to: '/plant',
       },
       {
         component: CNavItem,
         name: 'Hozzáadás',
-        to: '/pot/add',
+        to: '/plant/add',
       },
 
     ]

@@ -74,11 +74,18 @@ const EditPeat = React.lazy(() => import('./views/peat/EditPeat'))
 
 
 
-//Peat
+//Pott
 
 const Pot = React.lazy(() => import('./views/pot/Pot'))
 const AddPot = React.lazy(() => import('./views/pot/AddPot'))
 const EditPot = React.lazy(() => import('./views/pot/EditPot'))
+
+//Plant
+
+const Plant = React.lazy(() => import('./views/plant/Plant'))
+const AddPlant = React.lazy(() => import('./views/plant/AddPlant'))
+const EditPlant = React.lazy(() => import('./views/plant/EditPlant'))
+
 
 //Seasons
 const Seasons = React.lazy(() => import('./views/seasons/Seasons'))
@@ -186,6 +193,11 @@ const routes = [
   { path: '/pot/edit/:id', name: 'Edit Pot', element: EditPot },
 
 
+  //Plant
+  { path: '/plant', name: 'Plant', element: Plant },
+  { path: '/plant/add', name: 'Add Plant', element: AddPlant },
+  { path: '/plant/edit/:id', name: 'Edit Plant', element: EditPlant },
+
 
 
   //Seasons
@@ -207,7 +219,7 @@ const routes = [
 
 
   //Production units
-  { path: '/production-units', name: 'Production Units', element: ProductionUnit },
+  { path: '/production-units', name: 'Termelőegységek', element: ProductionUnit },
   { path: '/production-units/add', name: 'Add Production Unit', element: AddProductionUnit },
   { path: '/production-units/edit/:id', name: 'Edit Production Unit', element: EditProductionUnit },
 
