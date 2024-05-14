@@ -19,7 +19,7 @@ class LotController extends Controller
 
     public function getLots()
     {
-        $lots = Lot::all();
+        $lots = Lot::orderBy('start_date', 'desc')->get();
         foreach ($lots as $key => $lot) {
 
 
