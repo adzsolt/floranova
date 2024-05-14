@@ -86,6 +86,17 @@ const Plant = React.lazy(() => import('./views/plant/Plant'))
 const AddPlant = React.lazy(() => import('./views/plant/AddPlant'))
 const EditPlant = React.lazy(() => import('./views/plant/EditPlant'))
 
+//Fertilizer
+
+const Fertilizer = React.lazy(() => import('./views/fertilizer/Fertilizer'))
+const AddFertilizer = React.lazy(() => import('./views/fertilizer/AddFertilizer'))
+const EditFertilizer = React.lazy(() => import('./views/fertilizer/EditFertilizer'))
+
+
+//Fertilizer Status
+const AddFertilizerStatus = React.lazy(() => import('./views/fertilizer-status/AddFertilizerStatus'))
+
+
 
 //Seasons
 const Seasons = React.lazy(() => import('./views/seasons/Seasons'))
@@ -108,6 +119,13 @@ const EditHeatUnit = React.lazy(() => import('./views/heat-unit/EditHeatUnit'))
 const ProductionUnit = React.lazy(() => import('./views/production-unit/ProductionUnit'))
 const AddProductionUnit = React.lazy(() => import('./views/production-unit/AddProductionUnit'))
 const EditProductionUnit = React.lazy(() => import('./views/production-unit/EditProductionUnit'))
+
+
+
+//Lot
+
+const Lot = React.lazy(() => import('./views/lot/Lot'))
+const AddLot = React.lazy(() => import('./views/lot/AddLot'))
 
 
 //Users
@@ -199,6 +217,15 @@ const routes = [
   { path: '/plant/edit/:id', name: 'Edit Plant', element: EditPlant },
 
 
+  //Fertilizer
+  { path: '/fertilizer', name: 'Fertilizer', element: Fertilizer },
+  { path: '/fertilizer/add', name: 'Add Fertilizer', element: AddFertilizer },
+  { path: '/fertilizer/edit/:id', name: 'Edit Fertilizer', element: EditFertilizer },
+
+  //Fertilizer-status
+
+  { path: '/fertilizer-status/add/:id', name: 'Add Fertilizer Status', element: AddFertilizerStatus },
+  //{ path: '/fertilizer/edit/:id', name: 'Edit Fertilizer', element: EditFertilizer },
 
   //Seasons
   { path: '/seasons', name: 'Seasons', element: Seasons },
@@ -222,6 +249,11 @@ const routes = [
   { path: '/production-units', name: 'Termelőegységek', element: ProductionUnit },
   { path: '/production-units/add', name: 'Add Production Unit', element: AddProductionUnit },
   { path: '/production-units/edit/:id', name: 'Edit Production Unit', element: EditProductionUnit },
+
+
+  //Lot
+  { path: '/lots', name: 'Virágcsoportok', element: Lot },
+  { path: '/lot/add', name: 'Add Lot', element: AddLot },
 
 
 

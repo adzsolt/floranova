@@ -123,7 +123,7 @@ const AddProductionUnitForm = () => {
 
         <CCol xs={6} className='mb-3'>
           <CFormSelect aria-label="Válassz fűtőegységet" className='mb-3' onChange={handleHeatUnitChange}>
-            <option>Open this select menu</option>
+            <option>Nyisd ki ezt a menüt</option>
             {heatUnits.map(val => (
               <option value={val.id} key={val.id}>{val.name} </option>
             ))

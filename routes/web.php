@@ -12,6 +12,9 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\HeatUnitController;
 use App\Http\Controllers\ProductionUnitController;
 use App\Http\Controllers\PlantController;
+use App\Http\Controllers\FertilizerController;
+use App\Http\Controllers\LotController;
+use App\Http\Controllers\LotStatusController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,6 +65,17 @@ Route::post("/create-plant", [PlantController::class, 'store']);
 Route::post("/delete-plant", [PlantController::class, 'delete']);
 Route::post("/update-plant", [PlantController::class, 'update']);
 
+
+//FERTILIZER
+Route::get("/get-fertilizers", [FertilizerController::class, 'getFertilizers']);
+Route::post("/get-fertilizer", [FertilizerController::class, 'getFertilizer']);
+Route::post("/create-fertilizer", [FertilizerController::class, 'store']);
+Route::post("/delete-fertilizer", [FertilizerController::class, 'delete']);
+Route::post("/update-fertilizer", [FertilizerController::class, 'update']);
+Route::post("/add-fertilizer-status", [FertilizerController::class, 'addStatus']);
+Route::post("/delete-fertilizer-status", [FertilizerController::class, 'deleteStatus']);
+
+
 //SEASONS
 Route::get("/get-seasons", [SeasoneController::class, 'getSeasons']);
 Route::post("/get-season", [SeasoneController::class, 'getSeason']);
@@ -98,6 +112,20 @@ Route::post("/create-production-unit", [ProductionUnitController::class, 'store'
 Route::post("/delete-production-unit", [ProductionUnitController::class, 'delete']);
 Route::post("/update-production-unit", [ProductionUnitController::class, 'update']);
 
+
+
+//LOT
+
+
+Route::get("/get-lots", [LotController::class, 'getLots']);
+Route::post("/create-lot", [LotController::class, 'store']);
+Route::get("/get-lot-form-data", [LotController::class, 'getLotFormData']);
+
+
+//LOT STATUS
+
+Route::post("/update-lot-status", [LotStatusController::class, 'updateLotStatus']);
+Route::post("/create-lot-status", [LotStatusController::class, 'createLotStatus']);
 
 
 //USERS
