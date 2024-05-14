@@ -31,7 +31,7 @@ class LotStatus extends Model
 
     public function layout(): BelongsTo
     {
-        return $this->belongsTo(layout::class);
+        return $this->belongsTo(Layout::class);
     }
 
 }
