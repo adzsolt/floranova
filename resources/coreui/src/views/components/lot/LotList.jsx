@@ -85,12 +85,12 @@ const LotList = () => {
       _style: {width: '5%'}
     },
     {
-      label: 'Ültetési dátum',
+      label: 'Ültetés',
       key: 'start_date',
       _style: {width: '10%'}
     },
     {
-      label: 'Befejezési dátum',
+      label: 'Befejezés',
       key: 'end_date',
       _style: {width: '10%'}
     },
@@ -333,7 +333,7 @@ const LotList = () => {
           lot_id: lotId,
           start_date:addStartDate,
           production_unit_id:addProductiontUnitId,
-          layout_id:addProductiontUnitId
+          layout_id:addLayoutId
         }
       )
         .then((response) => {
