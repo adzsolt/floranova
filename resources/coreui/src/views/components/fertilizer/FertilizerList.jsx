@@ -84,7 +84,7 @@ const FertilizerList = () => {
     },
     {
       label: 'Virágcsoport azonosító',
-      key: 'lot_id',
+      key: 'name',
       _style: { width: '20%' }
     },
     {

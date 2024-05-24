@@ -95,6 +95,12 @@ const LotList = () => {
       _style: {width: '10%'}
     },
     {
+      label: 'Növény ára',
+      key: 'plant_price',
+      _style: {width: '5%'}
+    },
+
+    {
       label: 'Tőzeg',
       key: 'peat_name',
       _style: {width: '5%'}
@@ -278,7 +284,7 @@ const LotList = () => {
     // console.log('delete ', condemnedId);
     setIsLoading(true);
     axios.post(
-      '/delete-fertilizer',
+      '/delete-lot',
       {
         id: condemnedId
       }
@@ -605,7 +611,7 @@ const LotList = () => {
                         <CButton size="sm" color="info" className="me-md-2" data-id={item.id} disabled onClick={handleEdit}>
                           Virágcsoport szerkesztése
                         </CButton>
-                        <CButton size="sm" color="danger" className="ml-1" data-id={item.id} disabled variant='outline'
+                        <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
                                  onClick={condemnId}>
                           Törlés
                         </CButton>

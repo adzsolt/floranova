@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fertilizer;
 use App\Models\FertilizerStatus;
+use App\Models\Lot;
 use App\Models\Pot;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,18 @@ class FertilizerController extends Controller
         $fertilizers = Fertilizer::all();
         foreach ($fertilizers as $key => $fertilizer) {
 
-            $fertilizers[$key]['statuses'] = $fertilizer->fertilizer_statuses;
+            $statuses = $fertilizer->fertilizer_statuses;
+            foreach ($statuses as $status) {
+                if($status->lot_id) {
+                    $lot = Lot::where('id', $status->lot_id)->first();
+                    $status->name = $lot->name;
+                }
+                else{
+                    $status->name = '-';
+                }
+            }
+
+            $fertilizers[$key]['statuses'] = $statuses;
         }
         return response()->json(['fertilizers' => $fertilizers]);
     }
@@ -26,7 +38,8 @@ class FertilizerController extends Controller
         $fertilizer = Fertilizer::where('id', $data['id'])->first();
 
         if ($fertilizer) {
-            $fertilizer['statuses'] = $fertilizer->fertilizer_statuses;
+            $statuses = $fertilizer->fertilizer_statuses;
+            $fertilizer['statuses'] = $statuses;
             return response()->json(['fertilizer' => $fertilizer]);
         } else {
             return response()->json(['status' => 'error']);

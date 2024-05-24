@@ -61,6 +61,9 @@ class LotController extends Controller
         $lot->fertilizer_id = $data['fertilizer_id'];
         $lot->fertilizer_volume = $data['fertilizer_volume'];
 
+        $plant = Plant::where('id', $data['plant_id'])->first();
+        $lot->plant_price = $plant->price;
+
         $lot->save();
 
 
@@ -109,7 +112,40 @@ class LotController extends Controller
         $data['fertilizers'] = Fertilizer::all();
 
 
-
         return response()->json(['data' => $data]);
+    }
+
+    public function delete(Request $request)
+    {
+        $data = $request->all();
+       /* $data = [];
+        $data['lot_id'] = 5;*/
+        $lot = Lot::where('id', $data['id'])->first();
+        $fertilizer_lot_volume = 0;
+
+        if ($lot) {
+            $lot_statuses = $lot->statuses;
+            foreach ($lot_statuses as $lot_status) {
+                $lot_status->delete();
+            }
+            $fertilizer_statuses = FertilizerStatus::where('lot_id', $lot->id)->get();
+            foreach ($fertilizer_statuses as $fertilizer_status) {
+                $fertilizer_status->delete();
+            }
+
+            $fertilizer_lot_volume = $lot->quantity * $lot->pot->size * $lot->fertilizer_volume / 1000;
+        }
+
+
+        $fertilizer = Fertilizer::where('id', $lot->fertilizer_id)->first();
+        $fertilizer->provision = $fertilizer->provision + $fertilizer_lot_volume;
+
+        $fertilizer->save();
+
+
+        $lot->delete();
+
+        return response('Success');
+
     }
 }

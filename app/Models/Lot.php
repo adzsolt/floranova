@@ -17,6 +17,7 @@ class Lot extends Model
         'quantity',
         'start_date',
         'end_date',
+        'plant_price',
         'peat_id',
         'pot_id',
         'plant_id',
