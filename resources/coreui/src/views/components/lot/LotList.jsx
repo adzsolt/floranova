@@ -62,7 +62,7 @@ const LotList = () => {
 
   const formRef = useRef();
   const formAddRef = useRef();
-
+  const formatNumber = (number) => number.toFixed(2);
   /*useEffect(() => {
     axios.get("/get-seasons")
       .then((response) => {
@@ -97,13 +97,15 @@ const LotList = () => {
     {
       label: 'Növény ára',
       key: 'plant_price',
-      _style: {width: '5%'}
+      _style: {width: '5%'},
+      _props: { className: 'custom-value-cell' },
     },
 
     {
       label: 'Tőzeg',
       key: 'peat_name',
       _style: {width: '5%'}
+
     },
     {
       label: 'Cserép',
@@ -543,6 +545,7 @@ const LotList = () => {
               }}
               /* onActivePageChange={(activePage) => setActivePage(activePage)}*/
               scopedColumns={{
+                plant_price: (item) => <td>{formatNumber(item.plant_price)}</td>,
                 /*avatar: (item) => (
                   <td>
                     <CAvatar src={`/images/avatars/${item.avatar}`} />

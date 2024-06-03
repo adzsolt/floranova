@@ -19,4 +19,9 @@ class HeatUnit extends Model
         return $this->hasMany(ProductionUnit::class);
     }
 
+    public function temperatures(): HasMany
+    {
+        return $this->hasMany(Temperature::class);
+    }
+
 }

@@ -15,6 +15,9 @@ use App\Http\Controllers\PlantController;
 use App\Http\Controllers\FertilizerController;
 use App\Http\Controllers\LotController;
 use App\Http\Controllers\LotStatusController;
+use App\Http\Controllers\WorkController;
+use App\Http\Controllers\TemperatureController;
+use App\Http\Controllers\SpendController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,6 +140,22 @@ Route::post('/delete-user',[UserController::class, 'delete']);
 Route::post('/update-user',[UserController::class, 'update']);
 
 
+//WORK
+
+Route::post('/get-works',[WorkController::class, 'getWorksSpend']);
+Route::post('/store-works',[WorkController::class, 'addPeriodInput']);
+
+//TEMPERATURE
+
+Route::post('/get-temperatures',[TemperatureController::class, 'getTemperatures']);
+Route::post('/get-temperature',[TemperatureController::class, 'getTemperature']);
+Route::post('/store-temperature',[TemperatureController::class, 'addPeriodInput']);
+
+
+//SPEND
+
+Route::post('/get-spends',[SpendController::class, 'getSpends']);
+Route::post('/store-spend',[SpendController::class, 'addSpendPeriodInput']);
 
 //ROLES
 Route::get('/get-roles',[RoleController::class, 'getRoles']);   //input:-, output: roles

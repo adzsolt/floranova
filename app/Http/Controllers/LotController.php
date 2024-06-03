@@ -22,7 +22,7 @@ class LotController extends Controller
         $lots = Lot::orderBy('start_date', 'desc')->get();
         foreach ($lots as $key => $lot) {
 
-
+            
             $lots[$key]['statuses'] = $lot->statuses;
             foreach ($lot->statuses as $key1 => $status) {
                 //dd($status->productionUnit);
@@ -62,7 +62,7 @@ class LotController extends Controller
         $lot->fertilizer_volume = $data['fertilizer_volume'];
 
         $plant = Plant::where('id', $data['plant_id'])->first();
-        $lot->plant_price = $plant->price;
+        $lot->plant_price = round($plant->price,2);
 
         $lot->save();
 

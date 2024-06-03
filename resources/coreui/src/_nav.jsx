@@ -698,14 +698,14 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Hőmérséklet',
-    to: '/theme/colors',
+    to: '/temperatures',
     icon: <CIcon icon={cilSun} customClassName="nav-icon" />,
   },
 
   {
     component: CNavItem,
     name: 'Fogyasztás',
-    to: '/theme/colors',
+    to: '/spends',
     icon: <CIcon icon={cilBattery0} customClassName="nav-icon" />,
   },
 
@@ -738,8 +738,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Kiadás',
-    to: '/theme/colors',
+    name: 'Munkaköltség',
+    to: '/works  ',
     icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
   },
   {

@@ -24,18 +24,30 @@ import {
 import { DocsExample } from '../../../components'
 import axios from 'axios'
 import seasons from "../../seasons/Seasons";
+import {CDatePicker} from "@coreui/react-pro";
 
 
 
 
-const SeasonsList = () => {
+const Worklist = () => {
   const controller = new AbortController();
   const navigate = useNavigate();
-  const [seasons, setSeasons] = useState([]);
+  const [works, setWorks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [condemnedId, setCondemnedId] = useState(null);
-  const [activePage, setActivePage] = useState(1)
+  const [activePage, setActivePage] = useState(1);
+  const date = new Date();
+
+  const initial_start_date = new Date(date.getFullYear(), date.getMonth(), 1, date.getHours(), date.getMinutes() );
+  initial_start_date.setMinutes(initial_start_date.getMinutes()-initial_start_date.getTimezoneOffset());
+
+
+  const initial_end_date = new Date(date.getFullYear(), date.getMonth() + 1, 0,  date.getHours(), date.getMinutes());
+  initial_end_date.setMinutes(initial_end_date.getMinutes()-initial_end_date.getTimezoneOffset());
+
+  const [startDate, setStartDate] = useState(initial_start_date.toISOString().split('T')[0]);
+  const [endDate, setEndDate] = useState(initial_end_date.toISOString().split('T')[0]);
 
 
   /*useEffect(() => {
@@ -50,19 +62,19 @@ const SeasonsList = () => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Név',
-      key: 'name',
+      label: 'Dátum',
+      key: 'work_date',
       _style: { width: '30%' },
     },
     {
-      label: 'Kezdési időpont',
-      key: 'start_date',
+      label: 'Munkaköltség',
+      key: 'spend',
       _style: { width: '30%' }
     },
 
     {
-      label: 'Befejezési időpont',
-      key: 'end_date',
+      label: 'Költségbeírás',
+      key: 'period_input',
       _style: { width: '30%' }
     },
     {
@@ -91,15 +103,16 @@ const SeasonsList = () => {
     setIsLoading(true);
     setError('');
 
-    axios.get(
-      '/get-seasons',
-      {
-        signal: controller.signal
-      }
-    )
+    axios.post('/get-works', {
+      start_date: startDate,
+      end_date: endDate,
+    },
+    {
+      signal: controller.signal
+    })
       .then((response) => {
         // console.log('get-users ', response);
-        setSeasons(response.data.seasons);
+        setWorks(response.data.works);
       })
       .catch(error => {
         console.log("ERROR:: ", error);
@@ -115,7 +128,7 @@ const SeasonsList = () => {
     return () => {
       controller.abort()
     }
-  }, []);
+  }, [startDate, endDate]);
 
 
   const condemnId = (e) => {
@@ -151,18 +164,56 @@ const SeasonsList = () => {
       });
   }
 
+  const handleSetStartDate = (d) => {
+    setStartDate(d);
+  }
+
+  const handleSetEndDate = (d) => {
+    setEndDate(d);
+  }
+
 
   //---------------------------------------------------------
-  console.log('Render');
   return (
 
     < CRow>
       < CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Szezon lista</strong> <small></small>
+            <strong>Munkaköltség lista</strong> <small></small>
           </CCardHeader>
           <CCardBody>
+
+            <div className="row">
+              <div className="col-lg-5">
+                <CDatePicker
+                  locale="en-US"
+                  placeholder="Adj mage egy kezdési dátumot"
+                  required
+                  feedbackInvalid='A kezdési dátum kötelező'
+                  date = {startDate}
+                  onDateChange={(date) => {
+                    date.setMinutes(date.getMinutes()-date.getTimezoneOffset())
+                    handleSetStartDate(date.toISOString().split('T')[0])}
+                  }
+                />
+              </div>
+
+              <div className="col-lg-5">
+                <CDatePicker
+                  locale="en-US"
+                  placeholder="Adj mage egy kezdési dátumot"
+                  required
+                  feedbackInvalid='A kezdési dátum kötelező'
+                  date = {endDate}
+                  onDateChange={(date) => {
+                    date.setMinutes(date.getMinutes()-date.getTimezoneOffset())
+                    handleSetEndDate(date.toISOString().split('T')[0])}
+                  }
+                />
+              </div>
+
+            </div>
             {/* <p className="text-medium-emphasis small">
               Use <code>striped</code> property to add zebra-striping to any table row within the{' '}
               <code>&lt;CTableBody&gt;</code>.
@@ -176,7 +227,7 @@ const SeasonsList = () => {
               columnFilter
               columnSorter
               footer
-              items={seasons}
+              items={works}
               itemsPerPageSelect
               itemsPerPage={5}
               pagination
@@ -186,7 +237,7 @@ const SeasonsList = () => {
               onSelectedItemsChange={(items) => {
                 // console.log(items)
               }}
-             /* onActivePageChange={(activePage) => setActivePage(activePage)}*/
+              /* onActivePageChange={(activePage) => setActivePage(activePage)}*/
               scopedColumns={{
                 /*avatar: (item) => (
                   <td>
@@ -199,21 +250,30 @@ const SeasonsList = () => {
                   </td>
                 ),*/
                 show_details: (item) => {
-                  return (
-                    <td className="py-2">
-                      <CButton
-                        color="primary"
-                        variant="outline"
-                        shape="square"
-                        size="sm"
-                        onClick={() => {
-                          toggleDetails(item.id)
-                        }}
-                      >
-                        {details.includes(item.id) ? 'Elrejt' : 'Mutat'}
-                      </CButton>
-                    </td>
-                  )
+                  if(item.period_input) {
+                    return (
+                      <td className="py-2">
+                        <CButton
+                          color="primary"
+                          variant="outline"
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            toggleDetails(item.id)
+                          }}
+                        >
+                          {details.includes(item.id) ? 'Elrejt' : 'Mutat'}
+                        </CButton>
+                      </td>
+                    )
+                  }
+                  else{
+                    return (
+                      <td>
+
+                      </td>
+                    )
+                  }
                 },
                 details: (item) => {
                   return (
@@ -222,7 +282,7 @@ const SeasonsList = () => {
                         <h4>{item.name}</h4>
                         {/*<p className="text-muted">Felhasználó  {item.registered} óta</p>*/}
                         <CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
-                          Szezon szerkesztése
+                          Munaköltség szerkesztése
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
                                  onClick={condemnId}>
@@ -275,4 +335,4 @@ const SeasonsList = () => {
   );
 }
 
-export default SeasonsList
+export default Worklist

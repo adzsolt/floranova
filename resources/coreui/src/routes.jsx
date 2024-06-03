@@ -133,8 +133,21 @@ const Users = React.lazy(() => import('./views/users/Users'))
 const AddUser = React.lazy(() => import('./views/users/AddUser'))
 const EditUser = React.lazy(() => import('./views/users/EditUser'))
 
+//Works
+
+const Works = React.lazy(() => import('./views/works/Works'))
+const AddWork = React.lazy(() => import('./views/works/AddWork'))
+
+//Temperatures
+
+const Temperatures = React.lazy(() => import('./views/temperatures/Temperatures'))
+const AddTemperature = React.lazy(() => import('./views/temperatures/AddTemperature'))
 
 
+//Works
+
+const Spends = React.lazy(() => import('./views/spends/Spends'))
+const AddSpend = React.lazy(() => import('./views/spends/AddSpend'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -263,6 +276,19 @@ const routes = [
   { path: '/users/edit/:id', name: 'Edit User', element: EditUser},
 
 
+  //Work
+  { path: '/works', name: 'Munkaköltség', element: Works },
+  { path: '/works/add', name: 'Költség hozzáadása', element: AddWork },
+
+
+  //Temperature
+  { path: '/temperatures', name: 'Hőmérséklet', element: Temperatures },
+  { path: '/temperatures/add', name: 'Hőmérséklet hozzáadása', element: AddTemperature },
+
+
+  //Spend
+  { path: '/spends', name: 'Fogyasztás', element: Spends },
+  { path: '/spends/add', name: 'Fogyasztás hozzáadása', element: AddSpend },
 ]
 
 export default routes
