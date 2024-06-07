@@ -37,6 +37,7 @@ const Spendslist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [condemnedId, setCondemnedId] = useState(null);
+  const [lastSpendId, setLastSpendId] = useState(null);
   const [activePage, setActivePage] = useState(1);
   const date = new Date();
 
@@ -126,6 +127,7 @@ const Spendslist = () => {
       .then((response) => {
         // console.log('get-users ', response);
         setSpends(response.data.spends);
+        setLastSpendId(response.data.spends[0])
       })
       .catch(error => {
         console.log("ERROR:: ", error);
@@ -159,7 +161,7 @@ const Spendslist = () => {
     // console.log('delete ', condemnedId);
     setIsLoading(true);
     axios.post(
-      '/delete-season',
+      '/delete-spend',
       {
         id: condemnedId
       }
@@ -263,7 +265,7 @@ const Spendslist = () => {
                   </td>
                 ),*/
                 show_details: (item) => {
-                  if(item.period_input) {
+                  if (item.id === lastSpendId.id) {
                     return (
                       <td className="py-2">
                         <CButton
@@ -294,9 +296,9 @@ const Spendslist = () => {
                       <CCardBody className="p-3">
                         <h4>{item.name}</h4>
                         {/*<p className="text-muted">Felhasználó  {item.registered} óta</p>*/}
-                        <CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
+                       {/* <CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
                           Fogyasztás szerkesztése
-                        </CButton>
+                        </CButton>*/}
                         <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
                                  onClick={condemnId}>
                           Törlés
@@ -321,17 +323,17 @@ const Spendslist = () => {
             />
             <CModal visible={condemnedId !== null} onClose={spareId}>
               <CModalHeader onClose={() => setVisible(false)}>
-                <CModalTitle>Delete user</CModalTitle>
+                <CModalTitle>Fogyasztás törlése</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Are you sure you want to delete user #{condemnedId}?
+                Biztosan akarod törölni a ezt a fogyasztást #{condemnedId}?
               </CModalBody>
               <CModalFooter>
                 <CButton color="secondary" onClick={spareId}>
-                  Close
+                  Bezár
                 </CButton>
                 <CLoadingButton color="danger" onClick={handleDelete} disabled={isLoading} loading={isLoading}>
-                  Delete User
+                  Fogyasztás törlése
                 </CLoadingButton>
               </CModalFooter>
             </CModal>

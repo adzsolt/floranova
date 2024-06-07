@@ -13,6 +13,7 @@ class Temperature extends Model
     protected $fillable = [
         'work_date',
         'heat_unit_id',
+        'outside_temperature',
         'daytime_temperature',
         'night_temperature',
         'input'

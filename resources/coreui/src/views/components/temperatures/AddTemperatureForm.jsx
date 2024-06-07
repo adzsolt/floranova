@@ -31,6 +31,7 @@ const AddTemperatureForm = ({heat_units1}) => {
   const [heatUnitId, setHeatUnitId] = useState(heat_units1[0].id);
 
   const formRef = useRef();
+  const outside_temperature = useRef();
   const daytime_temperature = useRef();
   const night_temperature = useRef();
 
@@ -38,16 +39,16 @@ const AddTemperatureForm = ({heat_units1}) => {
     const form = formRef.current;
     if (form.checkValidity() !== false) {
       setIsLoading(true);
-      console.log(work_date, daytime_temperature,night_temperature, heatUnitId);
       axios.post('/store-temperature', {
         work_date: work_date,
+        outside_temperature: outside_temperature.current.value,
         daytime_temperature: daytime_temperature.current.value,
         night_temperature:night_temperature.current.value,
         heat_unit_id:heatUnitId
 
       })
         .then((response) => {
-           console.log(response.data);
+
           navigate('/temperatures');
         })
         .catch(error => {
@@ -110,6 +111,13 @@ const AddTemperatureForm = ({heat_units1}) => {
             <CFormLabel htmlFor="email">E-mail</CFormLabel>*/}
         </CCol>
 
+        <CCol md={6} className='mb-3'>
+          <CFormFloating>
+            <CFormInput ref={outside_temperature} type="text" name="outside_temperature" id="outside_temperature" placeholder="Kinti hőmérséklet" disabled={isLoading}
+                        feedbackInvalid='Add meg a kinti hőmársákletet' required/>
+            <CFormLabel htmlFor="outside_temperature">Kinti hőmérséklet</CFormLabel>
+          </CFormFloating>
+        </CCol>
 
         <CCol md={6} className='mb-3'>
         <CFormFloating>

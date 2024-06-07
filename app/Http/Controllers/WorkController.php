@@ -33,7 +33,7 @@ class WorkController extends Controller
 
 
         if(!count($works)){
-            $this->addWork('2024-01-01', 0,0 );
+            $this->addWork('2023-10-01', 0,0 );
         }
         /*else{
 
@@ -81,5 +81,30 @@ class WorkController extends Controller
         else{
             return response()->json(['status' => 'error']);
         }
+    }
+
+
+    public function deleteWork(Request $request)
+    {
+        /*$data = $request->all();
+        $work = Work::where('id', $data['id'])->first();*/
+
+        $last_works = Work::where(function ($query) {
+            $query->where('period_input', '!=', null);
+        })->orderBy('work_date', 'desc')->get();
+
+
+        $works = Work::orderBy('work_date', 'desc')->get();
+
+
+        foreach ($works as $one_work) {
+            //dd($last_temperatures[1]->work_date, $temp->work_date);
+            if($one_work->work_date > $last_works[1]->work_date){
+                $one_work->delete();
+            }
+        }
+
+        return 'success';
+
     }
 }

@@ -146,7 +146,7 @@ const Worklist = () => {
     // console.log('delete ', condemnedId);
     setIsLoading(true);
     axios.post(
-      '/delete-season',
+      '/delete-work',
       {
         id: condemnedId
       }
@@ -281,9 +281,9 @@ const Worklist = () => {
                       <CCardBody className="p-3">
                         <h4>{item.name}</h4>
                         {/*<p className="text-muted">Felhasználó  {item.registered} óta</p>*/}
-                        <CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
+                        {/*<CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
                           Munaköltség szerkesztése
-                        </CButton>
+                        </CButton>*/}
                         <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
                                  onClick={condemnId}>
                           Törlés
@@ -308,17 +308,17 @@ const Worklist = () => {
             />
             <CModal visible={condemnedId !== null} onClose={spareId}>
               <CModalHeader onClose={() => setVisible(false)}>
-                <CModalTitle>Delete user</CModalTitle>
+                <CModalTitle>Munkaköltség törlése</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Are you sure you want to delete user #{condemnedId}?
+                Biztosan törölni akarod ezt a munkaköltséget #{condemnedId}?
               </CModalBody>
               <CModalFooter>
                 <CButton color="secondary" onClick={spareId}>
-                  Close
+                  Bezár
                 </CButton>
                 <CLoadingButton color="danger" onClick={handleDelete} disabled={isLoading} loading={isLoading}>
-                  Delete User
+                  Munkaköltség törlése
                 </CLoadingButton>
               </CModalFooter>
             </CModal>

@@ -36,6 +36,7 @@ const Temperaturelist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [condemnedId, setCondemnedId] = useState(null);
+  const [lastTemperatureId, setLastTemperatureId] = useState(null);
   const [activePage, setActivePage] = useState(1);
   const date = new Date();
 
@@ -64,22 +65,27 @@ const Temperaturelist = () => {
     {
       label: 'Dátum',
       key: 'work_date',
-      _style: {width: '20%'},
+      _style: {width: '15%'},
+    },
+    {
+      label: 'Kinti hőmérséklet',
+      key: 'outside_temperature',
+      _style: {width: '15%'}
     },
     {
       label: 'Nappali hőmérséklet',
       key: 'daytime_temperature',
-      _style: {width: '20%'}
+      _style: {width: '15%'}
     },
     {
       label: 'Éjjeli hőmérséklet',
       key: 'night_temperature',
-      _style: {width: '20%'}
+      _style: {width: '15%'}
     },
     {
       label: 'Hőmérésklet beírás',
       key: 'input',
-      _style: {width: '30%'}
+      _style: {width: '10%'}
     },
     {
       key: 'show_details',
@@ -118,6 +124,7 @@ const Temperaturelist = () => {
         setTemperatures(response.data.temperatures);
         setHeatUnitId(response.data.first_heat_unit_id);
         setHeatUnits(response.data.heat_units);
+        setLastTemperatureId(response.data.temperatures[0])
       })
       .catch(error => {
         console.log("ERROR:: ", error);
@@ -153,7 +160,7 @@ const Temperaturelist = () => {
     // console.log('delete ', condemnedId);
     setIsLoading(true);
     axios.post(
-      '/delete-season',
+      '/delete-temperature',
       {
         id: condemnedId
       }
@@ -274,7 +281,7 @@ const Temperaturelist = () => {
                   </td>
                 ),*/
                 show_details: (item) => {
-                  if (item.period_input) {
+                  if (item.id === lastTemperatureId.id) {
                     return (
                       <td className="py-2">
                         <CButton
@@ -304,9 +311,9 @@ const Temperaturelist = () => {
                       <CCardBody className="p-3">
                         <h4>{item.name}</h4>
                         {/*<p className="text-muted">Felhasználó  {item.registered} óta</p>*/}
-                        <CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
+                        {/*<CButton size="sm" color="info" data-id={item.id} onClick={handleEdit}>
                           Hőmérséklet szerkesztése
-                        </CButton>
+                        </CButton>*/}
                         <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
                                  onClick={condemnId}>
                           Törlés
@@ -331,17 +338,17 @@ const Temperaturelist = () => {
             />
             <CModal visible={condemnedId !== null} onClose={spareId}>
               <CModalHeader onClose={() => setVisible(false)}>
-                <CModalTitle>Delete user</CModalTitle>
+                <CModalTitle>Hőmérséklet törlése</CModalTitle>
               </CModalHeader>
               <CModalBody>
-                Are you sure you want to delete user #{condemnedId}?
+                Biztosan akarod törölni ezt a hőmérsékletet #{condemnedId}?
               </CModalBody>
               <CModalFooter>
                 <CButton color="secondary" onClick={spareId}>
-                  Close
+                  Bezár
                 </CButton>
                 <CLoadingButton color="danger" onClick={handleDelete} disabled={isLoading} loading={isLoading}>
-                  Delete User
+                  Hőmérséklet törlése
                 </CLoadingButton>
               </CModalFooter>
             </CModal>

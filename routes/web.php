@@ -144,18 +144,21 @@ Route::post('/update-user',[UserController::class, 'update']);
 
 Route::post('/get-works',[WorkController::class, 'getWorksSpend']);
 Route::post('/store-works',[WorkController::class, 'addPeriodInput']);
+Route::post('/delete-work',[WorkController::class, 'deleteWork']);
 
 //TEMPERATURE
 
 Route::post('/get-temperatures',[TemperatureController::class, 'getTemperatures']);
 Route::post('/get-temperature',[TemperatureController::class, 'getTemperature']);
 Route::post('/store-temperature',[TemperatureController::class, 'addPeriodInput']);
+Route::post('/delete-temperature',[TemperatureController::class, 'deleteTemperature']);
 
 
 //SPEND
 
 Route::post('/get-spends',[SpendController::class, 'getSpends']);
 Route::post('/store-spend',[SpendController::class, 'addSpendPeriodInput']);
+Route::post('/delete-spend',[SpendController::class, 'deleteSpend']);
 
 //ROLES
 Route::get('/get-roles',[RoleController::class, 'getRoles']);   //input:-, output: roles

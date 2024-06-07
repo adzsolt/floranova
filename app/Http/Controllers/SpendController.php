@@ -65,7 +65,7 @@ class SpendController extends Controller
 
 
         if (!count($spends_gas)) {
-            $this->addSpend('2024-01-01', 0, 0, 0, 0);
+            $this->addSpend('2023-10-01', 0, 0, 1, 1);
         }
         /*else{
 
@@ -90,8 +90,7 @@ class SpendController extends Controller
             foreach ($period as $date) {
                 if ($data['work_date'] == $date->format('Y-m-d')) {
                     $this->addSpend($date->format('Y-m-d'), $gas_spend_per_day, null, $data['spent_gas_period_input'], null);
-                }
-                else{
+                } else {
                     $this->addSpend($date->format('Y-m-d'), $gas_spend_per_day, null, null, null);
                 }
             }
@@ -117,8 +116,7 @@ class SpendController extends Controller
 
                 if ($data['work_date'] == $date->format('Y-m-d')) {
                     $this->addSpend($date->format('Y-m-d'), null, $electricity_spend_per_day, null, $data['spent_electricity_period_input']);
-                }
-                else{
+                } else {
                     $this->addSpend($date->format('Y-m-d'), null, $electricity_spend_per_day, null, null);
                 }
             }
@@ -126,6 +124,84 @@ class SpendController extends Controller
 
 
         return response()->json(['success']);
+    }
+
+
+    public function deleteSpend(Request $request)
+    {
+         $data = $request->all();
+
+        /* $data['id'] = 342;*/
+
+        $spend = Spend::where('id', $data['id'])->first();
+        //$spend = Spend::where('id', 312)->first();
+
+        $last_spends_gas = Spend::where(function ($query) {
+            $query->where('spent_gas_period_input', '!=', null);
+        })->orderBy('work_date', 'desc')->get();
+
+
+        $last_spends_electricity = Spend::where(function ($query) {
+            $query->where('spent_electricity_period_input', '!=', null);
+        })->orderBy('work_date', 'desc')->get();
+
+
+        //dd($last_spends[1]);
+        $spends = Spend::orderBy('work_date', 'desc')->get();
+
+
+        if (isset($spend->spent_gas_period_input) and isset($spend->spent_electricity_period_input)) {
+            foreach ($spends as $sp) {
+
+
+                if ($sp->work_date > $last_spends_gas[1]->work_date) {
+                    $sp->spent_gas = null;
+                    $sp->save();
+                }
+
+                if ($sp->work_date > $last_spends_electricity[1]->work_date) {
+                    $sp->spent_electricity = null;
+                    $sp->save();
+                }
+
+                if (!$sp->spent_gas and !$sp->spent_electricity) {
+                    $sp->delete();
+                }
+            }
+
+        } elseif (isset($spend->spent_gas_period_input) and !isset($spend->spent_electricity_period_input)) {
+            foreach ($spends as $sp) {
+
+
+                if ($sp->work_date > $last_spends_gas[1]->work_date) {
+                    $sp->spent_gas = null;
+                    $sp->save();
+                }
+
+
+                if (!$sp->spent_gas and !$sp->spent_electricity) {
+                    $sp->delete();
+                }
+            }
+        }
+
+        elseif (!isset($spend->spent_gas_period_input) and isset($spend->spent_electricity_period_input)) {
+            foreach ($spends as $sp) {
+
+
+                if ($sp->work_date > $last_spends_electricity[1]->work_date) {
+                    $sp->spent_electricity = null;
+                    $sp->save();
+                }
+
+                if (!$sp->spent_gas and !$sp->spent_electricity) {
+                    $sp->delete();
+                }
+            }
+        }
+
+        return 'success';
+
     }
 
 }
