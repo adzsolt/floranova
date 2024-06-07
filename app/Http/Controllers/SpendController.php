@@ -65,7 +65,7 @@ class SpendController extends Controller
 
 
         if (!count($spends_gas)) {
-            $this->addSpend('2023-10-01', 0, 0, 1, 1);
+            $this->addSpend('2023-10-01', 1, 1, 1, 1);
         }
         /*else{
 
