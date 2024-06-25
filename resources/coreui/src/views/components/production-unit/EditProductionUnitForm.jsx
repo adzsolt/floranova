@@ -122,7 +122,7 @@ const EditProductionUnitForm = ({production_unit}) => {
         </CCol>
         <CCol xs={6} className='mb-3'>
           <CFormLabel htmlFor="heat-unit">Fűtőegység</CFormLabel>
-          <CFormSelect aria-label="Válassz fűtőegységet" id ='heat-unit' className='mb-3' defaultValue={production_unit.heat_unit} onChange={handleHeatUnitChange}>
+          <CFormSelect aria-label="Válassz fűtőegységet" id ='heat-unit' className='mb-3' value={production_unit.heat_unit_id} onChange={handleHeatUnitChange}>
 
             {heatUnits.map(val => (
               <option value={val.id} key={val.id}>{val.name} </option>

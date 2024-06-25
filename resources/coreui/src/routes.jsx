@@ -97,6 +97,11 @@ const EditFertilizer = React.lazy(() => import('./views/fertilizer/EditFertilize
 const AddFertilizerStatus = React.lazy(() => import('./views/fertilizer-status/AddFertilizerStatus'))
 
 
+//HeatUnit
+const Business = React.lazy(() => import('./views/businesses/Business'))
+const AddHBusiness = React.lazy(() => import('./views/businesses/AddBusiness'))
+const EditBusiness = React.lazy(() => import('./views/businesses/EditBusiness'))
+
 
 //Seasons
 const Seasons = React.lazy(() => import('./views/seasons/Seasons'))
@@ -239,6 +244,14 @@ const routes = [
 
   { path: '/fertilizer-status/add/:id', name: 'Add Fertilizer Status', element: AddFertilizerStatus },
   //{ path: '/fertilizer/edit/:id', name: 'Edit Fertilizer', element: EditFertilizer },
+
+  //Heat units
+  { path: '/businesses', name: 'Egységek', element: Business },
+  { path: '/businesses/add', name: 'Egység hozzzáadása ', element: AddHBusiness },
+  { path: '/businesses/edit/:id', name: 'Egység szerkesztése', element: EditBusiness },
+
+
+
 
   //Seasons
   { path: '/seasons', name: 'Seasons', element: Seasons },

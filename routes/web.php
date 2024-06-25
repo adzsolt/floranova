@@ -18,6 +18,7 @@ use App\Http\Controllers\LotStatusController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\TemperatureController;
 use App\Http\Controllers\SpendController;
+use App\Http\Controllers\BusinessController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,6 +97,13 @@ Route::post("/create-layout", [LayoutController::class, 'store']);
 Route::post("/delete-layout", [LayoutController::class, 'delete']);
 Route::post("/update-layout", [LayoutController::class, 'update']);
 
+//Business
+
+Route::get("/get-businesses", [BusinessController::class, 'getBusinesses']);
+Route::post("/get-business", [BusinessController::class, 'getBusiness']);
+Route::post("/create-business", [BusinessController::class, 'store']);
+Route::post("/delete-business", [BusinessController::class, 'delete']);
+Route::post("/update-business", [BusinessController::class, 'update']);
 
 
 //HEAT UNIT
@@ -124,6 +132,7 @@ Route::get("/get-lots", [LotController::class, 'getLots']);
 Route::post("/create-lot", [LotController::class, 'store']);
 Route::get("/get-lot-form-data", [LotController::class, 'getLotFormData']);
 Route::post("/delete-lot", [LotController::class, 'delete']);
+Route::post("/get-price", [LotController::class, 'getPrice']);
 
 //LOT STATUS
 

@@ -13,13 +13,13 @@ import {
 } from "@coreui/react-pro";
 import axios from "axios";
 import {CDatePicker} from "@coreui/react-pro";
-import {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {GlobalContext} from "../../context/GlobalContext";
 // import useMediaQuery from "../../hooks/useMediaQuery";
 
 const AddFertilizerStatusForm = () => {
-
+  const controller = new AbortController();
   let { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -28,11 +28,48 @@ const AddFertilizerStatusForm = () => {
 
   const [start_date, setStartDate] = useState('');
   const [action, setAction] = useState('');
+  const [lots, setLots] = useState([]);
+  const [lotId, setLotId] = useState('');
   const formRef = useRef();
   const lotRef = useRef();
 
   const volumeRef = useRef();
   const priceRef = useRef();
+
+
+  const getFertilizerStatusFormData = () => {
+    // console.log('getList');
+    setIsLoading(true);
+    setError('');
+
+    axios.get(
+      '/get-lots',
+      {
+        signal: controller.signal
+      }
+    )
+      .then((response) => {
+        // console.log('get-users ', response);
+        setLots(response.data.lots);
+      })
+      .catch(error => {
+        console.log("ERROR:: ", error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+
+  useEffect(() => {
+    getFertilizerStatusFormData();
+
+    return () => {
+      controller.abort()
+    }
+  }, []);
+
 
   const handleSubmit = () => {
     const form = formRef.current;
@@ -42,7 +79,7 @@ const AddFertilizerStatusForm = () => {
       axios.post('/add-fertilizer-status', {
         id: id,
         action: action,
-        lot_id: lotRef.current.value,
+        lot_id: lotId,
         volume: volumeRef.current.value,
         price: priceRef.current.value,
         action_date: start_date,
@@ -75,7 +112,9 @@ const AddFertilizerStatusForm = () => {
   const handleActionChange = (e) => {
     setAction(e.currentTarget.value);
   }
-
+  const handleLotChange = (e) => {
+    setLotId(e.currentTarget.value);
+  }
 
   return (
 
@@ -91,13 +130,25 @@ const AddFertilizerStatusForm = () => {
         </CCol>
 
         <CCol md={6} className='mb-3'>
-          <CFormFloating>
+         {/* <CFormFloating>
             <CFormInput ref={lotRef} type="text" name="lot" id="lot" placeholder="Lot"
                         feedbackInvalid='Válassz egy virágcsoportot' required
                         disabled={action == 'Hozzáadás'  ? true : false}
             />
             <CFormLabel htmlFor="lot">Virágcsoport</CFormLabel>
-          </CFormFloating>
+          </CFormFloating>*/}
+
+          <CFormSelect aria-label="Válassz virágcsoportot" className='mb-3'
+                       feedbackInvalid="Válassz virágcsoportot"
+                       required onChange={handleLotChange}
+          >
+            <option value="">Válassz virágcsoportot</option>
+            {lots.map(val => (
+              <option value={val.id} key={val.id}>{val.name} </option>
+            ))
+            }
+
+          </CFormSelect>
         </CCol>
 
 

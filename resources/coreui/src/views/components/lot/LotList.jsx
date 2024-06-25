@@ -28,7 +28,9 @@ import {
   CModalFooter,
   CLoadingButton,
   CFormSelect,
-  CDatePicker
+  CDatePicker,
+  CCallout,
+  CSpinner
 
 } from '@coreui/react-pro'
 
@@ -46,6 +48,7 @@ const LotList = () => {
   const [activePage, setActivePage] = useState(1);
   const [visible, setVisible] = useState(false);
   const [visibleAdd, setVisibleAdd] = useState(false);
+  const [visibleCalculation, setVisibleCalculation] = useState(false);
   const [layouts, setLayouts] = useState([]);
   const [layoutId, setLayoutId] = useState([]);
   const [addLayoutId, setAddLayoutId] = useState([]);
@@ -53,16 +56,20 @@ const LotList = () => {
   const [productiontUnitId, setProductionUnitId] = useState([]);
   const [addProductiontUnitId, setAddProductionUnitId] = useState([]);
   const [status, setStatus] = useState([]);
-  const [lotId, setLotId] = useState([]);
-
+  const [lotId, setLotId] = useState('');
+  const [lotStatusId, setLotStatusId] = useState('');
+  const [priceInfo, setPriceInfo] = useState("invisible");
+  const [priceResponse, setPriceResponse] = useState([]);
 
   const [editStartDate, setEditStartDate] = useState('');
   const [addStartDate, setAddStartDate] = useState('');
+  const [addEndDate, setAddEndDate] = useState('');
 
 
   const formRef = useRef();
   const formAddRef = useRef();
-  const formatNumber = (number) => number.toFixed(2);
+  const formCalculationRef = useRef();
+  const formatNumber = (number) => number?number.toFixed(2):0;
   /*useEffect(() => {
     axios.get("/get-seasons")
       .then((response) => {
@@ -98,7 +105,7 @@ const LotList = () => {
       label: 'Növény ára',
       key: 'plant_price',
       _style: {width: '5%'},
-      _props: { className: 'custom-value-cell' },
+      _props: {className: 'custom-value-cell'},
     },
 
     {
@@ -310,10 +317,10 @@ const LotList = () => {
       axios.post(
         '/update-lot-status',
         {
-          lot_id: status.lot_id,
-          start_date:editStartDate,
-          production_unit_id:productiontUnitId,
-          layout_id:layoutId
+          lot_status_id: lotStatusId,
+          start_date: editStartDate,
+          production_unit_id: productiontUnitId,
+          layout_id: layoutId
         }
       )
         .then((response) => {
@@ -339,9 +346,9 @@ const LotList = () => {
         '/create-lot-status',
         {
           lot_id: lotId,
-          start_date:addStartDate,
-          production_unit_id:addProductiontUnitId,
-          layout_id:addLayoutId
+          start_date: addStartDate,
+          production_unit_id: addProductiontUnitId,
+          layout_id: addLayoutId
         }
       )
         .then((response) => {
@@ -367,6 +374,41 @@ const LotList = () => {
     setAddStartDate(d);
   }
 
+  const handleSetEndDate = (d) => {
+    setAddEndDate(d);
+  }
+
+  const handleCalculation = (e) => {
+    setIsLoading(false);
+    setVisibleCalculation(true);
+    const id = e.currentTarget.getAttribute('data-id');
+    setLotId(id);
+  }
+
+  const handleCalculationSubmit = () => {
+    setIsLoading(true);
+    axios.post(
+      '/get-price',
+      {
+        lot_id: lotId,
+        start_date: addStartDate,
+        end_date: addEndDate
+      }
+    )
+      .then((response) => {
+         console.log(response.data);
+        setPriceResponse(response.data);
+      })
+      .catch(error => {
+        console.log("ERROR:: ", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setPriceInfo("visible");
+      });
+
+  }
+
 
   //---------------------------------------------------------
   return (
@@ -378,7 +420,7 @@ const LotList = () => {
             <strong>Virágcsoport lista</strong> <small></small>
           </CCardHeader>
           <CCardBody>
-          {/*EDIT STATUS*/}
+            {/*EDIT STATUS*/}
             <CModal
               visible={visible}
               onClose={() => setVisible(false)}
@@ -399,8 +441,9 @@ const LotList = () => {
                         required
                         feedbackInvalid='A kezdési dátum kötelező'
                         onDateChange={(date) => {
-                          date.setMinutes(date.getMinutes()-date.getTimezoneOffset())
-                          handleSetEditStartDate(date.toISOString().split('T')[0])}
+                          date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                          handleSetEditStartDate(date.toISOString().split('T')[0])
+                        }
                         }
                       />
                       {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
@@ -410,7 +453,8 @@ const LotList = () => {
                     <CCol md={6} className='mb-3'>
                       <CFormSelect aria-label="Válassz termelőegységet " className='mb-3'
                                    feedbackInvalid="Válassz termelőegységet"
-                                   required onChange={handleProductionUnitChange} defaultValue={status.production_unit_id}>
+                                   required onChange={handleProductionUnitChange}
+                                   defaultValue={status.production_unit_id}>
                         <option value="">Válassz termelőegységet</option>
                         {productiontUnits.map(val => (
                           <option value={val.id} key={val.id}>{val.name} </option>
@@ -435,7 +479,7 @@ const LotList = () => {
 
                     <CCol xs={12} className="text-right">
                       <CButton type="button" color="primary"
-                                      onClick={handleLotStatusSubmit}>
+                               onClick={handleLotStatusSubmit}>
                         Virágcsoport állapot modosítása
                       </CButton>
                     </CCol>
@@ -447,11 +491,11 @@ const LotList = () => {
                 <CButton color="secondary" onClick={() => setVisible(false)}>
                   Close
                 </CButton>
-               {/* <CButton color="primary">Save changes</CButton>*/}
+                {/* <CButton color="primary">Save changes</CButton>*/}
               </CModalFooter>
             </CModal>
 
-         {/* ADD STATUS___________________________*/}
+            {/* ADD STATUS___________________________*/}
 
             <CModal
               visible={visibleAdd}
@@ -472,8 +516,9 @@ const LotList = () => {
                         required
                         feedbackInvalid='A kezdési dátum kötelező'
                         onDateChange={(date) => {
-                          date.setMinutes(date.getMinutes()-date.getTimezoneOffset())
-                          handleSetAddStartDate(date.toISOString().split('T')[0])}
+                          date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                          handleSetAddStartDate(date.toISOString().split('T')[0])
+                        }
                         }
                       />
                       {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
@@ -523,6 +568,112 @@ const LotList = () => {
                 {/* <CButton color="primary">Save changes</CButton>*/}
               </CModalFooter>
             </CModal>
+
+            {/*Calculation---------------------------------------------*/}
+
+
+            <CModal
+              visible={visibleCalculation}
+              onClose={() => {
+                setVisible(false);
+                setVisibleCalculation(false);
+                setPriceInfo("invisible");
+                  }
+              }
+              //size="xl"
+              aria-labelledby="ModalAdd"
+            >
+              <CModalHeader onClose={() => setVisibleCalculation(false)}>
+                <CModalTitle id="ModalAdd">Ár számítása</CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+                <CForm ref={formCalculationRef} className="needs-validation" noValidate validated={validated}>
+                  <CRow>
+                    <CCol md={6} className='mb-3'>
+
+                      <CDatePicker
+                        locale="en-US"
+                        placeholder="Adj meg egy kezdési dátumot"
+                        required
+                        feedbackInvalid='A kezdési dátum kötelező'
+                        onDateChange={(date) => {
+                          date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                          handleSetAddStartDate(date.toISOString().split('T')[0])
+                        }
+                        }
+                      />
+                      {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
+            <CFormLabel htmlFor="email">E-mail</CFormLabel>*/}
+                    </CCol>
+
+                    <CCol md={6} className='mb-3'>
+
+                      <CDatePicker
+                        locale="en-US"
+                        placeholder="Adj meg egy befejezési dátumot"
+                        required
+                        feedbackInvalid='A befejezési dátum kötelező'
+                        onDateChange={(date) => {
+                          date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                          handleSetEndDate(date.toISOString().split('T')[0])
+                        }
+                        }
+                      />
+                      {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
+            <CFormLabel htmlFor="email">E-mail</CFormLabel>*/}
+                    </CCol>
+
+
+                    <CCol xs={12} className="text-right">
+                      <CButton type="button" color="primary"
+                               onClick={handleCalculationSubmit}>
+                        Számítás
+                      </CButton>
+
+                      {isLoading ? <div className='text-center'><CSpinner color='primary'/></div>:''}
+                    </CCol>
+                  </CRow>
+                </CForm>
+                <CCallout color="primary" className={priceInfo}>
+
+                  <CAlert color="primary">
+                    Ár számítása a következő virágcsoportnak: {priceResponse.lot_name}
+                  </CAlert>
+                  <CAlert color="info">
+                    {priceResponse.start_date} / {priceResponse.end_date} közőtt
+                  </CAlert>
+                  <CAlert color="info">
+                    Növény ára:  {formatNumber(priceResponse.plant)}
+                  </CAlert>
+                  <CAlert color="info">
+                   Cserép ára:  {formatNumber(priceResponse.pot_price)}
+                  </CAlert>
+                  <CAlert color="info">
+                    Tőzeg ára:  {formatNumber(priceResponse.peat_price)}
+                  </CAlert>
+                  <CAlert color="info">
+                    Műtrágya:  {formatNumber(priceResponse.fertilizer_price)}
+                  </CAlert>
+                  <CAlert color="info">
+                    Munkaköltség ára:  {formatNumber(priceResponse.work_price)}
+                  </CAlert>
+                  <CAlert color="info">
+                    Hőmérséklet ára: xxxxxx
+                  </CAlert>
+                  <CAlert color="warning">
+                     Összesen:  {formatNumber(priceResponse.total_price)}
+                  </CAlert>
+                </CCallout>
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="secondary" onClick={() => setVisibleCalculation(false)}>
+                  Close
+                </CButton>
+                {/* <CButton color="primary">Save changes</CButton>*/}
+              </CModalFooter>
+            </CModal>
+
+
             <CSmartTable
               activePage={activePage}
               cleaner
@@ -595,6 +746,8 @@ const LotList = () => {
                                       setStatus(status);
                                       setLayoutId(status.layout_id);
                                       setProductionUnitId(status.production_unit_id);
+                                      setEditStartDate(status.start_date);
+                                      setLotStatusId(status.id)
                                     }}
                                   >
                                     Szerkesztés
@@ -611,8 +764,14 @@ const LotList = () => {
                                  onClick={handleAddStatus}>
                           Állapot hozzáadása
                         </CButton>
-                        <CButton size="sm" color="info" className="me-md-2" data-id={item.id} disabled onClick={handleEdit}>
+                        <CButton size="sm" color="info" className="me-md-2" data-id={item.id} disabled
+                                 onClick={handleEdit}>
                           Virágcsoport szerkesztése
+                        </CButton>
+
+                        <CButton size="sm" color="warning" className="me-md-2" data-id={item.id}
+                                 onClick={handleCalculation}>
+                          Ár számítása
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
                                  onClick={condemnId}>

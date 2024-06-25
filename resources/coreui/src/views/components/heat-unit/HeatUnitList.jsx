@@ -51,7 +51,12 @@ const HeatUnitList = () => {
     {
       label: 'Név',
       key: 'name',
-      _style: { width: '75%' },
+      _style: { width: '40%' },
+    },
+    {
+      label: 'Egység',
+      key: 'business_name',
+      _style: { width: '40%' },
     },
     {
       key: 'show_details',

@@ -34,7 +34,8 @@ import {
   cibHockeyapp,
   cilRectangle,
   cilPlant,
-  cibCoderwall
+  cibCoderwall,
+  cilBuilding
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
 
@@ -578,6 +579,25 @@ const _nav = [
     component: CNavTitle,
     name: 'Termelés',
   },
+
+  {
+    component: CNavGroup,
+    name: 'Egységek',
+    to: '/base',
+    icon: <CIcon icon={cilBuilding} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Lista',
+        to: '/businesses',
+      },
+      {
+        component: CNavItem,
+        name: 'Hozzáadás',
+        to: '/businesses/add',
+      },
+    ]
+  },
   {
     component: CNavGroup,
     name: 'Szezonok',
@@ -596,28 +616,6 @@ const _nav = [
       },
     ]
   },
-
-  {
-    component: CNavGroup,
-    name: 'Elrendezés',
-    to: '/base',
-    icon: <CIcon icon={cilRectangle} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Lista',
-        to: '/layouts',
-      },
-      {
-        component: CNavItem,
-        name: 'Hozzáadás',
-        to: '/layouts/add',
-      },
-
-    ]
-  },
-
-
 
 
   {
@@ -681,7 +679,25 @@ const _nav = [
 
     ]
   },
+  {
+    component: CNavGroup,
+    name: 'Elrendezés',
+    to: '/base',
+    icon: <CIcon icon={cilRectangle} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Lista',
+        to: '/layouts',
+      },
+      {
+        component: CNavItem,
+        name: 'Hozzáadás',
+        to: '/layouts/add',
+      },
 
+    ]
+  },
 
   {
     component: CNavTitle,

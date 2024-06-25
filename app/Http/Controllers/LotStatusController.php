@@ -33,7 +33,7 @@ class LotStatusController extends Controller
     {
         $data = $request->all();
 
-        $lot_status = LotStatus::where('id',$data['lot_id'])->first();
+        $lot_status = LotStatus::where('id',$data['lot_status_id'])->first();
 
         if($lot_status) {
             $lot_status->start_date = $data['start_date'];
