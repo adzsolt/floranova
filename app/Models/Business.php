@@ -20,4 +20,14 @@ class Business extends Model
     {
         return $this->hasMany(HeatUnit::class);
     }
+
+    public function spends(): HasMany
+    {
+        return $this->hasMany(Spend::class);
+    }
+
+    public function works(): HasMany
+    {
+        return $this->hasMany(Work::class);
+    }
 }

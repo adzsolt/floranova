@@ -42,10 +42,12 @@ const AddLotForm = () => {
     setIsLoading(true);
     setError('');
 
-    axios.get(
+    axios.post(
       '/get-lot-form-data',
       {
-        signal: controller.signal
+        signal: controller.signal,
+        lot_id: 0,
+
       }
     )
       .then((response) => {
@@ -141,7 +143,7 @@ const AddLotForm = () => {
   }
 
   const handleCancel = () => {
-    navigate('/production-units');
+    navigate('/lots');
   }
 
   return (

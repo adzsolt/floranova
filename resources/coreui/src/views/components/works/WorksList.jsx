@@ -18,33 +18,34 @@ import {
   CAvatar,
   CBadge,
   CButton,
-  CCollapse, CAlert, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CLoadingButton
+  CCollapse, CAlert, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CLoadingButton, CFormSelect
 
 } from '@coreui/react-pro'
-import { DocsExample } from '../../../components'
+import {DocsExample} from '../../../components'
 import axios from 'axios'
 import seasons from "../../seasons/Seasons";
 import {CDatePicker} from "@coreui/react-pro";
-
-
 
 
 const Worklist = () => {
   const controller = new AbortController();
   const navigate = useNavigate();
   const [works, setWorks] = useState([]);
+  const [lastWorks, setLastWorks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [condemnedId, setCondemnedId] = useState(null);
   const [activePage, setActivePage] = useState(1);
+  const [businesses, setBusinesses] = useState([]);
+  const [businessId, setBusinessId] = useState();
   const date = new Date();
 
-  const initial_start_date = new Date(date.getFullYear(), date.getMonth(), 1, date.getHours(), date.getMinutes() );
-  initial_start_date.setMinutes(initial_start_date.getMinutes()-initial_start_date.getTimezoneOffset());
+  const initial_start_date = new Date(date.getFullYear(), date.getMonth(), 1, date.getHours(), date.getMinutes());
+  initial_start_date.setMinutes(initial_start_date.getMinutes() - initial_start_date.getTimezoneOffset());
 
 
-  const initial_end_date = new Date(date.getFullYear(), date.getMonth() + 1, 0,  date.getHours(), date.getMinutes());
-  initial_end_date.setMinutes(initial_end_date.getMinutes()-initial_end_date.getTimezoneOffset());
+  const initial_end_date = new Date(date.getFullYear(), date.getMonth() + 1, 0, date.getHours(), date.getMinutes());
+  initial_end_date.setMinutes(initial_end_date.getMinutes() - initial_end_date.getTimezoneOffset());
 
   const [startDate, setStartDate] = useState(initial_start_date.toISOString().split('T')[0]);
   const [endDate, setEndDate] = useState(initial_end_date.toISOString().split('T')[0]);
@@ -64,18 +65,18 @@ const Worklist = () => {
     {
       label: 'Dátum',
       key: 'work_date',
-      _style: { width: '30%' },
+      _style: {width: '30%'},
     },
     {
       label: 'Munkaköltség',
       key: 'spend',
-      _style: { width: '30%' }
+      _style: {width: '30%'}
     },
 
     {
       label: 'Költségbeírás',
       key: 'period_input',
-      _style: { width: '30%' }
+      _style: {width: '30%'}
     },
     {
       key: 'show_details',
@@ -97,22 +98,20 @@ const Worklist = () => {
     setDetails(newDetails)
   }
 
-
-  const getList = () => {
-    // console.log('getList');
+  const getBusinesses = () => {
+    /*  console.log('getList');*/
     setIsLoading(true);
     setError('');
 
-    axios.post('/get-works', {
-      start_date: startDate,
-      end_date: endDate,
-    },
-    {
-      signal: controller.signal
-    })
+    axios.get('/get-businesses',
+      {},
+      {
+        signal: controller.signal
+      })
       .then((response) => {
-        // console.log('get-users ', response);
-        setWorks(response.data.works);
+        console.log(response.data.businesses[0].id);
+        setBusinesses(response.data.businesses);
+        setBusinessId(response.data.businesses[0].id)
       })
       .catch(error => {
         console.log("ERROR:: ", error);
@@ -122,13 +121,52 @@ const Worklist = () => {
         setIsLoading(false);
       });
   }
+
+  const getList = () => {
+    // console.log('getList');
+    setIsLoading(true);
+    setError('');
+
+    axios.post('/get-works', {
+        start_date: startDate,
+        end_date: endDate,
+        business_id: businessId
+      },
+      {
+        signal: controller.signal
+      })
+      .then((response) => {
+        // console.log('get-users ', response);
+        setWorks(response.data.works);
+        setLastWorks(response.data.works[0]);
+      })
+      .catch(error => {
+        console.log("ERROR:: ", error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  useEffect(() => {
+
+    getBusinesses();
+
+
+    return () => {
+      controller.abort()
+    }
+  }, []);
+
+
   useEffect(() => {
     getList();
 
     return () => {
       controller.abort()
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, businessId]);
 
 
   const condemnId = (e) => {
@@ -148,18 +186,19 @@ const Worklist = () => {
     axios.post(
       '/delete-work',
       {
-        id: condemnedId
+        id: condemnedId,
+        business_id: businessId
       }
     )
-      .then( (response) => {
+      .then((response) => {
         // console.log('delete-user ', response);
         setCondemnedId(null);
         getList();
       })
-      .catch( error => {
+      .catch(error => {
         console.log("ERROR:: ", error);
       })
-      .finally( ()=> {
+      .finally(() => {
         setIsLoading(false);
       });
   }
@@ -171,7 +210,9 @@ const Worklist = () => {
   const handleSetEndDate = (d) => {
     setEndDate(d);
   }
-
+  const handleBusinessChange = (e) => {
+    setBusinessId(e.currentTarget.value);
+  }
 
   //---------------------------------------------------------
   return (
@@ -185,34 +226,46 @@ const Worklist = () => {
           <CCardBody>
 
             <div className="row">
-              <div className="col-lg-5">
+              <div className="col-lg-4">
                 <CDatePicker
                   locale="en-US"
                   placeholder="Adj mage egy kezdési dátumot"
                   required
                   feedbackInvalid='A kezdési dátum kötelező'
-                  date = {startDate}
+                  date={startDate}
                   onDateChange={(date) => {
-                    date.setMinutes(date.getMinutes()-date.getTimezoneOffset())
-                    handleSetStartDate(date.toISOString().split('T')[0])}
+                    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                    handleSetStartDate(date.toISOString().split('T')[0])
+                  }
                   }
                 />
               </div>
 
-              <div className="col-lg-5">
+              <div className="col-lg-4">
                 <CDatePicker
                   locale="en-US"
                   placeholder="Adj mage egy kezdési dátumot"
                   required
                   feedbackInvalid='A kezdési dátum kötelező'
-                  date = {endDate}
+                  date={endDate}
                   onDateChange={(date) => {
-                    date.setMinutes(date.getMinutes()-date.getTimezoneOffset())
-                    handleSetEndDate(date.toISOString().split('T')[0])}
+                    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                    handleSetEndDate(date.toISOString().split('T')[0])
+                  }
                   }
                 />
               </div>
+              <div className="col-lg-4">
+                <CCol xs={6} className='mb-3'>
+                  <CFormSelect aria-label="Válassz egységet" className='mb-3' onChange={handleBusinessChange}>
+                    {businesses.map(val => (
+                      <option value={val.id} key={val.id}>{val.name} </option>
+                    ))
+                    }
 
+                  </CFormSelect>
+                </CCol>
+              </div>
             </div>
             {/* <p className="text-medium-emphasis small">
               Use <code>striped</code> property to add zebra-striping to any table row within the{' '}
@@ -250,30 +303,31 @@ const Worklist = () => {
                   </td>
                 ),*/
                 show_details: (item) => {
-                  if(item.period_input) {
-                    return (
-                      <td className="py-2">
-                        <CButton
-                          color="primary"
-                          variant="outline"
-                          shape="square"
-                          size="sm"
-                          onClick={() => {
-                            toggleDetails(item.id)
-                          }}
-                        >
-                          {details.includes(item.id) ? 'Elrejt' : 'Mutat'}
-                        </CButton>
-                      </td>
-                    )
-                  }
-                  else{
+                  //if(item.period_input) {
+                  return (
+                    <td className="py-2">
+                      <CButton
+                        color="primary"
+                        variant="outline"
+                        shape="square"
+                        size="sm"
+                        onClick={() => {
+                          toggleDetails(item.id)
+                        }}
+                       /* disabled={item.id === lastWorks.id?false:true}*/
+                      >
+                        {details.includes(item.id) ? 'Elrejt' : 'Mutat'}
+                      </CButton>
+                    </td>
+                  )
+                  //}
+                  /*else{
                     return (
                       <td>
 
                       </td>
                     )
-                  }
+                  }*/
                 },
                 details: (item) => {
                   return (

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use App\Models\Spend;
 use App\Models\Work;
 use Carbon\Carbon;
@@ -13,18 +14,25 @@ class SpendController extends Controller
     public function getSpends(Request $request)
     {
         $data = $request->all();
-        $spends = Spend::where('work_date', '>=', $data['start_date'])->where('work_date', '<=', $data['end_date'])->orderBy('work_date', 'desc')->get();
-
-        if ($spends) {
-            return response()->json(['spends' => $spends]);
-        } else {
-            return response()->json(['status' => 'error']);
+        if(!isset($data['business_id'])){
+            $data['business_id'] = Business::first()->id;
         }
+        $spends = Spend::where('work_date', '>=', $data['start_date'])
+            ->where('work_date', '<=', $data['end_date'])
+            ->where('business_id', $data['business_id'])
+            ->orderBy('work_date', 'desc')->get();
+
+
+       // if ($spends) {
+            return response()->json(['spends' => $spends]);
+        //} else {
+          //  return response()->json(['status' => 'error']);
+        //}
     }
 
-    public function addSpend($work_date, $spent_gas, $spent_electricity, $spent_gas_period_input, $spent_electricity_period_input)
+    public function addSpend($work_date, $spent_gas, $spent_electricity, $spent_gas_period_input, $spent_electricity_period_input, $business_id)
     {
-        $spend = Spend::where('work_date', $work_date)->first();
+        $spend = Spend::where('work_date', $work_date)->where('business_id', $business_id)->first();
 
         if (!isset($spend)) {
 
@@ -48,6 +56,9 @@ class SpendController extends Controller
         if (isset($spent_electricity_period_input)) {
             $spend->spent_electricity_period_input = $spent_electricity_period_input;
         }
+
+        $spend->business_id = $business_id;
+
         $spend->save();
 
         return $spend;
@@ -61,18 +72,18 @@ class SpendController extends Controller
         $data['spent_gas_period_input'] = 5000;
         $data['spent_electricity_period_input'] = 10000;*/
 
-        $spends_gas = Spend::whereNotNull('spent_gas_period_input')->orderBy('work_date')->get();
+        $spends_gas = Spend::whereNotNull('spent_gas_period_input')->where('business_id', $data['business_id'])->orderBy('work_date')->get();
 
 
         if (!count($spends_gas)) {
-            $this->addSpend('2023-10-01', 1, 1, 1, 1);
+            $this->addSpend('2023-10-01', 1, 1, 1, 1, $data['business_id'] );
         }
         /*else{
 
         }*/
 
         if (isset($data['spent_gas_period_input'])) {
-            $spends_gas = Spend::whereNotNull('spent_gas_period_input')->orderBy('work_date')->get();
+            $spends_gas = Spend::whereNotNull('spent_gas_period_input')->where('business_id', $data['business_id'])->orderBy('work_date')->get();
             //dd($works->last()->work_date);
 
             $last_input_gas = Carbon::parse($spends_gas->last()->work_date);
@@ -89,15 +100,15 @@ class SpendController extends Controller
 
             foreach ($period as $date) {
                 if ($data['work_date'] == $date->format('Y-m-d')) {
-                    $this->addSpend($date->format('Y-m-d'), $gas_spend_per_day, null, $data['spent_gas_period_input'], null);
+                    $this->addSpend($date->format('Y-m-d'), $gas_spend_per_day, null, $data['spent_gas_period_input'], null, $data['business_id']);
                 } else {
-                    $this->addSpend($date->format('Y-m-d'), $gas_spend_per_day, null, null, null);
+                    $this->addSpend($date->format('Y-m-d'), $gas_spend_per_day, null, null, null, $data['business_id']);
                 }
             }
         }
 
         if (isset($data['spent_electricity_period_input'])) {
-            $spends_electricity = Spend::whereNotNull('spent_electricity_period_input')->orderBy('work_date')->get();
+            $spends_electricity = Spend::whereNotNull('spent_electricity_period_input')->where('business_id', $data['business_id'])->orderBy('work_date')->get();
             //dd($works->last()->work_date);
 
             $last_input_electricity = Carbon::parse($spends_electricity->last()->work_date);
@@ -115,9 +126,9 @@ class SpendController extends Controller
             foreach ($period as $date) {
 
                 if ($data['work_date'] == $date->format('Y-m-d')) {
-                    $this->addSpend($date->format('Y-m-d'), null, $electricity_spend_per_day, null, $data['spent_electricity_period_input']);
+                    $this->addSpend($date->format('Y-m-d'), null, $electricity_spend_per_day, null, $data['spent_electricity_period_input'], $data['business_id'],);
                 } else {
-                    $this->addSpend($date->format('Y-m-d'), null, $electricity_spend_per_day, null, null);
+                    $this->addSpend($date->format('Y-m-d'), null, $electricity_spend_per_day, null, null, $data['business_id']);
                 }
             }
         }
@@ -129,7 +140,7 @@ class SpendController extends Controller
 
     public function deleteSpend(Request $request)
     {
-         $data = $request->all();
+        $data = $request->all();
 
         /* $data['id'] = 342;*/
 
@@ -138,16 +149,16 @@ class SpendController extends Controller
 
         $last_spends_gas = Spend::where(function ($query) {
             $query->where('spent_gas_period_input', '!=', null);
-        })->orderBy('work_date', 'desc')->get();
+        })->where('business_id', $spend->business_id)->orderBy('work_date', 'desc')->get();
 
 
         $last_spends_electricity = Spend::where(function ($query) {
             $query->where('spent_electricity_period_input', '!=', null);
-        })->orderBy('work_date', 'desc')->get();
+        })->where('business_id', $spend->business_id)->orderBy('work_date', 'desc')->get();
 
 
         //dd($last_spends[1]);
-        $spends = Spend::orderBy('work_date', 'desc')->get();
+        $spends = Spend::where('business_id', $spend->business_id)->orderBy('work_date', 'desc')->get();
 
 
         if (isset($spend->spent_gas_period_input) and isset($spend->spent_electricity_period_input)) {
@@ -183,9 +194,7 @@ class SpendController extends Controller
                     $sp->delete();
                 }
             }
-        }
-
-        elseif (!isset($spend->spent_gas_period_input) and isset($spend->spent_electricity_period_input)) {
+        } elseif (!isset($spend->spent_gas_period_input) and isset($spend->spent_electricity_period_input)) {
             foreach ($spends as $sp) {
 
 

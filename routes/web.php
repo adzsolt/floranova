@@ -130,7 +130,7 @@ Route::post("/update-production-unit", [ProductionUnitController::class, 'update
 
 Route::get("/get-lots", [LotController::class, 'getLots']);
 Route::post("/create-lot", [LotController::class, 'store']);
-Route::get("/get-lot-form-data", [LotController::class, 'getLotFormData']);
+Route::post("/get-lot-form-data", [LotController::class, 'getLotFormData']);
 Route::post("/delete-lot", [LotController::class, 'delete']);
 Route::post("/get-price", [LotController::class, 'getPrice']);
 

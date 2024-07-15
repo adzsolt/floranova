@@ -10,13 +10,16 @@ import SeasonsList from "../components/seasons/SeasonsList";
 import WorksList from "../components/works/WorksList";
 import TemperatureList from "../components/temperatures/TemperatureList";
 import Spendslist from "../components/spends/SpendsList";
+import axios from "axios";
 //import useIsAdmin from '../../hooks/useIsAdmin';
 
 
 const Spends = () => {
 
-
+  const controller = new AbortController();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
   //const isAdmin = useIsAdmin();
   // const showAddButton = isAdmin || user?.permissions?.includes('add_users');
@@ -27,8 +30,9 @@ const Spends = () => {
 
 
 
+
   // const permissions = useStore((state) => state.permissions);
-  // console.log(permissions);
+
 
   return (
     <CCard className='mb-3'>
@@ -45,7 +49,7 @@ const Spends = () => {
           </CCol>
           <CCol xs={12}>
             {/* {isLoading ? <div className='text-center'><CSpinner color='primary'/></div> :*/}
-            <Spendslist/>{/*}*/}
+           <Spendslist/>
           </CCol>
         </CRow>
       </CCardBody>

@@ -69,6 +69,7 @@ const LotList = () => {
   const formRef = useRef();
   const formAddRef = useRef();
   const formCalculationRef = useRef();
+  const hasPageBeenRendered = useRef(false);
   const formatNumber = (number) => number?number.toFixed(2):0;
   /*useEffect(() => {
     axios.get("/get-seasons")
@@ -223,9 +224,11 @@ const LotList = () => {
     setIsLoading(true);
     setError('');
 
-    axios.get(
+    axios.post(
       '/get-lot-form-data',
+
       {
+        lot_id: lotId,
         signal: controller.signal
       }
     )
@@ -246,12 +249,23 @@ const LotList = () => {
 
   useEffect(() => {
     getList();
-    getLotStatusFormData();
+
 
     return () => {
       controller.abort()
     }
   }, []);
+
+  useEffect(() => {
+
+    if(hasPageBeenRendered.current) {
+      getLotStatusFormData();
+      return () => {
+        controller.abort()
+      }
+    }
+    hasPageBeenRendered.current = true;
+  }, [lotId]);
 
 
   const condemnId = (e) => {
@@ -658,7 +672,7 @@ const LotList = () => {
                     Munkaköltség ára:  {formatNumber(priceResponse.work_price)}
                   </CAlert>
                   <CAlert color="info">
-                    Hőmérséklet ára: xxxxxx
+                    Energia ára: {formatNumber(priceResponse.spend_price)}
                   </CAlert>
                   <CAlert color="warning">
                      Összesen:  {formatNumber(priceResponse.total_price)}

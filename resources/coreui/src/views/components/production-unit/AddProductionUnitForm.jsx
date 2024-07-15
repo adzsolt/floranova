@@ -138,7 +138,7 @@ const AddProductionUnitForm = () => {
         </CCol>
         <CCol xs={12} className="text-right">
           <CLoadingButton type="button" color="primary" loading={isLoading} disabled={isLoading} onClick={handleSubmit}>
-           Termelőegység frissítése
+           Termelőegység hozzáadása
           </CLoadingButton>
           <CButton   color='light' disabled={isLoading} onClick={handleCancel} className='mr-1 ms-4'>Mégsem</CButton>
         </CCol>

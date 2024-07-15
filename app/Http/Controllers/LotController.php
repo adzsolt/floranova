@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use App\Models\Fertilizer;
 use App\Models\FertilizerStatus;
+use App\Models\HeatUnit;
 use App\Models\Layout;
 use App\Models\Lot;
 use App\Models\LotStatus;
@@ -13,10 +14,13 @@ use App\Models\Plant;
 use App\Models\Pot;
 use App\Models\ProductionUnit;
 use App\Models\Season;
+use App\Models\Spend;
 use App\Models\Work;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LotController extends Controller
 {
@@ -104,14 +108,30 @@ class LotController extends Controller
 
     }
 
-    public function getLotFormData()
+    public function getLotFormData(Request $request)
     {
+        $data_from_request = $request->all();
+
+        $lot = Lot::where('id', $data_from_request['lot_id'])->first();
+
+        if (isset($lot)) {
+            $business_id = $lot->statuses[0]->productionUnit->heatUnit->business->id;
+        }
+
         $data = [];
         $data['peats'] = Peat::all();
         $data['pots'] = Pot::all();
         $data['plants'] = Plant::all();
         $data['seasons'] = Season::all();
-        $data['production_units'] = ProductionUnit::all();
+        if (isset($lot)) {
+            $data['production_units'] = ProductionUnit::whereHas('heatUnit', function ($p) use ($business_id) {
+                $p->whereHas('business', function ($r) use ($business_id) {
+                    return $r->where('id', $business_id);
+                });
+            })->get();
+        } else {
+            $data['production_units'] = ProductionUnit::all();
+        }
         $data['layouts'] = Layout::all();
         $data['fertilizers'] = Fertilizer::all();
 
@@ -182,6 +202,10 @@ class LotController extends Controller
         $data['work_price'] = $this->getWorkPrice($lot, $start, $end);
         $price = $price + $data['work_price'];
 
+
+        $data['spend_price'] = $this->getSpendPrice($lot, $start, $end);
+        $price = $price + $data['spend_price'];
+
         $data['total_price'] = $price;
 
         return response()->json($data);
@@ -223,7 +247,7 @@ class LotController extends Controller
         return $fertilizer_price;
     }
 
-
+///////////////////////Work
     public function getWorkPrice($lot, $start, $end)
     {
         $work_price = 0;
@@ -238,13 +262,13 @@ class LotController extends Controller
             $work = null;
             $total_used_space = 0;
             $total_lot_space = 0;
-            $work= Work::where('work_date', $date)->first();
+            $work = Work::where('work_date', $date)->where('business_id', $business_id)->first();
             $work_spend = $work->spend;
             //dd($work_spend);
-                $total_used_space = $this->getTotalUsedSpace($business_id, $date);
-                $total_lot_space = $this->getTotalLotSpace($lot, $date);
-            if($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date){
-               //dump($date->format('Y-m-d'), 'work_spend ', $work_spend, 'total_used', $total_used_space['total_used_space'], 'total_lot',$total_lot_space['total_lot_space'],
+            $total_used_space = $this->getTotalUsedSpace($business_id, $date);
+            $total_lot_space = $this->getTotalLotSpace($lot, $date);
+            if ($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date) {
+                //dump($date->format('Y-m-d'), 'work_spend ', $work_spend, 'total_used', $total_used_space['total_used_space'], 'total_lot',$total_lot_space['total_lot_space'],
                 //  'price',($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space']);
                 $work_price = $work_price + ($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space'];
             }
@@ -287,17 +311,17 @@ class LotController extends Controller
         $dates = [];
 
         $lots = Lot::whereHas('productionUnit', function ($q) use ($business_id) {
-                    $q->whereHas('heatUnit', function ($p) use ($business_id) {
-                        $p->whereHas('business', function ($r) use ($business_id) {
-                            return $r->where('id', $business_id);
-                        });
-                    });
-                })->get();
+            $q->whereHas('heatUnit', function ($p) use ($business_id) {
+                $p->whereHas('business', function ($r) use ($business_id) {
+                    return $r->where('id', $business_id);
+                });
+            });
+        })->get();
 
         foreach ($lots as $lot) {
             if ($lot->start_date <= $date) {
                 $lot_names[] = $lot->name;
-                $statuses = $lot->statuses()->get();
+                $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
                 $current_status_key = $statuses->reverse()->keys()->first();
                 $best_date = '2030-01-01';
@@ -332,15 +356,14 @@ class LotController extends Controller
     {
         ///$lot = Lot::where('id', $lot_id)->first();
 
-        $statuses = $lot->statuses()->get();
+        $statuses = $lot->statuses()->orderBy('start_date')->get();
         //dd($statuses);
         $current_status_key = $statuses->reverse()->keys()->first();
         $best_date = '2030-01-01';
         foreach ($statuses as $status_key => $status) {
-            if($status->start_date > $date){
+            if ($status->start_date > $date) {
                 continue;
-            }
-            else{
+            } else {
                 $current_status_key = $status_key;
                 $best_date = $status->start_date;
                 break;
@@ -351,14 +374,200 @@ class LotController extends Controller
 
         $current_pot_per_m2 = $statuses[$current_status_key]->layout->pot_per_m2;
 
-        $data['total_lot_space'] = $lot->quantity/$current_pot_per_m2;
+        $data['total_lot_space'] = $lot->quantity / $current_pot_per_m2;
+
+        Log::info('TOTAL LOT SPACE ON ' . $date . ':' . $data['total_lot_space']);
+        $data['pot_per_m2'] = $current_pot_per_m2;
         $data['best_date'] = $best_date;
         return $data;
 
     }
 
-    public function getTotalHeatUnitUsedSpace($heat_unit_id, $date)
+//////////////////////////////////////Temperature
+    public function getHeatUnitArea($heat_unit)
+    {
+        $heat_unit_area = 0;
+
+        foreach ($heat_unit->productionUnits as $production_unit) {
+            $heat_unit_area = $heat_unit_area + $production_unit->width * $production_unit->length;
+        }
+
+        return $heat_unit_area;
+    }
+
+
+    public function getHeatUnitTemperatureIndex($heat_unit, $date)
     {
 
+        $temperature = $heat_unit->temperatures->where('work_date', $date)->first();
+
+        $inside_temperature_average = ($temperature->daytime_temperature + $temperature->night_temperature) / 2;
+
+        //dd($heat_unit->name, $temperature);
+        return $inside_temperature_average - $temperature->outside_temperature;
+    }
+
+    public function getHeatUnitSpendPerDate($heat_unit, $heat_units, $date)
+    {
+
+        $heat_units_area = [];
+
+        // dd($date);
+        //$heat_unit_area = $this->getHeatUnitArea($heat_unit);
+
+        $spend = Spend::where('work_date', $date)->where('business_id', $heat_unit->business->id)->first();
+        Log::info('                                                                  ');
+        Log::info('------------------------------------------------------------------');
+        Log::info('                                                                  ');
+        $total_index = 0;
+        foreach ($heat_units as $one_heat_unit) {
+
+            Log::info('Date:' . $date);
+            Log::info('heat_unit_name:' . $one_heat_unit->name . ', heat_unit_id:' . $one_heat_unit->id);
+
+
+            $heat_units_area[$one_heat_unit->id]['area'] = $this->getHeatUnitArea($one_heat_unit);
+            Log::info('heat_unit_area:' . $heat_units_area[$one_heat_unit->id]['area']);
+            $heat_units_area[$one_heat_unit->id]['temperature_index'] = $this->getHeatUnitTemperatureIndex($one_heat_unit, $date);
+            Log::info('temperature_index:' . $heat_units_area[$one_heat_unit->id]['temperature_index']);
+            $heat_units_area[$one_heat_unit->id]['total_index'] = $heat_units_area[$one_heat_unit->id]['area'] * $heat_units_area[$one_heat_unit->id]['temperature_index'];
+            Log::info('one_total_index:' . $heat_units_area[$one_heat_unit->id]['total_index']);
+            $total_index = $total_index + $heat_units_area[$one_heat_unit->id]['total_index'];
+            Log::info('current_total_index:' . $total_index);
+            Log::info('************************************************************************');
+        }
+
+        $spend_per_unit = 0;
+
+        if ($total_index) {
+            $spend_per_unit = ($spend->spent_gas + $spend->spent_electricity) / $total_index;
+        }
+        Log::info('one_day_spend:' . $heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit);
+        //dd($heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit);
+        return $heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit;
+
+
+        //dd($heat_unit->id,$heat_unit->name, $heat_unit_area, $heat_units_area, $total_index, $spend->spent_gas, $heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit);
+    }
+
+
+    public function getSpendPrice($lot, $start, $end)
+    {
+
+        //$lot = Lot::where('id', $lot_id)->first();
+
+
+        $total_spend = 0;
+
+
+        //$this->getHeatUnitSpendPerDate($heat_unit, $heat_units, $date);
+
+        $period = CarbonPeriod::create($start, $end);
+        // dd($period);
+        $statuses = $lot->statuses()->orderBy('start_date')->get();
+
+        foreach ($period as $date) {
+            $current_status_key = $statuses->reverse()->keys()->first();
+            foreach ($statuses as $status_key => $status) {
+                if ($status->start_date > $date) {
+                    continue;
+                } else {
+                    $current_status_key = $status_key;
+
+                    break;
+
+                }
+
+            }
+
+
+            $heat_unit = $statuses[$current_status_key]->productionUnit->heatUnit;
+
+            $business = $heat_unit->business;
+
+            $heat_units = HeatUnit::where('business_id', $business->id)->get();
+
+            $heatUnitSpendPerDate = $this->getHeatUnitSpendPerDate($heat_unit, $heat_units, $date->format('Y-m-d'));
+            $heatUnitTotalM2PerDate = $this->getHeatUnitTotalM2SpecificDay($heat_unit->id, $date);
+            Log::info('Heat Unit Total M2 On ' . $date . ':' . $heatUnitTotalM2PerDate);
+            $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
+            Log::info('SPENDING PER M2 PER DATE: ' . $m2_spend_per_day);
+            Log::info('IN BASE FUNCTION');
+            $total_lot_space_m2 = $this->getTotalLotSpace($lot, $date);
+
+            $spend_lot_in_m2_per_date = $m2_spend_per_day;
+            $pot_per_m2 = $total_lot_space_m2['pot_per_m2'];
+            Log::info('POT PER M2: ' . $pot_per_m2);
+            $spend_per_lot_plant = $spend_lot_in_m2_per_date / $pot_per_m2;
+            Log::info('SPENDING PER PLANT: ' . $spend_per_lot_plant);
+            $total_spend = $total_spend + $spend_per_lot_plant;
+            Log::info('CURRENT TOTAL SPEND: ' . $total_spend);
+
+        }
+
+        return $total_spend;
+
+    }
+
+    /**
+     * @param $heat_unit
+     * @param $date
+     * @return array
+     * $data['total_m2'] and $data['lot_m2']
+     */
+    public function getHeatUnitTotalM2SpecificDay($heat_unit_id, $date)
+    {
+        $lots = LotStatus::whereHas('productionUnit', function ($query) use ($heat_unit_id) {
+            $query->whereHas('heatUnit', function ($q) use ($heat_unit_id) {
+                $q->where('id', '=', $heat_unit_id);
+            });
+        })->get()->groupBy('lot_id');
+
+        $sorted_lots = [];
+
+        foreach ($lots as $key => $lot) {
+            $sorted_lots[] = $lot->sortByDesc('start_date');
+        }
+
+        $current_lot_statuses = [];
+
+        //calculating if anytime the lot was in heat_unit
+        foreach ($sorted_lots as $lot_collection) {
+            foreach ($lot_collection as $lot_status) {
+                $start = Carbon::parse($lot_status->start_date);
+                $end = Carbon::parse($lot_status->lot->end_date);
+                $date_calculated = Carbon::parse($date);
+                //dd($lot_status);
+                if ($start <= $date_calculated and $date_calculated <= $end) {
+                    $current_lot_statuses[] = $lot_status;
+                    break;
+                }
+            }
+        }
+        //calculating if  the lot was moved in another heat_unit
+        $heat_unit_used_area = 0;
+
+        foreach ($current_lot_statuses as $current_lot_status) {
+            $lot_status_different_heat_unit = null;
+
+            $all_lot_statuses_ordered_by_date = $current_lot_status->lot->statuses()->orderBy('start_date')->get();
+
+            $lot_status_different_heat_unit = $all_lot_statuses_ordered_by_date->first(function ($item) use ($date, $heat_unit_id, $current_lot_status) {
+                // dump( 'item_id: '.$item->id.' item_start_date: '.$item->start_date.' date: '.$date.' current_item_id: '.$current_lot_status->id.' current_lot_status_start_date: '.$current_lot_status->start_date);
+                return $item->start_date < $date and $item->start_date > $current_lot_status->start_date and $item->productionUnit->heatUnit->id <> $heat_unit_id;
+
+            });
+            //dump($heat_unit_id, $current_lot_status->lot_id, $lot_status_different_heat_unit->id, '----------------');
+            //dd($current_lot_status, $lot_status_different_heat_unit);
+
+            if (!$lot_status_different_heat_unit) {
+                Log::info('M2 CALCULATION');
+                $total_lot_space_response = $this->getTotalLotSpace($current_lot_status->LOT, $date);
+                $heat_unit_used_area = $heat_unit_used_area + $total_lot_space_response['total_lot_space'];
+            }
+        }
+
+        return $heat_unit_used_area;
+        // return $sorted_lots;
     }
 }

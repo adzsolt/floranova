@@ -281,7 +281,7 @@ const Temperaturelist = () => {
                   </td>
                 ),*/
                 show_details: (item) => {
-                  if (item.id === lastTemperatureId.id) {
+                 /* if (item.id === lastTemperatureId.id) {*/
                     return (
                       <td className="py-2">
                         <CButton
@@ -297,13 +297,13 @@ const Temperaturelist = () => {
                         </CButton>
                       </td>
                     )
-                  } else {
+                 /* } else {
                     return (
                       <td>
 
                       </td>
                     )
-                  }
+                  }*/
                 },
                 details: (item) => {
                   return (
