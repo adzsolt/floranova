@@ -18,8 +18,10 @@ use App\Models\Spend;
 use App\Models\Work;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use GuzzleHttp\Client;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class LotController extends Controller
@@ -243,6 +245,7 @@ class LotController extends Controller
             $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price;
         }
 
+        $fertilizer_price = $fertilizer_price / $lot->quantity;
 
         return $fertilizer_price;
     }
@@ -570,4 +573,29 @@ class LotController extends Controller
         return $heat_unit_used_area;
         // return $sorted_lots;
     }
+
+    public function testApi()
+    {
+
+        $apiUrl = 'https://homestead.biflora/api/test';
+
+        $response = Http::post($apiUrl, [
+                'name' => 'Taylor',
+                'page' => 1,
+            ]
+        );
+
+
+        return json_decode($response->body());
+    }
+
+    public function addProductsToStore($sku, $qty)
+    {
+       //$response = Http::post('https://homestead.biflora/api/add_products?sku=100001&quantity=300');
+        $client = new Client();
+        $response = $client->post('https://homestead.biflora/api/add_products?sku='.$sku.'&quantity='.$qty);
+        $price = json_decode($response->getBody()->getContents());
+        return  $price->amount;
+    }
+
 }

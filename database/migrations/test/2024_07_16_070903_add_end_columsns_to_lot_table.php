@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::table('lots', function (Blueprint $table) {
             $table->integer('final_quantity')->after('quantity')->nullable();
-            $table->integer('final_price')->after('end_date')->nullable();
+            $table->float('final_price')->after('end_date')->nullable();
             $table->integer('group_id')->after('fertilizer_volume')->nullable();
+            $table->float('store_price')->after('final_price')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->dropColumn('final_quantity');
             $table->dropColumn('final_price');
             $table->dropColumn('group_id');
+            $table->dropColumn('store_price');
         });
     }
 };
