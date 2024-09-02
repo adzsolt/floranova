@@ -607,7 +607,8 @@ class LotController extends Controller
        // dd($data);
        //$response = Http::post('https://homestead.biflora/api/add_products?sku=100001&quantity=300');
         $client = new Client();
-        $response = $client->post('https://homestead.biflora/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
+       // $response = $client->post('https://homestead.biflora/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
+        $response = $client->post('https://floranova.ro/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
         //$price = json_decode($response->getBody()->getContents());
 
         $info['price'] = json_decode($response->getBody()->getContents());
