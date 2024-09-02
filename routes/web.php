@@ -176,3 +176,9 @@ Route::post('/add-role',[RoleController::class, 'addRole']);  //input:user_id,ro
 Route::post('/revoke-role',[RoleController::class, 'revokeRole']);  //input:user_id,role_id output: string:success/error
 Route::post('/update-role',[RoleController::class, 'updateRole']);  //input:user_id,role_id_remove, role_id_add output: string:success/error
 
+
+
+//PRODUCTION END
+Route::post('/add-products-to-store',[LotController::class, 'addProductsToStore']);
+Route::post('/check-if-lot-finished',[LotController::class, 'checkIfLotFinished']);
+

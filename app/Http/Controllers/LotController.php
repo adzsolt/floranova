@@ -538,12 +538,24 @@ class LotController extends Controller
         foreach ($sorted_lots as $lot_collection) {
             foreach ($lot_collection as $lot_status) {
                 $start = Carbon::parse($lot_status->start_date);
-                $end = Carbon::parse($lot_status->lot->end_date);
+
+                if(isset($lot_status->lot->end_date)) {
+                     $end = Carbon::parse($lot_status->lot->end_date);
+                }
                 $date_calculated = Carbon::parse($date);
                 //dd($lot_status);
-                if ($start <= $date_calculated and $date_calculated <= $end) {
-                    $current_lot_statuses[] = $lot_status;
-                    break;
+
+                if(isset($lot_status->lot->end_date)) {
+                    if ($start <= $date_calculated and $date_calculated <= $end) {
+                        $current_lot_statuses[] = $lot_status;
+                        break;
+                    }
+                }
+                else {
+                    if ($start <= $date_calculated /*and $date_calculated <= $end*/) {
+                        $current_lot_statuses[] = $lot_status;
+                        break;
+                    }
                 }
             }
         }
@@ -589,13 +601,84 @@ class LotController extends Controller
         return json_decode($response->body());
     }
 
-    public function addProductsToStore($sku, $qty)
+    public function addProductsToStore(Request $request)
     {
+        $data = $request->all();
+       // dd($data);
        //$response = Http::post('https://homestead.biflora/api/add_products?sku=100001&quantity=300');
         $client = new Client();
-        $response = $client->post('https://homestead.biflora/api/add_products?sku='.$sku.'&quantity='.$qty);
-        $price = json_decode($response->getBody()->getContents());
-        return  $price->amount;
+        $response = $client->post('https://homestead.biflora/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
+        //$price = json_decode($response->getBody()->getContents());
+
+        $info['price'] = json_decode($response->getBody()->getContents());
+       // dd($price);
+
+        if ($info['price']->product_price == -1){
+            $info['message'] = 'Error';
+        }
+        else{
+            $lot = Lot::where('id', $data['lotId'])->first();
+
+            if($lot){
+                $request = new \Illuminate\Http\Request();
+
+                $request->replace(
+                    [
+                        'lot_id' =>  $lot->id,
+                        'start_date' =>  $lot->start_date,
+                        'end_date' =>  $data['date'],
+
+                    ]
+                );
+
+                $calculated_price = $this->getPrice($request);
+                $calculated_price_with_loss = $calculated_price->original['total_price']*$lot->quantity/$data['qty'];
+                $original_quantity = $lot->quantity;
+                $end_quantity = $data['qty'];
+                $store_code = $data['sku'];
+                $start_date = $lot->start_date;
+                $end_date = $data['date'];
+
+
+                $lot->end_date = $end_date;
+                $lot->final_quantity = $end_quantity;
+                $lot->final_price = round($calculated_price->original['total_price'],2);
+                $lot->final_price_with_loss = round($calculated_price_with_loss,2);
+                $lot->store_price = $info['price']->product_price;
+                $lot->group_id = $store_code;
+                $lot->save();
+
+
+
+               // dd($calculated_price->original);
+                $info['calculated_price'] = round($calculated_price->original['total_price'],2);
+                $info['calculated_price_with_loss'] = round($calculated_price_with_loss,2);
+                $info['original_quantity'] = $original_quantity;
+                $info['end_quantity'] = $end_quantity;
+                $info['store_code'] = $store_code;
+                $info['start_date'] = $start_date;
+                $info['end_date'] = $end_date;
+
+
+                $info['message'] = 'Ok';
+            }
+
+            else{
+                $info['message'] = 'Error';
+            }
+
+
+        }
+        return  $info;
+    }
+
+
+    public function checkIfLotFinished(Request $request)
+    {
+        $data = $request->all();
+        $lot = Lot::where('id', $data['lot_id'])->first();
+
+        return $lot;
     }
 
 }

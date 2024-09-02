@@ -30,7 +30,7 @@ import {
   CFormSelect,
   CDatePicker,
   CCallout,
-  CSpinner
+  CSpinner, CFormInput, CFormLabel, CHeader
 
 } from '@coreui/react-pro'
 
@@ -49,6 +49,8 @@ const LotList = () => {
   const [visible, setVisible] = useState(false);
   const [visibleAdd, setVisibleAdd] = useState(false);
   const [visibleCalculation, setVisibleCalculation] = useState(false);
+  const [visibleLotEnd, setVisibleLotEnd] = useState(false);
+  const [visibleEnd, setVisibleEnd] = useState(false);
   const [layouts, setLayouts] = useState([]);
   const [layoutId, setLayoutId] = useState([]);
   const [addLayoutId, setAddLayoutId] = useState([]);
@@ -57,6 +59,7 @@ const LotList = () => {
   const [addProductiontUnitId, setAddProductionUnitId] = useState([]);
   const [status, setStatus] = useState([]);
   const [lotId, setLotId] = useState('');
+  const [lotEndId, setLotEndId] = useState('');
   const [lotStatusId, setLotStatusId] = useState('');
   const [priceInfo, setPriceInfo] = useState("invisible");
   const [priceResponse, setPriceResponse] = useState([]);
@@ -66,11 +69,21 @@ const LotList = () => {
   const [addEndDate, setAddEndDate] = useState('');
 
 
+  const [addProductionEndDate, setAddProductionEndDate] = useState('');
+  const [plantNumbers, setPlantNumbers] = useState(0);
+  const [storeSkuCode, setStoreSkuCode] = useState(0);
+  const [endData, setEndData] = useState([]);
+  const [isLoadingProductionEnd, setIsLoadingProductionEnd] = useState(false);
+  const [endOk, setEndOk] = useState(false);
+  const [lotEndInfo, setLotEndInfo] = useState([]);
+
+
   const formRef = useRef();
   const formAddRef = useRef();
+  const formEndRef = useRef();
   const formCalculationRef = useRef();
   const hasPageBeenRendered = useRef(false);
-  const formatNumber = (number) => number?number.toFixed(2):0;
+  const formatNumber = (number) => number ? number.toFixed(2) : 0;
   /*useEffect(() => {
     axios.get("/get-seasons")
       .then((response) => {
@@ -78,6 +91,7 @@ const LotList = () => {
         //console.log(response.data.seasons);
       })
   }, []);*/
+
 
   //-----------------------------
   const [details, setDetails] = useState([])
@@ -258,7 +272,7 @@ const LotList = () => {
 
   useEffect(() => {
 
-    if(hasPageBeenRendered.current) {
+    if (hasPageBeenRendered.current) {
       getLotStatusFormData();
       return () => {
         controller.abort()
@@ -394,12 +408,38 @@ const LotList = () => {
 
   const handleCalculation = (e) => {
     setIsLoading(false);
-    setVisibleCalculation(true);
+
     const id = e.currentTarget.getAttribute('data-id');
-    setLotId(id);
+
+    axios.post(
+      '/check-if-lot-finished',
+      {
+        lot_id: id,
+
+      }
+    )
+      .then((response) => {
+        console.log(response.data);
+        if (!response.data.end_date) {
+          setLotId(id);
+          setVisibleCalculation(true);
+        } else {
+          setVisibleLotEnd(true);
+          setLotEndInfo(response.data)
+        }
+      })
+      .catch(error => {
+        console.log("ERROR:: ", error);
+      })
+      .finally(() => {
+        /* setIsLoading(false);
+         setPriceInfo("visible");*/
+      });
   }
 
+
   const handleCalculationSubmit = () => {
+
     setIsLoading(true);
     axios.post(
       '/get-price',
@@ -410,7 +450,7 @@ const LotList = () => {
       }
     )
       .then((response) => {
-         console.log(response.data);
+        console.log(response.data);
         setPriceResponse(response.data);
       })
       .catch(error => {
@@ -421,6 +461,72 @@ const LotList = () => {
         setPriceInfo("visible");
       });
 
+  }
+
+  const handleProductionEnd = (e) => {
+
+
+    setIsLoading(false);
+    setIsLoadingProductionEnd(false);
+    setVisibleEnd(true);
+    const id = e.currentTarget.getAttribute('data-id');
+    setLotEndId(id);
+
+  }
+
+
+  const handlePlantNumbersChange = (e) => {
+    setPlantNumbers(e.target.value);
+  }
+
+  const handleSkuChange = (e) => {
+    setStoreSkuCode(e.target.value);
+  }
+
+  const handleSubmitProductionEnd = (e) => {
+    const form = formEndRef.current;
+    if (form.checkValidity() !== false) {
+
+      setIsLoading(true);
+      setIsLoadingProductionEnd(false);
+
+
+      //console.log(lotEndId, plantNumbers,storeSkuCode,addProductionEndDate);
+
+      axios.post(
+        '/add-products-to-store',
+        {
+          lotId: lotEndId,
+          qty: plantNumbers,
+          sku: storeSkuCode,
+          date: addProductionEndDate
+        }
+      )
+        .then((response) => {
+          console.log(response.data.price.product_price);
+          // setStorePrice(response.data.price.product_price);
+          setEndData(response.data)
+          if (response.data.message === 'Ok') {
+            setEndOk(true)
+          }
+          //setPriceResponse(response.data);
+        })
+        .catch(error => {
+          console.log("ERROR:: ", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          setIsLoadingProductionEnd(true);
+          //setVisibleEnd(false);
+        });
+    }
+    setValidated(true);
+
+  }
+
+
+  const handleSetProductionEndDate = (d) => {
+    setAddProductionEndDate(d);
   }
 
 
@@ -592,7 +698,7 @@ const LotList = () => {
                 setVisible(false);
                 setVisibleCalculation(false);
                 setPriceInfo("invisible");
-                  }
+              }
               }
               //size="xl"
               aria-labelledby="ModalAdd"
@@ -644,7 +750,7 @@ const LotList = () => {
                         Számítás
                       </CButton>
 
-                      {isLoading ? <div className='text-center'><CSpinner color='primary'/></div>:''}
+                      {isLoading ? <div className='text-center'><CSpinner color='primary'/></div> : ''}
                     </CCol>
                   </CRow>
                 </CForm>
@@ -657,31 +763,211 @@ const LotList = () => {
                     {priceResponse.start_date} / {priceResponse.end_date} közőtt
                   </CAlert>
                   <CAlert color="info">
-                    Növény ára:  {formatNumber(priceResponse.plant)}
+                    Növény ára: {formatNumber(priceResponse.plant)}
                   </CAlert>
                   <CAlert color="info">
-                   Cserép ára:  {formatNumber(priceResponse.pot_price)}
+                    Cserép ára: {formatNumber(priceResponse.pot_price)}
                   </CAlert>
                   <CAlert color="info">
-                    Tőzeg ára:  {formatNumber(priceResponse.peat_price)}
+                    Tőzeg ára: {formatNumber(priceResponse.peat_price)}
                   </CAlert>
                   <CAlert color="info">
-                    Műtrágya:  {formatNumber(priceResponse.fertilizer_price)}
+                    Műtrágya: {formatNumber(priceResponse.fertilizer_price)}
                   </CAlert>
                   <CAlert color="info">
-                    Munkaköltség ára:  {formatNumber(priceResponse.work_price)}
+                    Munkaköltség ára: {formatNumber(priceResponse.work_price)}
                   </CAlert>
                   <CAlert color="info">
                     Energia ára: {formatNumber(priceResponse.spend_price)}
                   </CAlert>
                   <CAlert color="warning">
-                     Összesen:  {formatNumber(priceResponse.total_price)}
+                    Összesen: {formatNumber(priceResponse.total_price)}
                   </CAlert>
                 </CCallout>
               </CModalBody>
               <CModalFooter>
                 <CButton color="secondary" onClick={() => setVisibleCalculation(false)}>
                   Close
+                </CButton>
+                {/* <CButton color="primary">Save changes</CButton>*/}
+              </CModalFooter>
+            </CModal>
+
+
+            <CModal
+              visible={visibleLotEnd}
+              onClose={() => {
+                setVisibleLotEnd(false);
+                setLotEndInfo([]);
+
+              }
+              }
+              //size="xl"
+              aria-labelledby="ModalAdd"
+            >
+              <CModalHeader onClose={() => setVisibleLotEnd(false)}>
+                <CModalTitle id="ModalAdd">Befejezett virágcsoport - végső árak</CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+
+                <CAlert color="success">
+                  Kezdés: {lotEndInfo.start_date}
+                </CAlert>
+                <CAlert color="success">
+                  Befejezés: {lotEndInfo.end_date}
+                </CAlert>
+                <CAlert color="success">
+                  Darabszám kezdéskor: {lotEndInfo.quantity}
+                </CAlert>
+                <CAlert color="success">
+                  Darabszám befejezéskor: {lotEndInfo.final_quantity}
+                </CAlert>
+
+                <CAlert color="danger">
+                  Veszteség: {lotEndInfo.quantity - lotEndInfo.final_quantity}
+                </CAlert>
+
+                <CAlert color="success">
+                  Ár a kezdési darabszámmal: {lotEndInfo.final_price}
+                </CAlert>
+
+                <CAlert color="danger">
+                  Ár a veszteséggel: {lotEndInfo.final_price_with_loss}
+                </CAlert>
+
+                <CAlert color="warning">
+                  Üzleti ár: {lotEndInfo.store_price}
+                </CAlert>
+
+                <CAlert color="success">
+                  Az üzletbe átkerült a következő kóddal {lotEndInfo.group_id}, {lotEndInfo.final_quantity} darab
+                  növény.
+                </CAlert>
+
+
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="secondary" onClick={() => setVisibleLotEnd(false)}>
+                  Close
+                </CButton>
+                {/* <CButton color="primary">Save changes</CButton>*/}
+              </CModalFooter>
+            </CModal>
+
+            {/* Production end*/}
+
+            <CModal
+              visible={visibleEnd}
+              onClose={() => {
+                setVisibleEnd(false);
+                setIsLoadingProductionEnd(false);
+                setEndOk(false);
+                setValidated(false);
+                getList();
+              }}
+              aria-labelledby="LiveDemoExampleLabel"
+            >
+              <CModalHeader onClose={() => setVisible(false)}>
+                <CModalTitle id="LiveDemoExampleLabel">Termelés befejezése </CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+                <CForm ref={formEndRef} className="needs-validation" noValidate validated={validated}>
+                  <CRow>
+                    <CCol md={6} className='mb-3'>
+
+                      <CDatePicker
+                        locale="en-US"
+                        placeholder="Adj meg egy befejezési dátumot"
+                        date={status.start_date}
+                        required
+                        feedbackInvalid='A befejezési  dátum kötelező'
+                        onDateChange={(date) => {
+                          date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+                          handleSetProductionEndDate(date.toISOString().split('T')[0])
+                        }
+                        }
+                      />
+                      {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
+            <CFormLabel htmlFor="email">E-mail</CFormLabel>*/}
+                    </CCol>
+
+
+                    <CCol md={6} className='mb-3'>
+                      <CFormInput type="number" name="plant_numbers" id="plant_numbers" placeholder="Növények száma"
+                                  step='any' disabled={isLoading} feedbackInvalid='Adj meg a növények számát' required
+                                  onChange={handlePlantNumbersChange}/>
+                      <CFormLabel htmlFor="plant_numbers"></CFormLabel>
+                    </CCol>
+
+                    <CCol md={6} className='mb-3'>
+                      <CFormInput type="number" name="sku_code" id="sku_code" placeholder="Üzlet SKU kód" step='any'
+                                  disabled={isLoading} feedbackInvalid='Adj meg egy SKU k=dot' required
+                                  onChange={handleSkuChange}/>
+                      <CFormLabel htmlFor="sku_code"></CFormLabel>
+                    </CCol>
+
+                    <CCol xs={12} className="text-right">
+                      <CButton  color="primary" type="button" disabled={isLoading} onClick={handleSubmitProductionEnd}>
+                        Befejezés
+                      </CButton>
+                    </CCol>
+                  </CRow>
+                </CForm>
+                {isLoading ? <div className='text-center'><CSpinner color='primary'/></div> : ''}
+                {isLoadingProductionEnd ? endOk ?
+                  <CRow className='mt-3'>
+                    <CAlert color="success" className="fw-bolder text-center">
+                      Befejezve
+                    </CAlert>
+                    <CAlert color="success">
+                      Kezdés: {endData.start_date}
+                    </CAlert>
+                    <CAlert color="success">
+                      Befejezés: {endData.end_date}
+                    </CAlert>
+                    <CAlert color="success">
+                      Darabszám kezdéskor: {endData.original_quantity}
+                    </CAlert>
+                    <CAlert color="success">
+                      Darabszám befejezéskor: {endData.end_quantity}
+                    </CAlert>
+
+                    <CAlert color="danger">
+                      Veszteség: {endData.original_quantity - endData.end_quantity}
+                    </CAlert>
+
+                    <CAlert color="success">
+                      Ár a kezdési darabszámmal: {endData.calculated_price}
+                    </CAlert>
+
+                    <CAlert color="danger">
+                      Ár a veszteséggel: {endData.calculated_price_with_loss}
+                    </CAlert>
+
+                    <CAlert color="warning">
+                      Üzleti ár: {endData.price.product_price}
+                    </CAlert>
+
+                    <CAlert color="success">
+                      Az üzletbe átkerült a következő kóddal {endData.store_code}, {endData.end_quantity} darab növény.
+                    </CAlert>
+                  </CRow>
+
+                  : <CAlert color="danger" className='mt-3'>
+                    Valami hibás!
+                  </CAlert> : ''}
+
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="secondary" onClick={() => {
+                  setVisibleEnd(false);
+                  setIsLoadingProductionEnd(false);
+                  setEndData([]);
+                  setEndOk(false);
+                  setValidated(false);
+                }
+                }>
+                  Bezárás
                 </CButton>
                 {/* <CButton color="primary">Save changes</CButton>*/}
               </CModalFooter>
@@ -787,9 +1073,14 @@ const LotList = () => {
                                  onClick={handleCalculation}>
                           Ár számítása
                         </CButton>
-                        <CButton size="sm" color="danger" className="ml-1" data-id={item.id} variant='outline'
+                        <CButton size="sm" color="danger" className="me-md-2" data-id={item.id} variant='outline'
                                  onClick={condemnId}>
                           Törlés
+                        </CButton>
+
+                        <CButton size="sm" color="dark" className="me-md-2" data-id={item.id}
+                                 onClick={handleProductionEnd} disabled={!(item.end_date == null)}>
+                          Termelés befejezése
                         </CButton>
                       </CCardBody>
                     </CCollapse>
