@@ -68,7 +68,7 @@ const Temperaturelist = () => {
       _style: {width: '15%'},
     },
     {
-      label: 'Kinti hőmérséklet',
+      label: 'Benti hőmérséklet',
       key: 'outside_temperature',
       _style: {width: '15%'}
     },

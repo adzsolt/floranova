@@ -113,9 +113,9 @@ const AddTemperatureForm = ({heat_units1}) => {
 
         <CCol md={6} className='mb-3'>
           <CFormFloating>
-            <CFormInput ref={outside_temperature} type="text" name="outside_temperature" id="outside_temperature" placeholder="Kinti hőmérséklet" disabled={isLoading}
-                        feedbackInvalid='Add meg a kinti hőmársákletet' required/>
-            <CFormLabel htmlFor="outside_temperature">Kinti hőmérséklet</CFormLabel>
+            <CFormInput ref={outside_temperature} type="text" name="outside_temperature" id="outside_temperature" placeholder="Benti hőmérséklet" disabled={isLoading}
+                        feedbackInvalid='Add meg a benti hőmársákletet' required/>
+            <CFormLabel htmlFor="outside_temperature">Benti hőmérséklet</CFormLabel>
           </CFormFloating>
         </CCol>
 

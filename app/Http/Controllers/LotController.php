@@ -407,7 +407,7 @@ class LotController extends Controller
         $inside_temperature_average = ($temperature->daytime_temperature + $temperature->night_temperature) / 2;
 
         //dd($heat_unit->name, $temperature);
-        return $inside_temperature_average - $temperature->outside_temperature;
+        return $inside_temperature_average - $temperature->outside_temperature - $inside_temperature_average;
     }
 
     public function getHeatUnitSpendPerDate($heat_unit, $heat_units, $date)
