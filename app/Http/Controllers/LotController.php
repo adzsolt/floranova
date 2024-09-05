@@ -404,10 +404,10 @@ class LotController extends Controller
 
         $temperature = $heat_unit->temperatures->where('work_date', $date)->first();
 
-        $inside_temperature_average = ($temperature->daytime_temperature + $temperature->night_temperature) / 2;
+        //$inside_temperature_average = ($temperature->daytime_temperature + $temperature->night_temperature) / 2;
 
         //dd($heat_unit->name, $temperature);
-        return $inside_temperature_average - $temperature->outside_temperature - $inside_temperature_average;
+        return  $temperature->outside_temperature;
     }
 
     public function getHeatUnitSpendPerDate($heat_unit, $heat_units, $date)

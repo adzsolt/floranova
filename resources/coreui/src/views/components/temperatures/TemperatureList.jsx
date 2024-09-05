@@ -65,14 +65,14 @@ const Temperaturelist = () => {
     {
       label: 'Dátum',
       key: 'work_date',
-      _style: {width: '15%'},
+      _style: {width: '25%'},
     },
     {
       label: 'Benti hőmérséklet',
       key: 'outside_temperature',
-      _style: {width: '15%'}
+      _style: {width: '25%'}
     },
-    {
+    /*{
       label: 'Nappali hőmérséklet',
       key: 'daytime_temperature',
       _style: {width: '15%'}
@@ -81,11 +81,11 @@ const Temperaturelist = () => {
       label: 'Éjjeli hőmérséklet',
       key: 'night_temperature',
       _style: {width: '15%'}
-    },
+    },*/
     {
       label: 'Hőmérésklet beírás',
       key: 'input',
-      _style: {width: '10%'}
+      _style: {width: '20%'}
     },
     {
       key: 'show_details',

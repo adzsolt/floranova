@@ -42,8 +42,8 @@ const AddTemperatureForm = ({heat_units1}) => {
       axios.post('/store-temperature', {
         work_date: work_date,
         outside_temperature: outside_temperature.current.value,
-        daytime_temperature: daytime_temperature.current.value,
-        night_temperature:night_temperature.current.value,
+        daytime_temperature: 0,
+        night_temperature:0,
         heat_unit_id:heatUnitId
 
       })
@@ -119,21 +119,21 @@ const AddTemperatureForm = ({heat_units1}) => {
           </CFormFloating>
         </CCol>
 
-        <CCol md={6} className='mb-3'>
+        {/*<CCol md={6} className='mb-3'>
         <CFormFloating>
           <CFormInput ref={daytime_temperature} type="text" name="daytime_temperature" id="daytime_temperature" placeholder="Nappali hőmérséklet" disabled={isLoading}
                       feedbackInvalid='Add meg a nappali hőmársákletet' required/>
           <CFormLabel htmlFor="daytime_temperature">Nappali hőmérséklet</CFormLabel>
         </CFormFloating>
-      </CCol>
+      </CCol>*/}
 
-        <CCol md={6} className='mb-3'>
+        {/*<CCol md={6} className='mb-3'>
           <CFormFloating>
             <CFormInput ref={night_temperature} type="text" name="night-temperature" id="night-temperature" placeholder="Éjjeli hőmérésklet" disabled={isLoading}
                         feedbackInvalid='Add meg az éjjeli hőmérésékletet' required/>
             <CFormLabel htmlFor="night-temperature">Éjjeli hőmérséklet</CFormLabel>
           </CFormFloating>
-        </CCol>
+        </CCol>*/}
 
 
         <CCol xs={12}>
