@@ -78,8 +78,8 @@ const AddFertilizerStatusForm = () => {
 
       axios.post('/add-fertilizer-status', {
         id: id,
-        action: action,
-        lot_id: lotId,
+        action: 'All',
+        lot_id: 0,
         volume: volumeRef.current.value,
         price: priceRef.current.value,
         action_date: start_date,
@@ -129,16 +129,9 @@ const AddFertilizerStatusForm = () => {
           </CFormSelect>
         </CCol>
 
-        <CCol md={6} className='mb-3'>
-         {/* <CFormFloating>
-            <CFormInput ref={lotRef} type="text" name="lot" id="lot" placeholder="Lot"
-                        feedbackInvalid='Válassz egy virágcsoportot' required
-                        disabled={action == 'Hozzáadás'  ? true : false}
-            />
-            <CFormLabel htmlFor="lot">Virágcsoport</CFormLabel>
-          </CFormFloating>*/}
+       {/* <CCol md={6} className='mb-3'>
 
-          <CFormSelect aria-label="Válassz virágcsoportot" className='mb-3'
+         { <CFormSelect aria-label="Válassz virágcsoportot" className='mb-3'
                        feedbackInvalid="Válassz virágcsoportot"
                        required onChange={handleLotChange}
           >
@@ -148,8 +141,8 @@ const AddFertilizerStatusForm = () => {
             ))
             }
 
-          </CFormSelect>
-        </CCol>
+          </CFormSelect>}
+        </CCol>*/}
 
 
         <CCol md={6} className='mb-3'>
@@ -166,43 +159,43 @@ const AddFertilizerStatusForm = () => {
           <CFormFloating>
             <CFormInput ref={priceRef} type="text" name="price" id="price" placeholder="Ár"
                         feedbackInvalid='Add meg a bejövő árat' required
-                        disabled={action == 'Használat'  ? true : false}
+                        disabled={action == 'Használat' ? true : false}
             />
             <CFormLabel htmlFor="price">Ár</CFormLabel>
           </CFormFloating>
         </CCol>
 
-      <CCol md={6} className='mb-3'>
-        <CDatePicker
-          locale="en-US"
-          placeholder="Adj meg egy kezdési dátumot"
-          required
-          feedbackInvalid='A kezdési dátum kötelező'
-          onDateChange={(date) => {
-            date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
-            handleSetStartDate(date.toISOString().split('T')[0])
-          }
-          }
-        />
-        {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
+        <CCol md={6} className='mb-3'>
+          <CDatePicker
+            locale="en-US"
+            placeholder="Adj meg egy kezdési dátumot"
+            required
+            feedbackInvalid='A kezdési dátum kötelező'
+            onDateChange={(date) => {
+              date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+              handleSetStartDate(date.toISOString().split('T')[0])
+            }
+            }
+          />
+          {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
             <CFormLabel htmlFor="email">E-mail</CFormLabel>*/}
-      </CCol>
+        </CCol>
 
 
-      <CCol xs={12}>
-        <CAlert color="danger" visible={error != ''}>
-          {error}
-        </CAlert>
-      </CCol>
-      <CCol xs={12} className="text-right">
-        <CLoadingButton type="button" color="primary" loading={isLoading} disabled={isLoading} onClick={handleSubmit}>
-          Műtrágya állapot létrehozása
-        </CLoadingButton>
-        <CButton color='light' disabled={isLoading} onClick={handleCancel} className='mr-1 ms-4'>Mégsem</CButton>
-      </CCol>
-    </CRow>
-</CForm>
-)
+        <CCol xs={12}>
+          <CAlert color="danger" visible={error != ''}>
+            {error}
+          </CAlert>
+        </CCol>
+        <CCol xs={12} className="text-right">
+          <CLoadingButton type="button" color="primary" loading={isLoading} disabled={isLoading} onClick={handleSubmit}>
+            Műtrágya állapot létrehozása
+          </CLoadingButton>
+          <CButton color='light' disabled={isLoading} onClick={handleCancel} className='mr-1 ms-4'>Mégsem</CButton>
+        </CCol>
+      </CRow>
+    </CForm>
+  );
 }
 
 export default AddFertilizerStatusForm;

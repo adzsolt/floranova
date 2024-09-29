@@ -235,19 +235,37 @@ class LotController extends Controller
     public function getFertilizerPrice($lot, $start, $end)
     {
         $fertilizer_price = 0;
+        $fertilizer_price_1 = 0;
 
-        $fertilezer_statuses = FertilizerStatus::where('lot_id', $lot->id)->where('action_date', '>=', $start)->where('action_date', '<=', $end)->get();
+        $business_id = $lot->productionUnit->heatUnit->business_id;
+
+
+
+        $fertilezer_statuses_1 = FertilizerStatus::where('lot_id', $lot->id)->where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'Használat')->get();
+
+        foreach ($fertilezer_statuses_1 as $fertilezer_status) {
+
+            $fertilizer_price_1 = $fertilizer_price_1 + ($fertilezer_status->volume * $fertilezer_status->fertilizer->price);
+        }
+
+
+        $fertilezer_statuses = FertilizerStatus::where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'All')->get();
 
         //dd($start, $end, $lot,$fertilezer_statuses);
 
         foreach ($fertilezer_statuses as $fertilezer_status) {
-            // dump($fertilezer_status->volume,$fertilezer_status->fertilizer->price);
-            $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price;
+
+            $total_used_space = $this->getTotalUsedSpace($business_id, $fertilezer_status->action_date);
+            $total_lot_space = $this->getTotalLotSpace($lot, $fertilezer_status->action_date);
+
+            $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price/$total_used_space['total_used_space'] * $total_lot_space['total_lot_space'];
+
         }
 
-        $fertilizer_price = $fertilizer_price / $lot->quantity;
+        $fertilizer_price_sum = ($fertilizer_price + $fertilizer_price_1)/ $lot->quantity;
 
-        return $fertilizer_price;
+        //dd($fertilezer_statuses, $fertilizer_price, $fertilizer_price_1, $total_used_space['total_used_space'], $total_lot_space['total_lot_space']);
+        return $fertilizer_price_sum;
     }
 
 ///////////////////////Work
@@ -269,8 +287,9 @@ class LotController extends Controller
             $work_spend = $work->spend;
             //dd($work_spend);
             $total_used_space = $this->getTotalUsedSpace($business_id, $date);
+            Log::info('TOTAL USED SPACE ON ' . $date . ':' . $total_used_space['total_used_space']);
             $total_lot_space = $this->getTotalLotSpace($lot, $date);
-            if ($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date) {
+            if ($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date ) {
                 //dump($date->format('Y-m-d'), 'work_spend ', $work_spend, 'total_used', $total_used_space['total_used_space'], 'total_lot',$total_lot_space['total_lot_space'],
                 //  'price',($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space']);
                 $work_price = $work_price + ($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space'];
@@ -321,8 +340,10 @@ class LotController extends Controller
             });
         })->get();
 
+        //dd($lots);
+
         foreach ($lots as $lot) {
-            if ($lot->start_date <= $date) {
+            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
                 $lot_names[] = $lot->name;
                 $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
@@ -336,6 +357,7 @@ class LotController extends Controller
                         $best_date = $status->start_date;
                         break;
 
+
                     }
 
                 }
@@ -344,14 +366,15 @@ class LotController extends Controller
                 $total_used_space = $total_used_space + $lot->quantity / $statuses[$current_status_key]->layout->pot_per_m2;
 
 
+                //dump($date, $lot->name);
             }
         }
-
+        //dump($lot_statuses);
         $data['lot_names'] = $lot_names;
         $data['lot_statuses'] = $lot_statuses;
         $data['dates'] = $dates;
         $data['total_used_space'] = $total_used_space;
-
+        //dump($dates);
         return $data;
     }
 
