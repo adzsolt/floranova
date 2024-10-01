@@ -83,7 +83,7 @@ const EditPotForm = ({pot}) => {
 
         <CCol md={6} className='mb-3'>
           <CFormFloating>
-            <CFormInput ref={sizeRef} type="number" name="size" id="size" placeholder="Cserép mérete" step='any' disabled={isLoading} defaultValue={pot.price} feedbackInvalid='A cserép mérete kötelező' required />
+            <CFormInput ref={sizeRef} type="number" name="size" id="size" placeholder="Cserép mérete" step='any' disabled={isLoading} defaultValue={pot.size} feedbackInvalid='A cserép mérete kötelező' required />
             <CFormLabel htmlFor="name">Cserép mérete</CFormLabel>
           </CFormFloating>
         </CCol>

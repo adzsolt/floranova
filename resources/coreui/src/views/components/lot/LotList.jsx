@@ -783,6 +783,9 @@ const LotList = () => {
                   <CAlert color="warning">
                     Összesen: {formatNumber(priceResponse.total_price)}
                   </CAlert>
+                  <CAlert color="primary">
+                    Minimális eladási ár: {formatNumber(priceResponse.total_price*1.35)}
+                  </CAlert>
                 </CCallout>
               </CModalBody>
               <CModalFooter>

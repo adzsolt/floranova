@@ -47,6 +47,7 @@ const PotList = () => {
 
   //-----------------------------
   const [details, setDetails] = useState([])
+  const formatNumber = (number) => number ? number.toFixed(2) : 0;
   const columns = [
     {
       label: 'Név',
