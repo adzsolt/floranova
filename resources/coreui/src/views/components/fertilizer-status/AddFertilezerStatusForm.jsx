@@ -78,7 +78,7 @@ const AddFertilizerStatusForm = () => {
 
       axios.post('/add-fertilizer-status', {
         id: id,
-        action: 'All',
+        action: action,
         lot_id: 0,
         volume: volumeRef.current.value,
         price: priceRef.current.value,
@@ -125,7 +125,7 @@ const AddFertilizerStatusForm = () => {
           <CFormSelect aria-label="Használat vagy hozzáadás" className='mb-3' onChange={handleActionChange}>
             <option>Válassz Hozzáadás és használat között</option>
             <option value='Hozzáadás' key='hozzaadas'>Hozzáadás</option>
-            <option value='Használat' key='hasznalat'>Használat</option>
+            <option value='All' key='All'>Használat</option>
           </CFormSelect>
         </CCol>
 
@@ -159,7 +159,7 @@ const AddFertilizerStatusForm = () => {
           <CFormFloating>
             <CFormInput ref={priceRef} type="text" name="price" id="price" placeholder="Ár"
                         feedbackInvalid='Add meg a bejövő árat' required
-                        disabled={action == 'Használat' ? true : false}
+                        disabled={action == 'All' ? true : false}
             />
             <CFormLabel htmlFor="price">Ár</CFormLabel>
           </CFormFloating>
