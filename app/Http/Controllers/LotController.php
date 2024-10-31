@@ -651,7 +651,7 @@ class LotController extends Controller
             Log::info('Heat Unit Total M2 On ' . $date . ':' . $heatUnitTotalM2PerDate);
 
             if($heatUnitTotalM2PerDate == 0){
-                $m2_spend_per_da = 0;
+                $m2_spend_per_day = 0;
             }
             else {
                 $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
