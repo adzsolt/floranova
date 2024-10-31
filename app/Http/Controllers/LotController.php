@@ -210,6 +210,8 @@ class LotController extends Controller
 
         $data['total_price'] = $price;
 
+        $data['lot_quantity'] = $lot->quantity;
+
         return response()->json($data);
     }
 
@@ -365,6 +367,137 @@ class LotController extends Controller
                 $dates[] = $best_date;
                 $total_used_space = $total_used_space + $lot->quantity / $statuses[$current_status_key]->layout->pot_per_m2;
 
+
+                //dump($date, $lot->name);
+            }
+        }
+        //dump($lot_statuses);
+        $data['lot_names'] = $lot_names;
+        $data['lot_statuses'] = $lot_statuses;
+        $data['dates'] = $dates;
+        $data['total_used_space'] = $total_used_space;
+        //dump($dates);
+        return $data;
+    }
+
+    public function getTotalUsedSpaceHeatUnit($heat_unit_id, $date)
+    {
+        $total_used_space = 0;
+        $lot_names = [];
+        $lot_statuses = [];
+        $dates = [];
+
+        $heat_unit = HeatUnit::where('id', $heat_unit_id)->first();
+
+        $business_id = $heat_unit->business->id;
+
+        /*$lots = Lot::whereHas('productionUnit', function ($q) use ($heat_unit_id) {
+            $q->whereHas('heatUnit', function ($p) use ($heat_unit_id) {
+                    return $p->where('id', $heat_unit_id);
+                });
+        })->get();*/
+
+        $lots = Lot::whereHas('productionUnit', function ($q) use ($business_id) {
+            $q->whereHas('heatUnit', function ($p) use ($business_id) {
+                $p->whereHas('business', function ($r) use ($business_id) {
+                    return $r->where('id', $business_id);
+                });
+            });
+        })->get();
+
+        //dd($lots);
+
+        foreach ($lots as $lot) {
+            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
+                $lot_names[] = $lot->name;
+                $statuses = $lot->statuses()->orderBy('start_date')->get();
+                //dd($statuses);
+                $current_status_key = $statuses->reverse()->keys()->first();
+                $best_date = '2050-01-01';
+                foreach ($statuses as $status_key => $status) {
+                    if ($status->start_date > $date) {
+                        continue;
+                    } else {
+                        $current_status_key = $status_key;
+                        $best_date = $status->start_date;
+                        break;
+
+
+                    }
+
+                }
+                $currentHeatUnitId = $statuses[$current_status_key]->productionUnit->heatUnit->id;
+
+                if($currentHeatUnitId == $heat_unit_id) {
+                    $lot_statuses[] = $statuses[$current_status_key]->layout->pot_per_m2;
+                    $dates[] = $best_date;
+                    $total_used_space = $total_used_space + $lot->quantity / $statuses[$current_status_key]->layout->pot_per_m2;
+                }
+
+                //dump($date, $lot->name);
+            }
+        }
+        //dump($lot_statuses);
+        $data['lot_names'] = $lot_names;
+        $data['lot_statuses'] = $lot_statuses;
+        $data['dates'] = $dates;
+        $data['total_used_space'] = $total_used_space;
+        //dump($dates);
+        return $data;
+    }
+
+    public function getTotalUsedSpaceProductionUnit($production_unit_id, $date)
+    {
+        $total_used_space = 0;
+        $lot_names = [];
+        $lot_statuses = [];
+        $dates = [];
+
+        $productionUnit = ProductionUnit::where('id', $production_unit_id)->first();
+
+        $business_id = $productionUnit->heatUnit->business->id;
+
+
+
+        //$lots = Lot::where('production_unit_id', $production_unit_id)->get();
+
+        $lots = Lot::whereHas('productionUnit', function ($q) use ($business_id) {
+            $q->whereHas('heatUnit', function ($p) use ($business_id) {
+                $p->whereHas('business', function ($r) use ($business_id) {
+                    return $r->where('id', $business_id);
+                });
+            });
+        })->get();
+
+        //dd($lots);
+
+        foreach ($lots as $lot) {
+            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
+                $lot_names[] = $lot->name;
+                $statuses = $lot->statuses()->orderBy('start_date')->get();
+                //dd($statuses);
+                $current_status_key = $statuses->reverse()->keys()->first();
+                $best_date = '2030-01-01';
+                foreach ($statuses as $status_key => $status) {
+                    if ($status->start_date > $date) {
+                        continue;
+                    } else {
+                        $current_status_key = $status_key;
+                        $best_date = $status->start_date;
+                        break;
+
+
+                    }
+
+                }
+
+                $currentProductionUnitId = $statuses[$current_status_key]->productionUnit->id;
+
+                if($currentProductionUnitId == $production_unit_id) {
+                    $lot_statuses[] = $statuses[$current_status_key]->layout->pot_per_m2;
+                    $dates[] = $best_date;
+                    $total_used_space = $total_used_space + $lot->quantity / $statuses[$current_status_key]->layout->pot_per_m2;
+                }
 
                 //dump($date, $lot->name);
             }

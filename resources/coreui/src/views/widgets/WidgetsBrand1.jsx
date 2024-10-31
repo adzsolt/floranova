@@ -10,10 +10,11 @@ import { cibFacebook,
   cilTerrain,
   cibHockeyapp,
   cibCoderwall,
+  cilBattery0,
   cilMoney,
   cilChart,
-  cilCalculator,
-  cilBattery0,
+  cilCalculator
+
 
 
 
@@ -22,13 +23,14 @@ import { cibFacebook,
 } from '@coreui/icons'
 import { CChart } from '@coreui/react-chartjs'
 
-const WidgetsBrand = ({ withCharts,
-                        plant_spend,
-                        peat_spend,
-                        pot_spend,
-                        fertilizer_spend
+const WidgetsBrand1 = ({
+                         withCharts,
+                         work_spend,
+                         spend,
+                         totalSpend,
+                         profit
+
 }) => {
-  console.log('ez az', plant_spend);
   const chartOptions = {
     elements: {
       line: {
@@ -84,12 +86,12 @@ const WidgetsBrand = ({ withCharts,
               />
             ),
           })}
-          icon={<CIcon icon={ cilPlant} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={ cilBattery0} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'Növény költség', value: plant_spend },
+            { title: 'Fogyasztási költség', value: spend },
           ]}
           style={{
-            '--cui-card-cap-bg': '#c9223b',
+            '--cui-card-cap-bg': '#d21eba',
           }}
         />
       </CCol>
@@ -119,12 +121,12 @@ const WidgetsBrand = ({ withCharts,
               />
             ),
           })}
-          icon={<CIcon icon={cilTerrain} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={cilMoney} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'Tőzeg költség', value: peat_spend },
+            { title: 'Munka költség', value: work_spend }, ,
           ]}
           style={{
-            '--cui-card-cap-bg': '#00aced',
+            '--cui-card-cap-bg': '#509826',
           }}
         />
       </CCol>
@@ -154,12 +156,12 @@ const WidgetsBrand = ({ withCharts,
               />
             ),
           })}
-          icon={<CIcon icon={cibHockeyapp} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={cilChart} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'Cserép költség', value: pot_spend },
+            { title: 'Összköltség', value: totalSpend },
           ]}
           style={{
-            '--cui-card-cap-bg': '#4875b4',
+            '--cui-card-cap-bg': '#f8082b',
           }}
         />
       </CCol>
@@ -167,7 +169,7 @@ const WidgetsBrand = ({ withCharts,
       <CCol sm={6} lg={3}>
         <CWidgetStatsD
           className="mb-4"
-          color="warning"
+          color="info"
           {...(withCharts && {
             chart: (
               <CChart
@@ -190,9 +192,9 @@ const WidgetsBrand = ({ withCharts,
               />
             ),
           })}
-          icon={<CIcon icon={cibCoderwall} height={52} className="my-4 text-white" />}
+          icon={<CIcon icon={cilCalculator} height={52} className="my-4 text-white" />}
           values={[
-            { title: 'Műtrágya költség', value: fertilizer_spend },
+            { title: 'Profit', value: profit },
           ]}
         />
       </CCol>
@@ -204,8 +206,8 @@ const WidgetsBrand = ({ withCharts,
   )
 }
 
-WidgetsBrand.propTypes = {
+WidgetsBrand1.propTypes = {
   withCharts: PropTypes.bool,
 }
 
-export default WidgetsBrand
+export default WidgetsBrand1

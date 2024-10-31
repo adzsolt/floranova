@@ -19,6 +19,7 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\TemperatureController;
 use App\Http\Controllers\SpendController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -182,3 +183,8 @@ Route::post('/update-role',[RoleController::class, 'updateRole']);  //input:user
 Route::post('/add-products-to-store',[LotController::class, 'addProductsToStore']);
 Route::post('/check-if-lot-finished',[LotController::class, 'checkIfLotFinished']);
 
+//DASHBOARD
+Route::get('/get-dashboard-info',[DashboardController::class, 'getBasicData']);
+Route::post('/react-heat-units',[DashboardController::class, 'getHeatUnits']);
+Route::post('/react-production-units',[DashboardController::class, 'getProductionUnits']);
+Route::post('/dashboard-info',[DashboardController::class, 'dashboardInfo']);
