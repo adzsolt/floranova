@@ -649,7 +649,13 @@ class LotController extends Controller
             $heatUnitSpendPerDate = $this->getHeatUnitSpendPerDate($heat_unit, $heat_units, $date->format('Y-m-d'));
             $heatUnitTotalM2PerDate = $this->getHeatUnitTotalM2SpecificDay($heat_unit->id, $date);
             Log::info('Heat Unit Total M2 On ' . $date . ':' . $heatUnitTotalM2PerDate);
-            $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
+
+            if($heatUnitTotalM2PerDate == 0){
+                $m2_spend_per_da = 0;
+            }
+            else {
+                $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
+            }
             Log::info('SPENDING PER M2 PER DATE: ' . $m2_spend_per_day);
             Log::info('IN BASE FUNCTION');
             $total_lot_space_m2 = $this->getTotalLotSpace($lot, $date);
