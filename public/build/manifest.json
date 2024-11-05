@@ -3,8 +3,8 @@
     "file": "assets/ProBadge-Cbe_NcNK.css",
     "src": "_ProBadge-!~{00d}~.js"
   },
-  "_ProBadge-CmIaVMMU.js": {
-    "file": "assets/ProBadge-CmIaVMMU.js",
+  "_ProBadge-DyLaPGoc.js": {
+    "file": "assets/ProBadge-DyLaPGoc.js",
     "imports": [
       "_client-DnTwIhck.js",
       "resources/coreui/src/index.jsx",
@@ -111,21 +111,21 @@
       "assets/8-CQnrj2m9.jpg"
     ]
   },
-  "_SpendsList-CCIvw_hp.js": {
-    "file": "assets/SpendsList-CCIvw_hp.js",
+  "_SpendsList-y_neIt-p.js": {
+    "file": "assets/SpendsList-y_neIt-p.js",
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js"
     ]
   },
-  "_WidgetsDropdown-Bs8Z52Xj.js": {
-    "file": "assets/WidgetsDropdown-Bs8Z52Xj.js",
+  "_WidgetsDropdown-De5IM9oF.js": {
+    "file": "assets/WidgetsDropdown-De5IM9oF.js",
     "imports": [
       "_client-DnTwIhck.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_index.es-HjcCfGYB.js",
       "_index.es-B6mrXtmy.js"
     ]
@@ -225,7 +225,7 @@
     "src": "resources/coreui/src/assets/images/vue.jpg"
   },
   "resources/coreui/src/index.jsx": {
-    "file": "assets/index-CMs2b6AS.js",
+    "file": "assets/index-CO8Q3xGz.js",
     "src": "resources/coreui/src/index.jsx",
     "isEntry": true,
     "imports": [
@@ -245,26 +245,26 @@
     ]
   },
   "resources/coreui/src/layout/DefaultLayout.jsx": {
-    "file": "assets/DefaultLayout-CzDWL3nX.js",
+    "file": "assets/DefaultLayout-o_d5NjUP.js",
     "src": "resources/coreui/src/layout/DefaultLayout.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_index.es-HjcCfGYB.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/apps/email/EmailApp.jsx": {
-    "file": "assets/EmailApp-XC0_I5kj.js",
+    "file": "assets/EmailApp-CmTI98da.js",
     "src": "resources/coreui/src/views/apps/email/EmailApp.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "_cil-underline-C8Qjd4hG.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
@@ -280,50 +280,50 @@
     ]
   },
   "resources/coreui/src/views/base/accordion/Accordion.jsx": {
-    "file": "assets/Accordion-CT2O9toe.js",
+    "file": "assets/Accordion-Sfq0a-Ph.js",
     "src": "resources/coreui/src/views/base/accordion/Accordion.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/breadcrumbs/Breadcrumbs.jsx": {
-    "file": "assets/Breadcrumbs-CvsTZaCM.js",
+    "file": "assets/Breadcrumbs-DwI5JxQa.js",
     "src": "resources/coreui/src/views/base/breadcrumbs/Breadcrumbs.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/cards/Cards.jsx": {
-    "file": "assets/Cards-DH0MU_3p.js",
+    "file": "assets/Cards-DTU-p_rN.js",
     "src": "resources/coreui/src/views/base/cards/Cards.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_react-CXR4X3T4.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/carousels/Carousels.jsx": {
-    "file": "assets/Carousels-BtP_PclA.js",
+    "file": "assets/Carousels-DBntS4VJ.js",
     "src": "resources/coreui/src/views/base/carousels/Carousels.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_react-CXR4X3T4.js",
       "_cil-user-q2NU2AQZ.js"
@@ -334,129 +334,129 @@
     ]
   },
   "resources/coreui/src/views/base/collapses/Collapses.jsx": {
-    "file": "assets/Collapses-DKKs4Q8w.js",
+    "file": "assets/Collapses-DAk_LaZu.js",
     "src": "resources/coreui/src/views/base/collapses/Collapses.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/list-groups/ListGroups.jsx": {
-    "file": "assets/ListGroups-CRq8N1_j.js",
+    "file": "assets/ListGroups-g7gkiaCJ.js",
     "src": "resources/coreui/src/views/base/list-groups/ListGroups.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/navs/Navs.jsx": {
-    "file": "assets/Navs-IXbGE0t6.js",
+    "file": "assets/Navs-BmVaTUX1.js",
     "src": "resources/coreui/src/views/base/navs/Navs.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/paginations/Paginations.jsx": {
-    "file": "assets/Paginations-BcfnHs8g.js",
+    "file": "assets/Paginations-DYuvZ8I5.js",
     "src": "resources/coreui/src/views/base/paginations/Paginations.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/placeholders/Placeholders.jsx": {
-    "file": "assets/Placeholders-CfDha0OR.js",
+    "file": "assets/Placeholders-Cph-7TKj.js",
     "src": "resources/coreui/src/views/base/placeholders/Placeholders.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_react-CXR4X3T4.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/popovers/Popovers.jsx": {
-    "file": "assets/Popovers-UofiseZf.js",
+    "file": "assets/Popovers-DtTK-fBd.js",
     "src": "resources/coreui/src/views/base/popovers/Popovers.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/progress/Progress.jsx": {
-    "file": "assets/Progress-BMI8_Ty8.js",
+    "file": "assets/Progress-CwUiISGJ.js",
     "src": "resources/coreui/src/views/base/progress/Progress.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/spinners/Spinners.jsx": {
-    "file": "assets/Spinners-CjDQ5pMb.js",
+    "file": "assets/Spinners-DZSOc1-b.js",
     "src": "resources/coreui/src/views/base/spinners/Spinners.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/tables/Tables.jsx": {
-    "file": "assets/Tables-B8jfdZ1_.js",
+    "file": "assets/Tables-B7g7rrJX.js",
     "src": "resources/coreui/src/views/base/tables/Tables.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/base/tooltips/Tooltips.jsx": {
-    "file": "assets/Tooltips-BYC8ngAg.js",
+    "file": "assets/Tooltips-DjPm9wTz.js",
     "src": "resources/coreui/src/views/base/tooltips/Tooltips.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/businesses/AddBusiness.jsx": {
-    "file": "assets/AddBusiness-BOoKNhF_.js",
+    "file": "assets/AddBusiness-QSIZYI4t.js",
     "src": "resources/coreui/src/views/businesses/AddBusiness.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -467,7 +467,7 @@
     ]
   },
   "resources/coreui/src/views/businesses/Business.jsx": {
-    "file": "assets/Business-CNLXky9M.js",
+    "file": "assets/Business-C1fvkEJN.js",
     "src": "resources/coreui/src/views/businesses/Business.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -475,12 +475,12 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/businesses/EditBusiness.jsx": {
-    "file": "assets/EditBusiness-CZQSJ3GV.js",
+    "file": "assets/EditBusiness-ys6p03WZ.js",
     "src": "resources/coreui/src/views/businesses/EditBusiness.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -488,68 +488,68 @@
       "_index.es-HjcCfGYB.js",
       "_axios-fEUzBR8L.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/buttons/button-groups/ButtonGroups.jsx": {
-    "file": "assets/ButtonGroups-z1Nzbnic.js",
+    "file": "assets/ButtonGroups-BqSkGczP.js",
     "src": "resources/coreui/src/views/buttons/button-groups/ButtonGroups.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/buttons/buttons/Buttons.jsx": {
-    "file": "assets/Buttons-CvrUZNtZ.js",
+    "file": "assets/Buttons-BvdRx1be.js",
     "src": "resources/coreui/src/views/buttons/buttons/Buttons.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/buttons/dropdowns/Dropdowns.jsx": {
-    "file": "assets/Dropdowns-BPgW51-B.js",
+    "file": "assets/Dropdowns-DnQn6OJe.js",
     "src": "resources/coreui/src/views/buttons/dropdowns/Dropdowns.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/buttons/loading-buttons/LoadingButtons.jsx": {
-    "file": "assets/LoadingButtons-DEbzffIG.js",
+    "file": "assets/LoadingButtons-z73GghfY.js",
     "src": "resources/coreui/src/views/buttons/loading-buttons/LoadingButtons.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/dashboard/Dashboard.jsx": {
-    "file": "assets/Dashboard-BccYuqej.js",
+    "file": "assets/Dashboard-CicKpcZG.js",
     "src": "resources/coreui/src/views/dashboard/Dashboard.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "_index.es-B6mrXtmy.js",
-      "_WidgetsDropdown-Bs8Z52Xj.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_WidgetsDropdown-De5IM9oF.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-chart-C8LjaPHg.js",
       "_axios-fEUzBR8L.js",
       "resources/coreui/src/index.jsx",
@@ -557,7 +557,7 @@
     ]
   },
   "resources/coreui/src/views/fertilizer-status/AddFertilizerStatus.jsx": {
-    "file": "assets/AddFertilizerStatus-D2uYP7B9.js",
+    "file": "assets/AddFertilizerStatus-DllCXHwt.js",
     "src": "resources/coreui/src/views/fertilizer-status/AddFertilizerStatus.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -568,7 +568,7 @@
     ]
   },
   "resources/coreui/src/views/fertilizer/AddFertilizer.jsx": {
-    "file": "assets/AddFertilizer-0QkEcUMs.js",
+    "file": "assets/AddFertilizer-DX3L_1U2.js",
     "src": "resources/coreui/src/views/fertilizer/AddFertilizer.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -579,7 +579,7 @@
     ]
   },
   "resources/coreui/src/views/fertilizer/EditFertilizer.jsx": {
-    "file": "assets/EditFertilizer-DaSYvlcd.js",
+    "file": "assets/EditFertilizer-KgL3PS_y.js",
     "src": "resources/coreui/src/views/fertilizer/EditFertilizer.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -590,7 +590,7 @@
     ]
   },
   "resources/coreui/src/views/fertilizer/Fertilizer.jsx": {
-    "file": "assets/Fertilizer-CRMHigGM.js",
+    "file": "assets/Fertilizer-CvoniDwE.js",
     "src": "resources/coreui/src/views/fertilizer/Fertilizer.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -598,157 +598,157 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/checks-radios/ChecksRadios.jsx": {
-    "file": "assets/ChecksRadios-UQizFmKO.js",
+    "file": "assets/ChecksRadios--vEqmlsW.js",
     "src": "resources/coreui/src/views/forms/checks-radios/ChecksRadios.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/date-picker/DatePicker.jsx": {
-    "file": "assets/DatePicker-_kmNg6up.js",
+    "file": "assets/DatePicker-saGfVpRC.js",
     "src": "resources/coreui/src/views/forms/date-picker/DatePicker.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/date-range-picker/DateRangePicker.jsx": {
-    "file": "assets/DateRangePicker-Bsuzy_0v.js",
+    "file": "assets/DateRangePicker-CNxcBzJf.js",
     "src": "resources/coreui/src/views/forms/date-range-picker/DateRangePicker.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/floating-labels/FloatingLabels.jsx": {
-    "file": "assets/FloatingLabels-E_oKyOmt.js",
+    "file": "assets/FloatingLabels-ByjGzC6t.js",
     "src": "resources/coreui/src/views/forms/floating-labels/FloatingLabels.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/form-control/FormControl.jsx": {
-    "file": "assets/FormControl-HqmPOiPa.js",
+    "file": "assets/FormControl-BXpljNI0.js",
     "src": "resources/coreui/src/views/forms/form-control/FormControl.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/input-group/InputGroup.jsx": {
-    "file": "assets/InputGroup-Dfen-yY3.js",
+    "file": "assets/InputGroup-BcBSl5vR.js",
     "src": "resources/coreui/src/views/forms/input-group/InputGroup.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/layout/Layout.jsx": {
-    "file": "assets/Layout-DjCvCTpv.js",
+    "file": "assets/Layout-tMcDugIC.js",
     "src": "resources/coreui/src/views/forms/layout/Layout.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/multi-select/MultiSelect.jsx": {
-    "file": "assets/MultiSelect-BMRpP56W.js",
+    "file": "assets/MultiSelect-Dl7HfE2W.js",
     "src": "resources/coreui/src/views/forms/multi-select/MultiSelect.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/range/Range.jsx": {
-    "file": "assets/Range-CGPMfw8K.js",
+    "file": "assets/Range-BfMLaXas.js",
     "src": "resources/coreui/src/views/forms/range/Range.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/select/Select.jsx": {
-    "file": "assets/Select-x8aVFLFq.js",
+    "file": "assets/Select-DqPd6x83.js",
     "src": "resources/coreui/src/views/forms/select/Select.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/time-picker/TimePicker.jsx": {
-    "file": "assets/TimePicker-CpIepWzg.js",
+    "file": "assets/TimePicker-BNXukSU_.js",
     "src": "resources/coreui/src/views/forms/time-picker/TimePicker.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/forms/validation/Validation.jsx": {
-    "file": "assets/Validation-BZr70Vtm.js",
+    "file": "assets/Validation-DmWYirMF.js",
     "src": "resources/coreui/src/views/forms/validation/Validation.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/heat-unit/AddHeatUnit.jsx": {
-    "file": "assets/AddHeatUnit-vmmoKpmj.js",
+    "file": "assets/AddHeatUnit-CxAL0sSL.js",
     "src": "resources/coreui/src/views/heat-unit/AddHeatUnit.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -759,7 +759,7 @@
     ]
   },
   "resources/coreui/src/views/heat-unit/EditHeatUnit.jsx": {
-    "file": "assets/EditHeatUnit-Dj_YDtVN.js",
+    "file": "assets/EditHeatUnit-B0Hi6hl-.js",
     "src": "resources/coreui/src/views/heat-unit/EditHeatUnit.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -767,12 +767,12 @@
       "_index.es-HjcCfGYB.js",
       "_axios-fEUzBR8L.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/heat-unit/HeatUnit.jsx": {
-    "file": "assets/HeatUnit-FNh6c1u_.js",
+    "file": "assets/HeatUnit-B6mvVnLJ.js",
     "src": "resources/coreui/src/views/heat-unit/HeatUnit.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -780,32 +780,32 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/icons/brands/Brands.jsx": {
-    "file": "assets/Brands-BvDRNEJe.js",
+    "file": "assets/Brands-9Zk4xLem.js",
     "src": "resources/coreui/src/views/icons/brands/Brands.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/icons/coreui-icons/CoreUIIcons.jsx": {
-    "file": "assets/CoreUIIcons-CrVTqljc.js",
+    "file": "assets/CoreUIIcons-C63mI93v.js",
     "src": "resources/coreui/src/views/icons/coreui-icons/CoreUIIcons.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "_cil-underline-C8Qjd4hG.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-laptop-gKE9Lh-R.js",
       "_cil-chart-C8LjaPHg.js",
       "_cil-save-bEm0gpL0.js",
@@ -817,20 +817,20 @@
     ]
   },
   "resources/coreui/src/views/icons/flags/Flags.jsx": {
-    "file": "assets/Flags-B4aQVd_F.js",
+    "file": "assets/Flags-CqtrbTxO.js",
     "src": "resources/coreui/src/views/icons/flags/Flags.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/views/icons/brands/Brands.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/layout/AddLayout.jsx": {
-    "file": "assets/AddLayout-yIvNlurz.js",
+    "file": "assets/AddLayout-BfWg6yO7.js",
     "src": "resources/coreui/src/views/layout/AddLayout.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -841,7 +841,7 @@
     ]
   },
   "resources/coreui/src/views/layout/EditLayout.jsx": {
-    "file": "assets/EditLayout-CV05EZOt.js",
+    "file": "assets/EditLayout-CE8BolGN.js",
     "src": "resources/coreui/src/views/layout/EditLayout.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -852,7 +852,7 @@
     ]
   },
   "resources/coreui/src/views/layout/PotLayout.jsx": {
-    "file": "assets/PotLayout-BK5ky9cF.js",
+    "file": "assets/PotLayout-j-l32ypV.js",
     "src": "resources/coreui/src/views/layout/PotLayout.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -864,7 +864,7 @@
     ]
   },
   "resources/coreui/src/views/lot/AddLot.jsx": {
-    "file": "assets/AddLot-Cm12jAgR.js",
+    "file": "assets/AddLot-C-mK2JbX.js",
     "src": "resources/coreui/src/views/lot/AddLot.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -875,7 +875,7 @@
     ]
   },
   "resources/coreui/src/views/lot/Lot.jsx": {
-    "file": "assets/Lot-fjwogGhL.js",
+    "file": "assets/Lot-DAyimNkM.js",
     "src": "resources/coreui/src/views/lot/Lot.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -883,61 +883,61 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/notifications/alerts/Alerts.jsx": {
-    "file": "assets/Alerts-COW42WT1.js",
+    "file": "assets/Alerts-BHf5ODeQ.js",
     "src": "resources/coreui/src/views/notifications/alerts/Alerts.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/notifications/badges/Badges.jsx": {
-    "file": "assets/Badges-BqQ1uMcR.js",
+    "file": "assets/Badges-BkHvYopv.js",
     "src": "resources/coreui/src/views/notifications/badges/Badges.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/notifications/modals/Modals.jsx": {
-    "file": "assets/Modals-dZtPE6ci.js",
+    "file": "assets/Modals-PDGMUnFL.js",
     "src": "resources/coreui/src/views/notifications/modals/Modals.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/notifications/toasts/Toasts.jsx": {
-    "file": "assets/Toasts-D4KjfAEC.js",
+    "file": "assets/Toasts-zZEeg34t.js",
     "src": "resources/coreui/src/views/notifications/toasts/Toasts.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/pages/login/Login.jsx": {
-    "file": "assets/Login-DYmcPmJw.js",
+    "file": "assets/Login-BdMAzXC7.js",
     "src": "resources/coreui/src/views/pages/login/Login.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -978,7 +978,7 @@
     ]
   },
   "resources/coreui/src/views/peat/AddPeat.jsx": {
-    "file": "assets/AddPeat-B1b6WCVo.js",
+    "file": "assets/AddPeat-DxXxCbj8.js",
     "src": "resources/coreui/src/views/peat/AddPeat.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -989,7 +989,7 @@
     ]
   },
   "resources/coreui/src/views/peat/EditPeat.jsx": {
-    "file": "assets/EditPeat-DGm0JNzl.js",
+    "file": "assets/EditPeat-Durno6db.js",
     "src": "resources/coreui/src/views/peat/EditPeat.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1000,21 +1000,21 @@
     ]
   },
   "resources/coreui/src/views/peat/Peat.jsx": {
-    "file": "assets/Peat-DIxbfBTA.js",
+    "file": "assets/Peat-qI26S3_t.js",
     "src": "resources/coreui/src/views/peat/Peat.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_axios-fEUzBR8L.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/plant/AddPlant.jsx": {
-    "file": "assets/AddPlant-D3eIfl8w.js",
+    "file": "assets/AddPlant-ClNA0IA4.js",
     "src": "resources/coreui/src/views/plant/AddPlant.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1025,7 +1025,7 @@
     ]
   },
   "resources/coreui/src/views/plant/EditPlant.jsx": {
-    "file": "assets/EditPlant-DUnLoP_7.js",
+    "file": "assets/EditPlant-EosKNBpo.js",
     "src": "resources/coreui/src/views/plant/EditPlant.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1036,7 +1036,7 @@
     ]
   },
   "resources/coreui/src/views/plant/Plant.jsx": {
-    "file": "assets/Plant-DeQYOyz0.js",
+    "file": "assets/Plant-CHrIjz3r.js",
     "src": "resources/coreui/src/views/plant/Plant.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1044,19 +1044,19 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/plugins/calendar/Calendar.jsx": {
-    "file": "assets/Calendar-nk6QDaF7.js",
+    "file": "assets/Calendar-BbjoCxra.js",
     "src": "resources/coreui/src/views/plugins/calendar/Calendar.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ],
@@ -1065,32 +1065,32 @@
     ]
   },
   "resources/coreui/src/views/plugins/charts/Charts.jsx": {
-    "file": "assets/Charts-CXD3adZb.js",
+    "file": "assets/Charts-hJtv4h5Q.js",
     "src": "resources/coreui/src/views/plugins/charts/Charts.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "_index.es-B6mrXtmy.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/plugins/google-maps/GoogleMaps.jsx": {
-    "file": "assets/GoogleMaps-CegN4uj5.js",
+    "file": "assets/GoogleMaps-68ArdfN4.js",
     "src": "resources/coreui/src/views/plugins/google-maps/GoogleMaps.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/pot/AddPot.jsx": {
-    "file": "assets/AddPot-Dkg_MSmP.js",
+    "file": "assets/AddPot-DlPWQDns.js",
     "src": "resources/coreui/src/views/pot/AddPot.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1101,7 +1101,7 @@
     ]
   },
   "resources/coreui/src/views/pot/EditPot.jsx": {
-    "file": "assets/EditPot-D3PA950z.js",
+    "file": "assets/EditPot-C-xZ6RZo.js",
     "src": "resources/coreui/src/views/pot/EditPot.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1112,7 +1112,7 @@
     ]
   },
   "resources/coreui/src/views/pot/Pot.jsx": {
-    "file": "assets/Pot-BSAwSMH8.js",
+    "file": "assets/Pot-DtrTjk-2.js",
     "src": "resources/coreui/src/views/pot/Pot.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1120,13 +1120,13 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/production-unit/AddProductionUnit.jsx": {
-    "file": "assets/AddProductionUnit-B0X7NdNG.js",
+    "file": "assets/AddProductionUnit-Biju40MB.js",
     "src": "resources/coreui/src/views/production-unit/AddProductionUnit.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1137,7 +1137,7 @@
     ]
   },
   "resources/coreui/src/views/production-unit/EditProductionUnit.jsx": {
-    "file": "assets/EditProductionUnit-C6hRuAiR.js",
+    "file": "assets/EditProductionUnit-DK_OXLXO.js",
     "src": "resources/coreui/src/views/production-unit/EditProductionUnit.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1148,7 +1148,7 @@
     ]
   },
   "resources/coreui/src/views/production-unit/ProductionUnit.jsx": {
-    "file": "assets/ProductionUnit-BVgoAqN2.js",
+    "file": "assets/ProductionUnit-DYNsBtx4.js",
     "src": "resources/coreui/src/views/production-unit/ProductionUnit.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1156,13 +1156,13 @@
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/seasons/AddSeason.jsx": {
-    "file": "assets/AddSeason-CiM3NrB6.js",
+    "file": "assets/AddSeason-zUZq655-.js",
     "src": "resources/coreui/src/views/seasons/AddSeason.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1173,7 +1173,7 @@
     ]
   },
   "resources/coreui/src/views/seasons/EditSeason.jsx": {
-    "file": "assets/EditSeason-Ck2UwGHV.js",
+    "file": "assets/EditSeason-BP9InRAo.js",
     "src": "resources/coreui/src/views/seasons/EditSeason.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1184,33 +1184,33 @@
     ]
   },
   "resources/coreui/src/views/seasons/Seasons.jsx": {
-    "file": "assets/Seasons-BwCBWpDR.js",
+    "file": "assets/Seasons-BoTrAPLo.js",
     "src": "resources/coreui/src/views/seasons/Seasons.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_axios-fEUzBR8L.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/smart-table/SmartTable.jsx": {
-    "file": "assets/SmartTable-DFo12Y_d.js",
+    "file": "assets/SmartTable-OJU6K4tc.js",
     "src": "resources/coreui/src/views/smart-table/SmartTable.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/spends/AddSpend.jsx": {
-    "file": "assets/AddSpend-DsMfKM_D.js",
+    "file": "assets/AddSpend-COc7VR7h.js",
     "src": "resources/coreui/src/views/spends/AddSpend.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1221,22 +1221,22 @@
     ]
   },
   "resources/coreui/src/views/spends/Spends.jsx": {
-    "file": "assets/Spends-Cap5VmV1.js",
+    "file": "assets/Spends-C2fWF5FB.js",
     "src": "resources/coreui/src/views/spends/Spends.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
-      "_SpendsList-CCIvw_hp.js",
+      "_ProBadge-DyLaPGoc.js",
+      "_SpendsList-y_neIt-p.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js",
       "_axios-fEUzBR8L.js"
     ]
   },
   "resources/coreui/src/views/temperatures/AddTemperature.jsx": {
-    "file": "assets/AddTemperature-Dw0HYZrG.js",
+    "file": "assets/AddTemperature-BWZ6Iw_-.js",
     "src": "resources/coreui/src/views/temperatures/AddTemperature.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1244,50 +1244,50 @@
       "_index.es-HjcCfGYB.js",
       "_axios-fEUzBR8L.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/temperatures/Temperatures.jsx": {
-    "file": "assets/Temperatures-3mEAiP2U.js",
+    "file": "assets/Temperatures-B0Opi-GG.js",
     "src": "resources/coreui/src/views/temperatures/Temperatures.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_axios-fEUzBR8L.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/theme/colors/Colors.jsx": {
-    "file": "assets/Colors-BMSAuldj.js",
+    "file": "assets/Colors-CWef7BXy.js",
     "src": "resources/coreui/src/views/theme/colors/Colors.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/theme/typography/Typography.jsx": {
-    "file": "assets/Typography-t6iSBIyx.js",
+    "file": "assets/Typography-DhJgW9Yj.js",
     "src": "resources/coreui/src/views/theme/typography/Typography.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_cil-user-q2NU2AQZ.js"
     ]
   },
   "resources/coreui/src/views/users/AddUser.jsx": {
-    "file": "assets/AddUser-BVRSmMQN.js",
+    "file": "assets/AddUser-Bs-mQ02M.js",
     "src": "resources/coreui/src/views/users/AddUser.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1298,7 +1298,7 @@
     ]
   },
   "resources/coreui/src/views/users/EditUser.jsx": {
-    "file": "assets/EditUser-llSfC5gy.js",
+    "file": "assets/EditUser-5km8w78B.js",
     "src": "resources/coreui/src/views/users/EditUser.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1309,13 +1309,13 @@
     ]
   },
   "resources/coreui/src/views/users/Users.jsx": {
-    "file": "assets/Users-6r7TxCVF.js",
+    "file": "assets/Users-Ckkp_7eR.js",
     "src": "resources/coreui/src/views/users/Users.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
       "_axios-fEUzBR8L.js",
       "_cil-user-plus-kfZGZ2sS.js",
@@ -1323,22 +1323,22 @@
     ]
   },
   "resources/coreui/src/views/widgets/Widgets.jsx": {
-    "file": "assets/Widgets-Dpp5GWX0.js",
+    "file": "assets/Widgets-C9EOMSre.js",
     "src": "resources/coreui/src/views/widgets/Widgets.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "_index.es-B6mrXtmy.js",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "resources/coreui/src/index.jsx",
-      "_WidgetsDropdown-Bs8Z52Xj.js",
+      "_WidgetsDropdown-De5IM9oF.js",
       "_cil-user-q2NU2AQZ.js",
       "_cil-laptop-gKE9Lh-R.js"
     ]
   },
   "resources/coreui/src/views/works/AddWork.jsx": {
-    "file": "assets/AddWork-BanDoUtD.js",
+    "file": "assets/AddWork-allVI7lR.js",
     "src": "resources/coreui/src/views/works/AddWork.jsx",
     "isDynamicEntry": true,
     "imports": [
@@ -1349,16 +1349,16 @@
     ]
   },
   "resources/coreui/src/views/works/Works.jsx": {
-    "file": "assets/Works-qNPjiw9k.js",
+    "file": "assets/Works-DTIaP23o.js",
     "src": "resources/coreui/src/views/works/Works.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_client-DnTwIhck.js",
       "_index.es-HjcCfGYB.js",
       "resources/coreui/src/index.jsx",
-      "_ProBadge-CmIaVMMU.js",
+      "_ProBadge-DyLaPGoc.js",
       "_axios-fEUzBR8L.js",
-      "_SpendsList-CCIvw_hp.js",
+      "_SpendsList-y_neIt-p.js",
       "_cil-user-plus-kfZGZ2sS.js",
       "_cil-user-q2NU2AQZ.js"
     ]
