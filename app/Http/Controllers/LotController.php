@@ -251,7 +251,7 @@ class LotController extends Controller
         }
 
 
-        $fertilezer_statuses = FertilizerStatus::where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'All')->get();
+        $fertilezer_statuses = FertilizerStatus::where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'All')->where('business_id', $business_id)->get();
 
         //dd($start, $end, $lot,$fertilezer_statuses);
 

@@ -122,13 +122,16 @@ class FertilizerController extends Controller
         if ($fertilizer) {
 
 
-            $fertilizer->fertilizer_statuses()->create([
+            $fertilizer_status =$fertilizer->fertilizer_statuses()->create([
                 'action' => $data['action'],
                 'lot_id' => $data['lot_id'],
                 'volume' => $data['volume'],
                 'price' => $data['price'],
-                'action_date' => $data['action_date']
+                'action_date' => $data['action_date'],
             ]);
+
+            $fertilizer_status->business_id = $data['business_id'];
+            $fertilizer_status->save();
 
 
             if ($data['action'] == 'Hozzáadás') {

@@ -763,25 +763,25 @@ const LotList = () => {
                     {priceResponse.start_date} / {priceResponse.end_date} közőtt
                   </CAlert>
                   <CAlert color="info">
-                    Növény ára: {formatNumber(priceResponse.plant)}
+                    Növény ára: {formatNumber(priceResponse.plant)} / {formatNumber(priceResponse.plant*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="info">
-                    Cserép ára: {formatNumber(priceResponse.pot_price)}
+                    Cserép ára: {formatNumber(priceResponse.pot_price)} / {formatNumber(priceResponse.pot_price*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="info">
-                    Tőzeg ára: {formatNumber(priceResponse.peat_price)}
+                    Tőzeg ára: {formatNumber(priceResponse.peat_price)} / {formatNumber(priceResponse.peat_price*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="info">
-                    Műtrágya: {formatNumber(priceResponse.fertilizer_price)}
+                    Műtrágya: {formatNumber(priceResponse.fertilizer_price)} / {formatNumber(priceResponse.fertilizer_price*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="info">
-                    Munkaköltség ára: {formatNumber(priceResponse.work_price)}
+                    Munkaköltség ára: {formatNumber(priceResponse.work_price)} / {formatNumber(priceResponse.work_price*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="info">
-                    Energia ára: {formatNumber(priceResponse.spend_price)}
+                    Energia ára: {formatNumber(priceResponse.spend_price)} / {formatNumber(priceResponse.spend_price*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="warning">
-                    Összesen: {formatNumber(priceResponse.total_price)}
+                    Összesen: {formatNumber(priceResponse.total_price)} / {formatNumber(priceResponse.total_price*priceResponse.lot_quantity)}
                   </CAlert>
                   <CAlert color="primary">
                     Minimális eladási ár: {formatNumber(priceResponse.total_price*1.35)}

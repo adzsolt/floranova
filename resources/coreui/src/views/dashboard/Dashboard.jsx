@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {
   CAvatar,
   CButton,
@@ -19,7 +19,6 @@ import {
   CTableRow,
   CCardTitle,
   CSpinner,
-
 
 
 } from '@coreui/react-pro'
@@ -69,7 +68,10 @@ const Dashboard = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+
+
   const controller = new AbortController();
+  const controllerRef = useRef();
 
   const [businesses, setBusinesses] = useState([])
   const [currentMainTab, setCurrentMainTab] = useState('')
@@ -98,7 +100,6 @@ const Dashboard = () => {
   const [businessPercentage, setBusinessPercentage] = useState(0)
   const [heatUnitPercentage, setHeatUnitPercentage] = useState(0)
   const [productionUnitPercentage, setProductionUnitPercentage] = useState(0)
-
 
 
   const [plantSpend, setPlantSpend] = useState(0)
@@ -166,6 +167,7 @@ const Dashboard = () => {
   const getData = () => {
     setIsLoading(true);
     setError('');
+
 
     axios.get(
       '/get-dashboard-info',
@@ -267,6 +269,12 @@ const Dashboard = () => {
     setIsLoading(true);
     setError('');
 
+    if (controllerRef.current) {
+      controllerRef.current.abort();
+    }
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+    console.log('jel', signal);
     axios.post(
       '/dashboard-info',
       {
@@ -274,8 +282,10 @@ const Dashboard = () => {
         heat_unit_id: currentHeatUnitId,
         production_unit_id: currentProductionUnitId,
         start: startDate,
-        end: endDate,
-        signal: controller.signal
+        end: endDate
+      },
+      {
+        signal: signal
       }
     )
       .then((response) => {
@@ -301,7 +311,6 @@ const Dashboard = () => {
 
         setTotalSpend(response.data.spend_info.total)
         setProfit(response.data.profit)
-
 
 
       })
@@ -601,18 +610,18 @@ const Dashboard = () => {
         <CCardBody>
           <CCardTitle>Költségek a periódusra/üzlet</CCardTitle>
           <WidgetsBrand
-          plant_spend = {plantSpend}
-          peat_spend = {peatSpend}
-          pot_spend = {potSpend}
-          fertilizer_spend = {fertilizerSpend}
+            plant_spend={plantSpend}
+            peat_spend={peatSpend}
+            pot_spend={potSpend}
+            fertilizer_spend={fertilizerSpend}
 
           />
 
           <WidgetsBrand1
-            work_spend = {workSpend}
-            spend = {spend}
-            totalSpend = {totalSpend}
-            profit = {profit}
+            work_spend={workSpend}
+            spend={spend}
+            totalSpend={totalSpend}
+            profit={profit}
           />
         </CCardBody>
       </CCard>

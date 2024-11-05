@@ -30,12 +30,39 @@ const AddFertilizerStatusForm = () => {
   const [action, setAction] = useState('');
   const [lots, setLots] = useState([]);
   const [lotId, setLotId] = useState('');
+  const [businesses, setBusinesses] = useState([]);
+  const [businessId, setBusinessId] = useState(0);
+
   const formRef = useRef();
   const lotRef = useRef();
 
   const volumeRef = useRef();
   const priceRef = useRef();
 
+
+  const getBusinesses = () => {
+    // console.log('getList');
+    setIsLoading(true);
+    setError('');
+
+    axios.get(
+      '/get-businesses',
+      {
+        signal: controller.signal
+      }
+    )
+      .then((response) => {
+        // console.log('get-users ', response);
+        setBusinesses(response.data.businesses);
+      })
+      .catch(error => {
+        console.log("ERROR:: ", error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
 
   const getFertilizerStatusFormData = () => {
     // console.log('getList');
@@ -64,6 +91,7 @@ const AddFertilizerStatusForm = () => {
 
   useEffect(() => {
     getFertilizerStatusFormData();
+    getBusinesses();
 
     return () => {
       controller.abort()
@@ -83,9 +111,9 @@ const AddFertilizerStatusForm = () => {
         volume: volumeRef.current.value,
         price: priceRef.current.value,
         action_date: start_date,
+        business_id: businessId
       })
         .then((response) => {
-          // console.log('update role success ', response.data);
           navigate('/fertilizer');
         })
         .catch(error => {
@@ -114,6 +142,10 @@ const AddFertilizerStatusForm = () => {
   }
   const handleLotChange = (e) => {
     setLotId(e.currentTarget.value);
+  }
+
+  const handleBusinessChange = (e) => {
+    setBusinessId(e.currentTarget.value);
   }
 
   return (
@@ -165,6 +197,17 @@ const AddFertilizerStatusForm = () => {
           </CFormFloating>
         </CCol>
 
+        <CCol xs={6} className='mb-3'>
+          <CFormSelect aria-label="Válassz egységet" className='mb-3' onChange={handleBusinessChange} disabled={action == 'All' ? false : true}>
+            <option>Nyisd ki ezt a menüt, hogy hozzárendelhesd egy egységhez</option>
+            {businesses.map(val => (
+              <option value={val.id} key={val.id}>{val.name} </option>
+            ))
+            }
+
+          </CFormSelect>
+        </CCol>
+
         <CCol md={6} className='mb-3'>
           <CDatePicker
             locale="en-US"
@@ -180,6 +223,8 @@ const AddFertilizerStatusForm = () => {
           {/*  <CFormInput ref={emailRef} type="email" name="email" id="email" placeholder="Email" disabled={isLoading} feedbackInvalid='Please provide a valid Email' required />
             <CFormLabel htmlFor="email">E-mail</CFormLabel>*/}
         </CCol>
+
+
 
 
         <CCol xs={12}>
