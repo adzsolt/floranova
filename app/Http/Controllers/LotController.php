@@ -187,15 +187,23 @@ class LotController extends Controller
         $end = $data['end_date'];
 
 
+        $carbon_start_date = Carbon::parse($start);
         $carbon_end_date = Carbon::parse($end);
 
         $lot = Lot::where('id', $id)->first();
 
         $lot_end_date_carbon = Carbon::parse($lot->end_date);
+        $lot_start_date_carbon = Carbon::parse($lot->start_date);
 
-        if(isset($lot_end_date_carbon) and $lot_end_date_carbon <= $carbon_end_date){
+        if (isset($lot_end_date_carbon) and $lot_end_date_carbon <= $carbon_end_date) {
             $end = $lot->end_date;
         }
+
+        if($carbon_start_date <= $lot_start_date_carbon){
+            $start = $lot_start_date_carbon;
+        }
+
+
 
         $data['lot_name'] = $lot->name;
 
@@ -252,7 +260,6 @@ class LotController extends Controller
         $business_id = $lot->productionUnit->heatUnit->business_id;
 
 
-
         $fertilezer_statuses_1 = FertilizerStatus::where('lot_id', $lot->id)->where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'Használat')->get();
 
         foreach ($fertilezer_statuses_1 as $fertilezer_status) {
@@ -270,11 +277,11 @@ class LotController extends Controller
             $total_used_space = $this->getTotalUsedSpace($business_id, $fertilezer_status->action_date);
             $total_lot_space = $this->getTotalLotSpace($lot, $fertilezer_status->action_date);
 
-            $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price/$total_used_space['total_used_space'] * $total_lot_space['total_lot_space'];
+            $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price / $total_used_space['total_used_space'] * $total_lot_space['total_lot_space'];
 
         }
 
-        $fertilizer_price_sum = ($fertilizer_price + $fertilizer_price_1)/ $lot->quantity;
+        $fertilizer_price_sum = ($fertilizer_price + $fertilizer_price_1) / $lot->quantity;
 
         //dd($fertilezer_statuses, $fertilizer_price, $fertilizer_price_1, $total_used_space['total_used_space'], $total_lot_space['total_lot_space']);
         return $fertilizer_price_sum;
@@ -301,7 +308,7 @@ class LotController extends Controller
             $total_used_space = $this->getTotalUsedSpace($business_id, $date);
             Log::info('TOTAL USED SPACE ON ' . $date . ':' . $total_used_space['total_used_space']);
             $total_lot_space = $this->getTotalLotSpace($lot, $date);
-            if ($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date ) {
+            if ($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date) {
                 //dump($date->format('Y-m-d'), 'work_spend ', $work_spend, 'total_used', $total_used_space['total_used_space'], 'total_lot',$total_lot_space['total_lot_space'],
                 //  'price',($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space']);
                 $work_price = $work_price + ($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space'];
@@ -355,7 +362,7 @@ class LotController extends Controller
         //dd($lots);
 
         foreach ($lots as $lot) {
-            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
+            if ($lot->start_date <= $date and ($lot->end_date >= $date or !$lot->end_date)) {
                 $lot_names[] = $lot->name;
                 $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
@@ -418,7 +425,7 @@ class LotController extends Controller
         //dd($lots);
 
         foreach ($lots as $lot) {
-            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
+            if ($lot->start_date <= $date and ($lot->end_date >= $date or !$lot->end_date)) {
                 $lot_names[] = $lot->name;
                 $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
@@ -438,7 +445,7 @@ class LotController extends Controller
                 }
                 $currentHeatUnitId = $statuses[$current_status_key]->productionUnit->heatUnit->id;
 
-                if($currentHeatUnitId == $heat_unit_id) {
+                if ($currentHeatUnitId == $heat_unit_id) {
                     $lot_statuses[] = $statuses[$current_status_key]->layout->pot_per_m2;
                     $dates[] = $best_date;
                     $total_used_space = $total_used_space + $lot->quantity / $statuses[$current_status_key]->layout->pot_per_m2;
@@ -468,7 +475,6 @@ class LotController extends Controller
         $business_id = $productionUnit->heatUnit->business->id;
 
 
-
         //$lots = Lot::where('production_unit_id', $production_unit_id)->get();
 
         $lots = Lot::whereHas('productionUnit', function ($q) use ($business_id) {
@@ -482,7 +488,7 @@ class LotController extends Controller
         //dd($lots);
 
         foreach ($lots as $lot) {
-            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
+            if ($lot->start_date <= $date and ($lot->end_date >= $date or !$lot->end_date)) {
                 $lot_names[] = $lot->name;
                 $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
@@ -503,7 +509,7 @@ class LotController extends Controller
 
                 $currentProductionUnitId = $statuses[$current_status_key]->productionUnit->id;
 
-                if($currentProductionUnitId == $production_unit_id) {
+                if ($currentProductionUnitId == $production_unit_id) {
                     $lot_statuses[] = $statuses[$current_status_key]->layout->pot_per_m2;
                     $dates[] = $best_date;
                     $total_used_space = $total_used_space + $lot->quantity / $statuses[$current_status_key]->layout->pot_per_m2;
@@ -573,7 +579,7 @@ class LotController extends Controller
         //$inside_temperature_average = ($temperature->daytime_temperature + $temperature->night_temperature) / 2;
 
         //dd($heat_unit->name, $temperature);
-        return  $temperature->outside_temperature;
+        return $temperature->outside_temperature;
     }
 
     public function getHeatUnitSpendPerDate($heat_unit, $heat_units, $date)
@@ -660,10 +666,9 @@ class LotController extends Controller
             $heatUnitTotalM2PerDate = $this->getHeatUnitTotalM2SpecificDay($heat_unit->id, $date);
             Log::info('Heat Unit Total M2 On ' . $date . ':' . $heatUnitTotalM2PerDate);
 
-            if($heatUnitTotalM2PerDate == 0){
+            if ($heatUnitTotalM2PerDate == 0) {
                 $m2_spend_per_day = 0;
-            }
-            else {
+            } else {
                 $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
             }
             Log::info('SPENDING PER M2 PER DATE: ' . $m2_spend_per_day);
@@ -711,19 +716,18 @@ class LotController extends Controller
             foreach ($lot_collection as $lot_status) {
                 $start = Carbon::parse($lot_status->start_date);
 
-                if(isset($lot_status->lot->end_date)) {
-                     $end = Carbon::parse($lot_status->lot->end_date);
+                if (isset($lot_status->lot->end_date)) {
+                    $end = Carbon::parse($lot_status->lot->end_date);
                 }
                 $date_calculated = Carbon::parse($date);
                 //dd($lot_status);
 
-                if(isset($lot_status->lot->end_date)) {
+                if (isset($lot_status->lot->end_date)) {
                     if ($start <= $date_calculated and $date_calculated <= $end) {
                         $current_lot_statuses[] = $lot_status;
                         break;
                     }
-                }
-                else {
+                } else {
                     if ($start <= $date_calculated /*and $date_calculated <= $end*/) {
                         $current_lot_statuses[] = $lot_status;
                         break;
@@ -776,36 +780,35 @@ class LotController extends Controller
     public function addProductsToStore(Request $request)
     {
         $data = $request->all();
-       // dd($data);
-       //$response = Http::post('https://homestead.biflora/api/add_products?sku=100001&quantity=300');
+        // dd($data);
+        //$response = Http::post('https://homestead.biflora/api/add_products?sku=100001&quantity=300');
         $client = new Client();
-       // $response = $client->post('https://homestead.biflora/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
-        $response = $client->post('https://floranova.ro/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
+        // $response = $client->post('https://homestead.biflora/api/add_products?sku='.$data['sku'].'&quantity='.$data['qty']);
+        $response = $client->post('https://floranova.ro/api/add_products?sku=' . $data['sku'] . '&quantity=' . $data['qty']);
         //$price = json_decode($response->getBody()->getContents());
 
         $info['price'] = json_decode($response->getBody()->getContents());
-       // dd($price);
+        // dd($price);
 
-        if ($info['price']->product_price == -1){
+        if ($info['price']->product_price == -1) {
             $info['message'] = 'Error';
-        }
-        else{
+        } else {
             $lot = Lot::where('id', $data['lotId'])->first();
 
-            if($lot){
+            if ($lot) {
                 $request = new \Illuminate\Http\Request();
 
                 $request->replace(
                     [
-                        'lot_id' =>  $lot->id,
-                        'start_date' =>  $lot->start_date,
-                        'end_date' =>  $data['date'],
+                        'lot_id' => $lot->id,
+                        'start_date' => $lot->start_date,
+                        'end_date' => $data['date'],
 
                     ]
                 );
 
                 $calculated_price = $this->getPrice($request);
-                $calculated_price_with_loss = $calculated_price->original['total_price']*$lot->quantity/$data['qty'];
+                $calculated_price_with_loss = $calculated_price->original['total_price'] * $lot->quantity / $data['qty'];
                 $original_quantity = $lot->quantity;
                 $end_quantity = $data['qty'];
                 $store_code = $data['sku'];
@@ -815,17 +818,16 @@ class LotController extends Controller
 
                 $lot->end_date = $end_date;
                 $lot->final_quantity = $end_quantity;
-                $lot->final_price = round($calculated_price->original['total_price'],2);
-                $lot->final_price_with_loss = round($calculated_price_with_loss,2);
+                $lot->final_price = round($calculated_price->original['total_price'], 2);
+                $lot->final_price_with_loss = round($calculated_price_with_loss, 2);
                 $lot->store_price = $info['price']->product_price;
                 $lot->group_id = $store_code;
                 $lot->save();
 
 
-
-               // dd($calculated_price->original);
-                $info['calculated_price'] = round($calculated_price->original['total_price'],2);
-                $info['calculated_price_with_loss'] = round($calculated_price_with_loss,2);
+                // dd($calculated_price->original);
+                $info['calculated_price'] = round($calculated_price->original['total_price'], 2);
+                $info['calculated_price_with_loss'] = round($calculated_price_with_loss, 2);
                 $info['original_quantity'] = $original_quantity;
                 $info['end_quantity'] = $end_quantity;
                 $info['store_code'] = $store_code;
@@ -834,15 +836,13 @@ class LotController extends Controller
 
 
                 $info['message'] = 'Ok';
-            }
-
-            else{
+            } else {
                 $info['message'] = 'Error';
             }
 
 
         }
-        return  $info;
+        return $info;
     }
 
 
