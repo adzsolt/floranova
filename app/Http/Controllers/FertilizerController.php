@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use App\Models\Fertilizer;
 use App\Models\FertilizerStatus;
 use App\Models\Lot;
@@ -24,10 +25,20 @@ class FertilizerController extends Controller
                 else{
                     $status->name = '-';
                 }
+
+                if($status->business_id) {
+                    $business = Business::where('id', $status->business_id)->first();
+                    $status->business_name = $business->name;
+                }
+                else{
+                    $status->business_name = '-';
+                }
             }
 
             $fertilizers[$key]['statuses'] = $statuses;
         }
+
+
         return response()->json(['fertilizers' => $fertilizers]);
     }
 

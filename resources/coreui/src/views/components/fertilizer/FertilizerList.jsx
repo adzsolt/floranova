@@ -80,27 +80,32 @@ const FertilizerList = () => {
     {
       label: 'Művelet',
       key: 'action',
-      _style: { width: '20%' },
+      _style: { width: '15%' },
+    },
+    {
+      label: 'Egység',
+      key: 'business_name',
+      _style: { width: '15%' }
     },
     {
       label: 'Virágcsoport azonosító',
       key: 'name',
-      _style: { width: '20%' }
+      _style: { width: '15%' }
     },
     {
       label: 'Mennyiség',
       key: 'volume',
-      _style: { width: '20%' }
+      _style: { width: '15%' }
     },
     {
       label: 'Ár',
       key: 'price',
-      _style: { width: '20%' }
+      _style: { width: '15%' }
     },
     {
       label: 'Dátum',
       key: 'action_date',
-      _style: { width: '20%' }
+      _style: { width: '15%' }
     },
   ]
 

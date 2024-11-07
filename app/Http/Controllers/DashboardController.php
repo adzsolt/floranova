@@ -274,7 +274,7 @@ class DashboardController extends Controller
             $lot_end_date = Carbon::parse($lot->end_date);
             if ($lot_end_date >= $start_date and $lot_end_date <= $end_date) {
 
-                $earning = $earning + $lot->final_quantity * $lot->final_price;
+                $earning = $earning + $lot->final_quantity * $lot->store_price;
             }
         }
 
