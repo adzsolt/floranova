@@ -355,7 +355,7 @@ class LotController extends Controller
         //dd($lots);
 
         foreach ($lots as $lot) {
-            if ($lot->start_date <= $date and  ($lot->end_date > $date or !$lot->end_date )) {
+            if ($lot->start_date <= $date and  ($lot->end_date >= $date or !$lot->end_date )) {
                 $lot_names[] = $lot->name;
                 $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
