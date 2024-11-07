@@ -193,7 +193,7 @@ class LotController extends Controller
 
         $lot_end_date_carbon = Carbon::parse($lot->end_date);
 
-        if(isset($lot_end_date_carbon) and $lot_end_date_carbon < $carbon_end_date){
+        if(isset($lot_end_date_carbon) and $lot_end_date_carbon <= $carbon_end_date){
             $end = $lot->end_date;
         }
 
