@@ -221,7 +221,7 @@ class DashboardController extends Controller
         foreach ($lots as $lot) {
 
             $lot_start_date = Carbon::parse($lot->start_date);
-            if ($lot_start_date >= $start_date and $lot_start_date <= $end_date) {
+            //if ($lot_start_date >= $start_date and $lot_start_date <= $end_date) {
 
                 $request = new \Illuminate\Http\Request();
 
@@ -242,7 +242,7 @@ class DashboardController extends Controller
                 $spend_info_response['lots'][] = $current_lot_prices->lot_name;
 
                 //dd($current_lot_prices, $spend_info_response);
-            }
+           // }
 
         }
 
