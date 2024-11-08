@@ -645,48 +645,53 @@ class LotController extends Controller
         // dd($period);
         $statuses = $lot->statuses()->orderBy('start_date')->get();
 
-        foreach ($period as $date) {
-            $current_status_key = $statuses->reverse()->keys()->first();
-            foreach ($statuses as $status_key => $status) {
-                if ($status->start_date > $date) {
-                    continue;
-                } else {
-                    $current_status_key = $status_key;
+        $carbon_lot_start = Carbon::parse($lot->start_date);
+        $carbon_lot_end = Carbon::parse($lot->end_date);
 
-                    break;
+        foreach ($period as $date) {
+            if ($carbon_lot_start <= $date and $date <= $carbon_lot_end) {
+                $current_status_key = $statuses->reverse()->keys()->first();
+                foreach ($statuses as $status_key => $status) {
+                    if ($status->start_date > $date) {
+                        continue;
+                    } else {
+                        $current_status_key = $status_key;
+
+                        break;
+
+                    }
 
                 }
 
+
+                $heat_unit = $statuses[$current_status_key]->productionUnit->heatUnit;
+
+                $business = $heat_unit->business;
+
+                $heat_units = HeatUnit::where('business_id', $business->id)->get();
+
+                $heatUnitSpendPerDate = $this->getHeatUnitSpendPerDate($heat_unit, $heat_units, $date->format('Y-m-d'));
+                $heatUnitTotalM2PerDate = $this->getHeatUnitTotalM2SpecificDay($heat_unit->id, $date);
+                Log::info('Heat Unit Total M2 On ' . $date . ':' . $heatUnitTotalM2PerDate);
+
+                if ($heatUnitTotalM2PerDate == 0) {
+                    $m2_spend_per_day = 0;
+                } else {
+                    $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
+                }
+                Log::info('SPENDING PER M2 PER DATE: ' . $m2_spend_per_day);
+                Log::info('IN BASE FUNCTION');
+                $total_lot_space_m2 = $this->getTotalLotSpace($lot, $date);
+
+                $spend_lot_in_m2_per_date = $m2_spend_per_day;
+                $pot_per_m2 = $total_lot_space_m2['pot_per_m2'];
+                Log::info('POT PER M2: ' . $pot_per_m2);
+                $spend_per_lot_plant = $spend_lot_in_m2_per_date / $pot_per_m2;
+                Log::info('SPENDING PER PLANT: ' . $spend_per_lot_plant);
+                $total_spend = $total_spend + $spend_per_lot_plant;
+                Log::info('CURRENT TOTAL SPEND: ' . $total_spend);
+
             }
-
-
-            $heat_unit = $statuses[$current_status_key]->productionUnit->heatUnit;
-
-            $business = $heat_unit->business;
-
-            $heat_units = HeatUnit::where('business_id', $business->id)->get();
-
-            $heatUnitSpendPerDate = $this->getHeatUnitSpendPerDate($heat_unit, $heat_units, $date->format('Y-m-d'));
-            $heatUnitTotalM2PerDate = $this->getHeatUnitTotalM2SpecificDay($heat_unit->id, $date);
-            Log::info('Heat Unit Total M2 On ' . $date . ':' . $heatUnitTotalM2PerDate);
-
-            if ($heatUnitTotalM2PerDate == 0) {
-                $m2_spend_per_day = 0;
-            } else {
-                $m2_spend_per_day = $heatUnitSpendPerDate / $heatUnitTotalM2PerDate;
-            }
-            Log::info('SPENDING PER M2 PER DATE: ' . $m2_spend_per_day);
-            Log::info('IN BASE FUNCTION');
-            $total_lot_space_m2 = $this->getTotalLotSpace($lot, $date);
-
-            $spend_lot_in_m2_per_date = $m2_spend_per_day;
-            $pot_per_m2 = $total_lot_space_m2['pot_per_m2'];
-            Log::info('POT PER M2: ' . $pot_per_m2);
-            $spend_per_lot_plant = $spend_lot_in_m2_per_date / $pot_per_m2;
-            Log::info('SPENDING PER PLANT: ' . $spend_per_lot_plant);
-            $total_spend = $total_spend + $spend_per_lot_plant;
-            Log::info('CURRENT TOTAL SPEND: ' . $total_spend);
-
         }
 
         return $total_spend;
