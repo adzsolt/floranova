@@ -187,23 +187,15 @@ class LotController extends Controller
         $end = $data['end_date'];
 
 
-        $carbon_start_date = Carbon::parse($start);
-        $carbon_end_date = Carbon::parse($end);
+
 
         $lot = Lot::where('id', $id)->first();
 
         $lot_end_date_carbon = Carbon::parse($lot->end_date);
         $lot_start_date_carbon = Carbon::parse($lot->start_date);
 
-        if (isset($lot_end_date_carbon) and $lot_end_date_carbon <= $carbon_end_date) {
-            $end = $lot->end_date;
-        }
 
-        if($carbon_start_date <= $lot_start_date_carbon){
-            $start = $lot_start_date_carbon;
-        }
-
-
+        //dd($start, $end);
 
         $data['lot_name'] = $lot->name;
 
@@ -296,22 +288,29 @@ class LotController extends Controller
         $business_id = $lot->productionUnit->heatUnit->business_id;
         $period = CarbonPeriod::create($start, $end);
 
+        $carbon_lot_start = Carbon::parse($lot->start_date);
+        $carbon_lot_end = Carbon::parse($lot->end_date);
 
+        //dd($business_id, $start, $end);
         foreach ($period as $date) {
-            //dump($date);
-            $work = null;
-            $total_used_space = 0;
-            $total_lot_space = 0;
-            $work = Work::where('work_date', $date)->where('business_id', $business_id)->first();
-            $work_spend = $work->spend;
-            //dd($work_spend);
-            $total_used_space = $this->getTotalUsedSpace($business_id, $date);
-            Log::info('TOTAL USED SPACE ON ' . $date . ':' . $total_used_space['total_used_space']);
-            $total_lot_space = $this->getTotalLotSpace($lot, $date);
-            if ($work_spend and $total_used_space['total_used_space'] and $lot->start_date <= $date) {
-                //dump($date->format('Y-m-d'), 'work_spend ', $work_spend, 'total_used', $total_used_space['total_used_space'], 'total_lot',$total_lot_space['total_lot_space'],
-                //  'price',($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space']);
-                $work_price = $work_price + ($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space'];
+
+            if($carbon_lot_start <= $date and $date <= $carbon_lot_end ) {
+               // dump($date);
+                $work = null;
+                $total_used_space = 0;
+                $total_lot_space = 0;
+                $work = Work::where('work_date', $date)->where('business_id', $business_id)->first();
+                $work_spend = $work->spend;
+                //dd($work_spend);
+                $total_used_space = $this->getTotalUsedSpace($business_id, $date);
+                Log::info('TOTAL USED SPACE ON ' . $date . ':' . $total_used_space['total_used_space']);
+                $total_lot_space = $this->getTotalLotSpace($lot, $date);
+                if ($work_spend and $total_used_space['total_used_space']) {
+                    //dump($date->format('Y-m-d'), 'work_spend ', $work_spend, 'total_used', $total_used_space['total_used_space'], 'total_lot',$total_lot_space['total_lot_space'],
+                    //  'price',($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space']);
+                    $work_price = $work_price + ($work_spend / $total_used_space['total_used_space']) * $total_lot_space['total_lot_space'];
+                    //dump($work_price);
+                }
             }
         }
 
@@ -361,8 +360,13 @@ class LotController extends Controller
 
         //dd($lots);
 
+        $date = Carbon::parse($date);
+
         foreach ($lots as $lot) {
-            if ($lot->start_date <= $date and ($lot->end_date >= $date or !$lot->end_date)) {
+            $carbon_start_date = Carbon::parse($lot->start_date);
+            $carbon_end_date = Carbon::parse($lot->end_date);
+            //dump($carbon_start_date, $carbon_end_date, $date);
+            if ($carbon_start_date <= $date and ($carbon_end_date >= $date or !$lot->end_date)) {
                 $lot_names[] = $lot->name;
                 $statuses = $lot->statuses()->orderBy('start_date')->get();
                 //dd($statuses);
