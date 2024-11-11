@@ -604,12 +604,16 @@ class LotController extends Controller
             Log::info('Date:' . $date);
             Log::info('heat_unit_name:' . $one_heat_unit->name . ', heat_unit_id:' . $one_heat_unit->id);
 
-
-            $heat_units_area[$one_heat_unit->id]['area'] = $this->getHeatUnitArea($one_heat_unit);
+            if($this->notEmptyHeatUnit($one_heat_unit, $date)) {
+                $heat_units_area[$one_heat_unit->id]['area'] = $this->getHeatUnitArea($one_heat_unit);
+            }
+            else{
+                $heat_units_area[$one_heat_unit->id]['area'] = 0;
+            }
             Log::info('heat_unit_area:' . $heat_units_area[$one_heat_unit->id]['area']);
             $heat_units_area[$one_heat_unit->id]['temperature_index'] = $this->getHeatUnitTemperatureIndex($one_heat_unit, $date);
             Log::info('temperature_index:' . $heat_units_area[$one_heat_unit->id]['temperature_index']);
-            $heat_units_area[$one_heat_unit->id]['total_index'] = $heat_units_area[$one_heat_unit->id]['area'] * $heat_units_area[$one_heat_unit->id]['temperature_index'];
+            $heat_units_area[$one_heat_unit->id]['total_index'] = abs($heat_units_area[$one_heat_unit->id]['area'] * $heat_units_area[$one_heat_unit->id]['temperature_index']);
             Log::info('one_total_index:' . $heat_units_area[$one_heat_unit->id]['total_index']);
             $total_index = $total_index + $heat_units_area[$one_heat_unit->id]['total_index'];
             Log::info('current_total_index:' . $total_index);
@@ -621,6 +625,7 @@ class LotController extends Controller
         if ($total_index) {
             $spend_per_unit = ($spend->spent_gas + $spend->spent_electricity) / $total_index;
         }
+        Log::info('spend_per_unit:' . $spend_per_unit);
         Log::info('one_day_spend:' . $heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit);
         //dd($heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit);
         return $heat_units_area[$heat_unit->id]['total_index'] * $spend_per_unit;
@@ -633,8 +638,9 @@ class LotController extends Controller
     public function getSpendPrice($lot, $start, $end)
     {
 
-        //$lot = Lot::where('id', $lot_id)->first();
+       // $lot = Lot::where('id', $id)->first();
 
+        Log::info('Lot _______________ :' . $lot->name);
 
         $total_spend = 0;
 
@@ -649,7 +655,9 @@ class LotController extends Controller
         $carbon_lot_end = Carbon::parse($lot->end_date);
 
         foreach ($period as $date) {
-            if ($carbon_lot_start <= $date and $date <= $carbon_lot_end) {
+
+            //dump( $carbon_lot_start <= $date and ($date <= $carbon_lot_end or $lot->end_date == null) );
+            if ($carbon_lot_start <= $date and ($date <= $carbon_lot_end or $lot->end_date == null)) {
                 $current_status_key = $statuses->reverse()->keys()->first();
                 foreach ($statuses as $status_key => $status) {
                     if ($status->start_date > $date) {
@@ -863,4 +871,31 @@ class LotController extends Controller
         return $lot;
     }
 
+    public function notEmptyHeatUnit($heat_unit, $date)
+    {
+        $state = false;
+
+        $carbon_date = Carbon::parse($date);
+        //$carbon_date = Carbon::parse($date);
+
+        //$heat_unit = HeatUnit::where('id', $heat_unit_id)->first();
+
+        $production_units = $heat_unit->productionUnits;
+
+        foreach ($production_units as $production_unit) {
+            $lots = $production_unit->lots;
+            //dd($lots);
+            foreach ($lots as $lot) {
+
+                $lot_end_date_carbon = Carbon::parse($lot->end_date);
+                $lot_start_date_carbon = Carbon::parse($lot->start_date);
+
+                if($lot_start_date_carbon <= $carbon_date and ($carbon_date <= $lot_end_date_carbon or $lot->date == null)){
+                    $state = true;
+                }
+            }
+        }
+        //dump($heat_unit->name, $date, $state);
+        return $state;
+    }
 }
