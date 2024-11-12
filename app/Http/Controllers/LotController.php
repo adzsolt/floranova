@@ -252,7 +252,8 @@ class LotController extends Controller
         $business_id = $lot->productionUnit->heatUnit->business_id;
 
 
-        $fertilezer_statuses_1 = FertilizerStatus::where('lot_id', $lot->id)->where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'Használat')->get();
+        $fertilezer_statuses_1 = FertilizerStatus::where('lot_id', $lot->id)->where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'Használat')->
+        where('business_id', $business_id)->get();
 
         foreach ($fertilezer_statuses_1 as $fertilezer_status) {
 
