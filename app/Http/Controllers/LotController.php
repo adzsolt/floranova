@@ -249,8 +249,12 @@ class LotController extends Controller
         $fertilizer_price = 0;
         $fertilizer_price_1 = 0;
 
+        //$lot = Lot::where('id', $lot)->first();
+
         $business_id = $lot->productionUnit->heatUnit->business_id;
 
+        $carbon_lot_start = Carbon::parse($lot->start_date);
+        $carbon_lot_end = Carbon::parse($lot->end_date);
 
         $fertilezer_statuses_1 = FertilizerStatus::where('lot_id', $lot->id)->where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'Használat')->
         where('business_id', $business_id)->get();
@@ -263,12 +267,14 @@ class LotController extends Controller
 
         $fertilezer_statuses = FertilizerStatus::where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'All')->where('business_id', $business_id)->get();
 
-        //dd($start, $end, $lot,$fertilezer_statuses);
+       // dd($start, $end, $lot,$fertilezer_statuses);
 
         foreach ($fertilezer_statuses as $fertilezer_status) {
 
             $total_used_space = $this->getTotalUsedSpace($business_id, $fertilezer_status->action_date);
             $total_lot_space = $this->getTotalLotSpace($lot, $fertilezer_status->action_date);
+
+            //dump($fertilezer_status->action_date, $lot->id);
 
             $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price / $total_used_space['total_used_space'] * $total_lot_space['total_lot_space'];
 

@@ -222,7 +222,7 @@ class DashboardController extends Controller
 
             $lot_start_date = Carbon::parse($lot->start_date);
             $lot_end_date = Carbon::parse($lot->start_date);
-           // if ($lot_start_date <= $end_date  and $lot_end_date >= $start_date) {
+            if ($lot_start_date <= $end_date and $lot_start_date >= $start_date) {
 
                 $request = new \Illuminate\Http\Request();
 
@@ -230,23 +230,22 @@ class DashboardController extends Controller
 
                 $current_lot_prices = $lc->getPrice($request)->getData();
 
-            //dump($lot->name, $current_lot_prices);
+                //dump($lot->name, $current_lot_prices);
 
 
-
-
-                $spend_info_response['plant'] = floatval(number_format( $spend_info_response['plant'] + $current_lot_prices->plant * $current_lot_prices->lot_quantity, 2, '.', ''));
-                $spend_info_response['peat'] = floatval(number_format( $spend_info_response['peat'] + $current_lot_prices->peat_price * $current_lot_prices->lot_quantity, 2, '.', ''));
-                $spend_info_response['pot'] = floatval(number_format( $spend_info_response['pot'] + $current_lot_prices->pot_price * $current_lot_prices->lot_quantity, 2, '.', ''));
-                $spend_info_response ['fertilizer'] =  floatval(number_format( $spend_info_response['fertilizer'] + $current_lot_prices->fertilizer_price * $current_lot_prices->lot_quantity, 2, '.', ''));
-                $spend_info_response['work'] = floatval(number_format( $spend_info_response['work'] + $current_lot_prices->work_price * $current_lot_prices->lot_quantity, 2, '.', ''));
-                $spend_info_response['spend'] = floatval(number_format( $spend_info_response['spend'] + $current_lot_prices->spend_price * $current_lot_prices->lot_quantity, 2, '.', ''));
-                $spend_info_response['total'] = floatval(number_format( $spend_info_response['total'] + $current_lot_prices->total_price * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response['plant'] = floatval(number_format($spend_info_response['plant'] + $current_lot_prices->plant * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response['peat'] = floatval(number_format($spend_info_response['peat'] + $current_lot_prices->peat_price * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response['pot'] = floatval(number_format($spend_info_response['pot'] + $current_lot_prices->pot_price * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response ['fertilizer'] = floatval(number_format($spend_info_response['fertilizer'] + $current_lot_prices->fertilizer_price * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response['work'] = floatval(number_format($spend_info_response['work'] + $current_lot_prices->work_price * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response['spend'] = floatval(number_format($spend_info_response['spend'] + $current_lot_prices->spend_price * $current_lot_prices->lot_quantity, 2, '.', ''));
+                $spend_info_response['total'] = floatval(number_format($spend_info_response['total'] + $current_lot_prices->total_price * $current_lot_prices->lot_quantity, 2, '.', ''));
                 $spend_info_response['lots'][] = $current_lot_prices->lot_name;
 
                 //dd($current_lot_prices, $spend_info_response);
-           //}
+                //}
 
+            }
         }
 
 
