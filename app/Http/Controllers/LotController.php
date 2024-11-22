@@ -187,8 +187,6 @@ class LotController extends Controller
         $end = $data['end_date'];
 
 
-
-
         $lot = Lot::where('id', $id)->first();
 
         $lot_end_date_carbon = Carbon::parse($lot->end_date);
@@ -267,17 +265,27 @@ class LotController extends Controller
 
         $fertilezer_statuses = FertilizerStatus::where('action_date', '>=', $start)->where('action_date', '<=', $end)->where('action', 'All')->where('business_id', $business_id)->get();
 
-       // dd($start, $end, $lot,$fertilezer_statuses);
+        // dd($start, $end, $lot,$fertilezer_statuses);
 
         foreach ($fertilezer_statuses as $fertilezer_status) {
 
             $total_used_space = $this->getTotalUsedSpace($business_id, $fertilezer_status->action_date);
             $total_lot_space = $this->getTotalLotSpace($lot, $fertilezer_status->action_date);
 
+            Log::info('FERTILIZER');
+            Log::info($lot->id);
+            Log::info($fertilezer_status->action_date);
+            Log::info($total_used_space['total_used_space']);
+            Log::info($total_lot_space['total_lot_space']);
+            Log::info($fertilezer_status->volume);
+            Log::info($fertilezer_status->fertilizer->price);
+
 
 
             $fertilizer_price = $fertilizer_price + $fertilezer_status->volume * $fertilezer_status->fertilizer->price / $total_used_space['total_used_space'] * $total_lot_space['total_lot_space'];
             //dump($fertilezer_status->action_date, $lot->id, $fertilizer_price, $total_used_space);
+
+            Log::info('Fertilezer_price: '.$fertilizer_price);
         }
 
         $fertilizer_price_sum = ($fertilizer_price + $fertilizer_price_1) / $lot->quantity;
@@ -301,8 +309,8 @@ class LotController extends Controller
         //dd($business_id, $start, $end);
         foreach ($period as $date) {
 
-            if($carbon_lot_start <= $date and $date <= $carbon_lot_end ) {
-               // dump($date);
+            if ($carbon_lot_start <= $date and $date <= $carbon_lot_end) {
+                // dump($date);
                 $work = null;
                 $total_used_space = 0;
                 $total_lot_space = 0;
@@ -611,10 +619,9 @@ class LotController extends Controller
             Log::info('Date:' . $date);
             Log::info('heat_unit_name:' . $one_heat_unit->name . ', heat_unit_id:' . $one_heat_unit->id);
 
-            if($this->notEmptyHeatUnit($one_heat_unit, $date)) {
+            if ($this->notEmptyHeatUnit($one_heat_unit, $date)) {
                 $heat_units_area[$one_heat_unit->id]['area'] = $this->getHeatUnitArea($one_heat_unit);
-            }
-            else{
+            } else {
                 $heat_units_area[$one_heat_unit->id]['area'] = 0;
             }
             Log::info('heat_unit_area:' . $heat_units_area[$one_heat_unit->id]['area']);
@@ -645,7 +652,7 @@ class LotController extends Controller
     public function getSpendPrice($lot, $start, $end)
     {
 
-       // $lot = Lot::where('id', $id)->first();
+        // $lot = Lot::where('id', $id)->first();
 
         Log::info('Lot _______________ :' . $lot->name);
 
@@ -897,7 +904,7 @@ class LotController extends Controller
                 $lot_end_date_carbon = Carbon::parse($lot->end_date);
                 $lot_start_date_carbon = Carbon::parse($lot->start_date);
 
-                if($lot_start_date_carbon <= $carbon_date and ($carbon_date <= $lot_end_date_carbon or $lot->date == null)){
+                if ($lot_start_date_carbon <= $carbon_date and ($carbon_date <= $lot_end_date_carbon or $lot->date == null)) {
                     $state = true;
                 }
             }
