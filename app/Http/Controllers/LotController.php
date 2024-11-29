@@ -103,6 +103,8 @@ class LotController extends Controller
         $fertilizer_status->lot_id = $lot->id;
         $fertilizer_status->volume = $fertilizer_lot_volume;
         $fertilizer_status->action_date = $data['start_date'];
+        $fertilizer_status->business_id = $lot->productionUnit->heatUnit->business->id;
+
 
         $fertilizer_status->save();
 
