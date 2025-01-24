@@ -221,8 +221,8 @@ class DashboardController extends Controller
         foreach ($lots as $lot) {
 
             $lot_start_date = Carbon::parse($lot->start_date);
-            $lot_end_date = Carbon::parse($lot->start_date);
-            if ($lot_start_date <= $end_date and $lot_start_date >= $start_date) {
+            $lot_end_date = Carbon::parse($lot->end_date);
+            if ($lot_start_date <= $end_date and ($lot_end_date >= $start_date or !$end_date)) {
 
                 $request = new \Illuminate\Http\Request();
 
