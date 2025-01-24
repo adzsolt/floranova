@@ -204,7 +204,7 @@ class DashboardController extends Controller
         $spend_info_response['total'] = 0;
         $spend_info_response['lots'] = [];
 
-
+        //teszt
         $lots = Lot::whereHas('productionUnit', function ($q) use ($business_id) {
             $q->whereHas('heatUnit', function ($p) use ($business_id) {
                 $p->whereHas('business', function ($r) use ($business_id) {
