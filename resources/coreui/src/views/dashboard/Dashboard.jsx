@@ -284,8 +284,10 @@ const Dashboard = () => {
         start: startDate,
         end: endDate
       },
+
       {
-        signal: signal
+        signal: signal,
+        timeout:180000
       }
     )
       .then((response) => {
