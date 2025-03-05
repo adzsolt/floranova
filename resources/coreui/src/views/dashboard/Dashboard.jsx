@@ -275,6 +275,7 @@ const Dashboard = () => {
     controllerRef.current = new AbortController();
     const signal = controllerRef.current.signal;
     console.log('jel', signal);
+    axios.defaults.timeout = 180000;
     axios.post(
       '/dashboard-info',
       {
